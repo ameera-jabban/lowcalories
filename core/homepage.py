@@ -304,12 +304,18 @@ def get_meal_plans(request=None):
             continue
         popular = any(p.is_popular for p in mt_plans)
         min_price = min(p.price_jod for p in mt_plans)
+        # صورة كرت نوع الخطة: صورة النوع الافتراضية، وإلا صورة أول خطة من هذا النوع
+        # إلها صورة خاصة، وإلا بديل التدرّج في _media_card.html.
+        card_image = _image_url_or_none(getattr(mt, "image", None))
+        if not card_image:
+            for p in mt_plans:
+                card_image = _image_url_or_none(getattr(p, "image", None))
+                if card_image:
+                    break
         rows.append((popular, min_price, {
             "variant": "plan",
             "href": plans_url,
-            # بطاقة نوع الخطة على الصفحة الرئيسية: صورة نوع الوجبة الافتراضية، وإلا
-            # بديل التدرّج (بطاقات الخطط ما تستخدم صورة موحّدة ثابتة).
-            "image": _image_url_or_none(getattr(mt, "image", None)),
+            "image": card_image,
             "image_alt": mt.name,
             "badge": _("الأكثر طلباً") if popular else None,
             "title": mt.name,
