@@ -13,6 +13,10 @@ class Plan(models.Model):
     meals_per_day = models.PositiveIntegerField(_("وجبات باليوم"), default=1)
     price_jod = models.DecimalField(_("السعر (د.أ)"), max_digits=6, decimal_places=2)
     is_popular = models.BooleanField(_("الأكثر طلباً"), default=False, help_text=_("يظهر عليها وسم 'الأكثر شعبية'"))
+    image = models.ImageField(
+        _("صورة خاصة بالخطة"), upload_to="plans/", blank=True, null=True,
+        help_text=_("صورة خاصة بهذه الخطة تحديداً. لو فاضية نستخدم صورة نوع الوجبة."),
+    )
 
     # Audit Log — الأسعار أهم شي: مين غيّر السعر وإمتى
     history = HistoricalRecords()
@@ -24,7 +28,25 @@ class Plan(models.Model):
         verbose_name_plural = _("خطط الاشتراك")
 
     def __str__(self):
-        return f"{self.days} يوم - {self.meal_type.name_ar} - {self.meals_per_day} وجبة ({self.price_jod} د)"
+        return _("%(days)s يوم · %(type)s · %(meals)s وجبة/يوم · %(price)s د.أ") % {
+            "days": self.days, "type": self.meal_type.name,
+            "meals": self.meals_per_day, "price": self.price_jod,
+        }
+
+    def get_card_image_url(self):
+        """
+        رابط صورة بطاقة الخطة حسب الأولوية:
+          1) صورة الخطة نفسها (Plan.image)
+          2) صورة نوع الوجبة الافتراضية (MealType.image)
+          3) None — يتركها لبديل التدرّج في core/_media_card.html
+        """
+        for candidate in (self.image, getattr(self.meal_type, "image", None)):
+            try:
+                if candidate and candidate.url:
+                    return candidate.url
+            except (ValueError, AttributeError):
+                pass
+        return None
 
     def whatsapp_message(self):
         from django.utils.translation import gettext as _
@@ -51,7 +73,7 @@ class DeliveryArea(models.Model):
         verbose_name_plural = _("مناطق التوصيل")
 
     def __str__(self):
-        return self.name_ar
+        return self.name
 
     @property
     def name(self):

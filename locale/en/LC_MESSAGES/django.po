@@ -767,17 +767,6 @@ msgstr ""
 "Request a nutrition consultation and the Low Calories team will contact you "
 "to arrange it."
 
-msgid ""
-"اطلب استشارة وفريقنا بيتواصل معك لترتيب جلسة مع أخصائي تغذية — بتراجعوا فيها"
-" هدفك وسعراتك وبتطلع بخطة عملية مفصّلة عليك."
-msgstr ""
-"Submit a request and our team will contact you to arrange a session with a "
-"nutritionist — you'll review your goal and calories together and leave with "
-"a practical, tailored plan."
-
-msgid "رسوم الجلسة %(price)s د.أ (يؤكّدها الفريق)."
-msgstr "Session fee %(price)s JOD (confirmed by the team)."
-
 msgid "إرشاد تغذوي مخصّص لهدفك"
 msgstr "Personalized nutrition guidance"
 
@@ -790,31 +779,11 @@ msgstr "Goal-based recommendations"
 msgid "اطلب استشارة"
 msgstr "Request a Consultation"
 
-msgid "إرسال الطلب"
-msgstr "Submit Request"
-
-msgid ""
-"ما في اختيار موعد — بعد ما تبعت الطلب، الفريق بيتواصل معك لترتيب الجلسة."
-msgstr ""
-"No slot to pick — after you submit, the team contacts you to arrange the "
-"session."
-
-msgid "استلمنا طلب استشارتك"
-msgstr "Your consultation request has been received"
-
-msgid "رح نتواصل معك قريباً لترتيب موعد الاستشارة."
-msgstr "We'll contact you shortly to arrange your consultation."
-
 msgid "رقم الطلب: %(ref)s"
 msgstr "Request %(ref)s"
 
 msgid "العودة للرئيسية"
 msgstr "Back to home"
-
-msgid "بدك خطة مفصّلة عليك بالضبط؟ اطلب استشارة مع أخصائي تغذية."
-msgstr ""
-"Want a plan tailored exactly to you? Request a consultation with a "
-"nutritionist."
 
 msgid "الاسم الكامل"
 msgstr "Full Name"
@@ -1959,3 +1928,187 @@ msgstr "Contact our team and we'll send it to you."
 
 msgid "تواصل معنا على واتساب"
 msgstr "Contact us on WhatsApp"
+
+msgid "منيو أسبوع %(d)s"
+msgstr "Menu — week of %(d)s"
+
+msgid "%(days)s يوم · %(type)s · %(meals)s وجبة/يوم · %(price)s د.أ"
+msgstr "%(days)s days · %(type)s · %(meals)s meals/day · %(price)s JOD"
+
+msgid "بصيغة دولية بدون + (مثال: 962795551234)"
+msgstr "International format without + (e.g. 962795551234)"
+
+msgid "يُنشأ تلقائياً. شاركه مع العميل ليدخل بوابته (بديل مؤقت عن OTP)."
+msgstr ""
+"Generated automatically. Share it with the customer to access their portal "
+"(temporary OTP substitute)."
+
+msgid "يُستخدم لتمديد تاريخ الانتهاء بشكل صحيح عند استئناف الاشتراك."
+msgstr ""
+"Used to extend the end date correctly when the subscription is resumed."
+
+msgid "يمنع إرسال طلب تقييم أكثر من مرة (أمر send_review_requests)."
+msgstr ""
+"Prevents sending a review request more than once (send_review_requests "
+"command)."
+
+msgid "مثال: 20 / 24 / 26"
+msgstr "e.g. 20 / 24 / 26"
+
+msgid "يظهر عليها وسم 'الأكثر شعبية'"
+msgstr "Shows a \"Most popular\" badge"
+
+msgid "مثال: WELCOME15"
+msgstr "e.g. WELCOME15"
+
+msgid "فاضي = بدون تاريخ انتهاء"
+msgstr "Empty = no expiry date"
+
+msgid "فاضي = بدون حد"
+msgstr "Empty = no limit"
+
+msgid "عادة يوم الأحد"
+msgstr "Usually a Sunday"
+
+msgid "فعّل هذا المنيو ليظهر بالموقع (يعطل تلقائياً القديم)"
+msgstr ""
+"Activate this menu to show it on the site (auto-deactivates the previous "
+"one)"
+
+msgid "اتركه فاضي للشريحة المفتوحة (مثال: 50+)."
+msgstr "Leave empty for an open-ended tier (e.g. 50+)."
+
+msgid "مدة جلسة الاستشارة بالدقائق (تظهر بصفحة الاستشارات)."
+msgstr ""
+"Consultation session length in minutes (shown on the consultations page)."
+
+msgid "مثلاً: plans_page, calculator, home_hero"
+msgstr "e.g. plans_page, calculator, home_hero"
+
+msgid "افصل كل فقرة بسطر فارغ."
+msgstr "Separate each paragraph with a blank line."
+
+msgid "عنصر واحد بكل سطر."
+msgstr "One item per line."
+
+msgid ""
+"اختياري — للتنظيم المستقبلي (خطط، وجبات، توصيل...). ما يظهر كفلتر إلا لو "
+"احتجناه."
+msgstr ""
+"Optional — for future organization (plans, meals, delivery…). Not shown as a"
+" filter unless needed."
+
+msgid "يظهر بالرابط: /policies/<slug>/ (مثال: privacy, terms)."
+msgstr "Appears in the URL: /policies/<slug>/ (e.g. privacy, terms)."
+
+msgid "التاريخ اللي يظهر بأعلى الصفحة ('آخر تحديث: ...')."
+msgstr "The date shown at the top of the page (\"Last updated: …\")."
+
+msgid ""
+"ما تنشرها إلا بعد ما يتأكد المحتوى القانوني. غير منشورة = ما إلها رابط "
+"بالفوتر ولا صفحة (404)."
+msgstr ""
+"Only publish after the legal content is confirmed. Unpublished = no footer "
+"link and no page (404)."
+
+msgid ""
+"رقم واتساب برمز الدولة (مثال: 962791234567 أو +962 79 123 4567). يُنظَّف "
+"آلياً لتوليد رابط wa.me. اتركه فاضي = تختفي كل عناصر واتساب."
+msgstr ""
+"WhatsApp number with country code (e.g. 962791234567 or +962 79 123 4567). "
+"Cleaned automatically to build the wa.me link. Empty = all WhatsApp elements"
+" disappear."
+
+msgid ""
+"الصيغة المعروضة للزوار (مثال: +962 79 123 4567). لو فاضي نعرض الرقم المنسّق "
+"آلياً من whatsapp_number."
+msgstr ""
+"The format shown to visitors (e.g. +962 79 123 4567). If empty, the number "
+"is formatted automatically from whatsapp_number."
+
+msgid "رسالة مبدئية تُملأ في واتساب عند الضغط على أي زر عام (اختياري)."
+msgstr ""
+"A pre-filled WhatsApp message when any generic button is tapped (optional)."
+
+msgid "رابط صفحة إنستغرام كامل. اتركه فاضي = يختفي أيقونة إنستغرام."
+msgstr "Full Instagram page URL. Empty = the Instagram icon disappears."
+
+msgid "اسم المستخدم بدون @ (اختياري — للعرض النصي فقط)."
+msgstr "Username without @ (optional — for text display only)."
+
+msgid "الموقع كما يظهر بالفوتر وصفحات السياسات (مثال: عمّان، الأردن)."
+msgstr ""
+"Location as shown in the footer and policy pages (e.g. Amman, Jordan)."
+
+msgid "بريد الدعم/التواصل (يظهر بصفحات السياسات إذا معبّأ)."
+msgstr "Support/contact email (shown on policy pages if set)."
+
+msgid ""
+"رقم Meta/Facebook Pixel (بدون حروف). لو فاضي، ما رح ينحقن أي كود تتبع "
+"بالموقع."
+msgstr ""
+"Meta/Facebook Pixel ID (digits only). If empty, no tracking code is "
+"injected."
+
+msgid ""
+"صورة الـ Hero بالصفحة الرئيسية. لو فاضية، يظهر رسم توضيحي بألوان الهوية."
+msgstr "Homepage hero image. If empty, a brand-colored illustration is shown."
+
+msgid ""
+"نقطة تركيز قص صورة الـ Hero (object-position)، مثال: center center أو 60% "
+"40%."
+msgstr ""
+"Hero image crop focus (object-position), e.g. center center or 60% 40%."
+
+msgid "object-position، مثال: center center أو 50% 30%."
+msgstr "object-position, e.g. center center or 50% 30%."
+
+msgid ""
+"رابط فيديو mp4 للـ Hero (اختياري). لو معبّأ يُعرض بدل الصورة (صامت، تلقائي، "
+"مع احترام تفضيل تقليل الحركة). صورة الـ Hero تصير poster."
+msgstr ""
+"Hero mp4 video URL (optional). If set, it replaces the image (muted, "
+"autoplay, respecting reduced-motion). The hero image becomes the poster."
+
+msgid "مثال: نوصّل يومياً داخل عمّان"
+msgstr "e.g. We deliver daily within Amman"
+
+msgid "مثال: يومياً ٩ ص – ٩ م (يظهر بالفوتر إذا معبّأ)"
+msgstr "e.g. Daily 9am – 9pm (shown in the footer if set)"
+
+msgid "رابط سياسة الخصوصية (يظهر بالفوتر إذا معبّأ)"
+msgstr "Privacy policy URL (shown in the footer if set)"
+
+msgid "رابط الشروط والأحكام (يظهر بالفوتر إذا معبّأ)"
+msgstr "Terms & conditions URL (shown in the footer if set)"
+
+msgid "اللون البرتقالي الأساسي (أزرار، هيدر, تمييز)"
+msgstr "Primary orange (buttons, header, accents)"
+
+msgid "اللون البرتقالي الأساسي (أزرار، هيدر، تمييز)"
+msgstr "Primary orange (buttons, header, accents)"
+
+msgid "اللون الأخضر (لوجو 'Low' بالخط اليدوي، تفاصيل ثانوية)"
+msgstr "Green (the handwritten \"Low\" logo, secondary details)"
+
+msgid "لون الخلفية الكريمية الفاتحة (خلفيات السكاشن)"
+msgstr "Soft cream background (section backgrounds)"
+
+msgid "سعر جلسة استشارة التغذية (د.أ). يُنسخ للحجز وقت إنشائه."
+msgstr ""
+"Nutrition consultation session price (JOD). Copied to the booking when "
+"created."
+
+msgid "صورة خاصة بالخطة"
+msgstr "Plan-specific image"
+
+msgid "صورة خاصة بهذه الخطة تحديداً. لو فاضية نستخدم صورة نوع الوجبة."
+msgstr ""
+"An image specific to this plan. If empty, the meal type's image is used."
+
+msgid "صورة افتراضية"
+msgstr "Default image"
+
+msgid "صورة افتراضية لكل خطط هذا النوع اللي ما إلها صورة خاصة."
+msgstr ""
+"A default image for every plan of this type that has no plan-specific image."

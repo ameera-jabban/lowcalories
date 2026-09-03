@@ -7,14 +7,18 @@ from .models import MealType, WeeklyMenu, MenuItem
 
 @admin.register(MealType)
 class MealTypeAdmin(ModelAdmin):
-    list_display = ("name_ar", "name_en", "slug", "icon_emoji", "macros")
+    list_display = ("name_ar", "name_en", "slug", "icon_emoji", "macros", "has_image")
     prepopulated_fields = {"slug": ("name_en",)}
-    fields = ("name_ar", "name_en", "slug", "icon_emoji",
+    fields = ("name_ar", "name_en", "slug", "icon_emoji", "image",
               "typical_protein_pct", "typical_carbs_pct", "typical_fat_pct")
 
     @admin.display(description="ماكروز %")
     def macros(self, obj):
         return f"{obj.typical_protein_pct}/{obj.typical_carbs_pct}/{obj.typical_fat_pct}"
+
+    @admin.display(description="صورة", boolean=True)
+    def has_image(self, obj):
+        return bool(obj.image)
 
 
 class MenuItemInline(TabularInline):

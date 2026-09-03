@@ -8,6 +8,10 @@ class MealType(models.Model):
     name_en = models.CharField(_("الاسم (إنجليزي)"), max_length=50)
     slug = models.SlugField(_("المُعرّف"), unique=True)
     icon_emoji = models.CharField(_("رمز تعبيري"), max_length=10, blank=True)
+    image = models.ImageField(
+        _("صورة افتراضية"), upload_to="meal_types/", blank=True, null=True,
+        help_text=_("صورة افتراضية لكل خطط هذا النوع اللي ما إلها صورة خاصة."),
+    )
 
     # توزيع الماكروز التقريبي لهذا النوع — يضبطه الأدمن مرة، يظهر على كروت الخطط
     typical_protein_pct = models.PositiveSmallIntegerField(_("بروتين %"), default=40)
@@ -19,7 +23,7 @@ class MealType(models.Model):
         verbose_name_plural = _("أنواع الوجبات")
 
     def __str__(self):
-        return self.name_ar
+        return self.name  # مُعرّب حسب لغة الطلب (يرجع name_ar افتراضياً)
 
     @property
     def name(self):
@@ -53,7 +57,7 @@ class WeeklyMenu(models.Model):
         verbose_name_plural = _("المنيو الأسبوعي")
 
     def __str__(self):
-        return f"منيو أسبوع {self.week_start_date}"
+        return _("منيو أسبوع %(d)s") % {"d": self.week_start_date}
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -92,7 +96,7 @@ class MenuItem(models.Model):
         verbose_name_plural = _("الوجبات")
 
     def __str__(self):
-        return f"{self.name_ar} ({self.get_day_of_week_display()})"
+        return f"{self.name} ({self.get_day_of_week_display()})"
 
     @property
     def name(self):

@@ -7,3 +7,7 @@ staticfiles/
 .venv/
 venv/
 locale/*/LC_MESSAGES/*.mo
+
+# manual media archives (backups) — never commit
+/media.rar
+/media.zip

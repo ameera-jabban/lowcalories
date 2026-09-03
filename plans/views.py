@@ -7,7 +7,6 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET
 
-from core.homepage import CARD_FALLBACK_IMAGE
 from menu.models import MealType
 from .models import DiscountCode, Plan
 
@@ -16,7 +15,7 @@ def _plan_card(plan, *, macro_labels, currency, popular_badge, cta_label):
     """
     dict متوافق مع core/_media_card.html (تخطيط overlay) — نفس بطاقة الصورة-أولاً
     المعتمدة بالصفحة الرئيسية، مع إضافة زر CTA وسعر قابل للخصم لهالصفحة.
-    الصورة مؤقتاً موحّدة (ChickenSatayBowl) لأن MealType ما إله صورة فردية بعد.
+    الصورة: Plan.image ← MealType.image ← بديل التدرّج (Plan.get_card_image_url).
     """
     mt = plan.meal_type
     if plan.meals_per_day == 1:
@@ -28,7 +27,7 @@ def _plan_card(plan, *, macro_labels, currency, popular_badge, cta_label):
     return {
         "variant": "plan",
         "layout": "overlay",
-        "image": CARD_FALLBACK_IMAGE,
+        "image": plan.get_card_image_url(),
         "image_alt": mt.name,
         "popular": plan.is_popular,
         "badge": popular_badge if plan.is_popular else None,

@@ -1,0 +1,214 @@
+#
+msgid ""
+msgstr ""
+"Language: ar\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Filters"
+msgstr "الفلاتر"
+
+msgid "Apply Filters"
+msgstr "تطبيق الفلاتر"
+
+msgid "Clear all filters"
+msgstr "مسح كل الفلاتر"
+
+msgid "Reset filters"
+msgstr "إعادة ضبط الفلاتر"
+
+msgid "Toggle filter"
+msgstr "إظهار/إخفاء الفلتر"
+
+msgid "Clear"
+msgstr "مسح"
+
+msgid "Clear selection"
+msgstr "مسح التحديد"
+
+msgid "Toggle sorting"
+msgstr "تبديل الترتيب"
+
+msgid "Toggle sidebar"
+msgstr "إظهار/إخفاء الشريط الجانبي"
+
+msgid "Toggle dark/light mode"
+msgstr "تبديل الوضع الداكن/الفاتح"
+
+msgid "Toggle password visibility"
+msgstr "إظهار/إخفاء كلمة السر"
+
+msgid "Show counts"
+msgstr "إظهار الأعداد"
+
+msgid "Hide counts"
+msgstr "إخفاء الأعداد"
+
+msgid "Show all"
+msgstr "عرض الكل"
+
+msgid "Type to search"
+msgstr "اكتب للبحث"
+
+msgid "No results found"
+msgstr "لا نتائج"
+
+msgid "No data"
+msgstr "لا بيانات"
+
+msgid "Nothing matched your search"
+msgstr "لا شيء يطابق بحثك"
+
+msgid "Recent searches"
+msgstr "عمليات البحث الأخيرة"
+
+msgid "All applications"
+msgstr "كل التطبيقات"
+
+msgid "Navigate"
+msgstr "تنقّل"
+
+msgid "Open command tool"
+msgstr "فتح أداة الأوامر"
+
+msgid "Available shortcuts"
+msgstr "الاختصارات المتاحة"
+
+msgid "Global shortcuts"
+msgstr "اختصارات عامة"
+
+msgid "Changelist shortcuts"
+msgstr "اختصارات القائمة"
+
+msgid "Command tool shortcuts"
+msgstr "اختصارات أداة الأوامر"
+
+msgid "Open shortcuts list"
+msgstr "فتح قائمة الاختصارات"
+
+msgid "Dark"
+msgstr "داكن"
+
+msgid "Light"
+msgstr "فاتح"
+
+msgid "System"
+msgstr "النظام"
+
+msgid "Go back"
+msgstr "رجوع"
+
+msgid "Create new record"
+msgstr "إنشاء سجل جديد"
+
+msgid "Record picture"
+msgstr "صورة السجل"
+
+msgid "Select"
+msgstr "اختر"
+
+msgid "Select record"
+msgstr "اختر سجلاً"
+
+msgid "Select value"
+msgstr "اختر قيمة"
+
+msgid "Select currency"
+msgstr "اختر العملة"
+
+msgid "Select format"
+msgstr "اختر الصيغة"
+
+msgid "Select action"
+msgstr "اختر إجراءً"
+
+msgid "Select action to run"
+msgstr "اختر إجراءً للتنفيذ"
+
+msgid "Run"
+msgstr "تنفيذ"
+
+msgid "Run the selected action"
+msgstr "تنفيذ الإجراء المحدّد"
+
+msgid "Submit"
+msgstr "إرسال"
+
+msgid "Summary"
+msgstr "ملخّص"
+
+msgid "General"
+msgstr "عام"
+
+msgid "Value"
+msgstr "القيمة"
+
+msgid "Date from"
+msgstr "التاريخ من"
+
+msgid "Date to"
+msgstr "التاريخ إلى"
+
+msgid "From"
+msgstr "من"
+
+msgid "To"
+msgstr "إلى"
+
+msgid "and"
+msgstr "و"
+
+msgid "Unknown"
+msgstr "غير معروف"
+
+msgid "Click to download"
+msgstr "اضغط للتنزيل"
+
+msgid "Click to cancel"
+msgstr "اضغط للإلغاء"
+
+msgid "Open selection"
+msgstr "فتح المحدّد"
+
+msgid "Open selection in new tab"
+msgstr "فتح المحدّد في تبويب جديد"
+
+msgid "No, take me back"
+msgstr "لا، ارجعني"
+
+msgid ""
+"This page yielded into no results. Create a new item or reset your filters."
+msgstr "لا نتائج في هذه الصفحة. أنشئ عنصراً جديداً أو أعد ضبط الفلاتر."
+
+msgid "Search apps and models..."
+msgstr "ابحث في التطبيقات والموديلات…"
+
+msgid "Add row"
+msgstr "إضافة صف"
+
+msgid "Remove from sorting"
+msgstr "إزالة من الترتيب"
+
+msgid "Choose file to upload"
+msgstr "اختر ملفاً للرفع"
+
+msgid "Date/time"
+msgstr "التاريخ/الوقت"
+
+msgid "Image preview"
+msgstr "معاينة الصورة"
+
+msgid "Return to site"
+msgstr "العودة للموقع"
+
+msgid "Save and view"
+msgstr "احفظ واعرض"
+
+msgid "This item will be deleted."
+msgstr "سيُحذف هذا العنصر."
+
+msgid "Unknown content"
+msgstr "محتوى غير معروف"
+
+msgid "View on site"
+msgstr "اعرض على الموقع"

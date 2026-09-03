@@ -48,8 +48,9 @@ cp .env.example .env
 nano .env   # عبّي القيم الحقيقية (SECRET_KEY, DATABASE_URL, ALLOWED_HOSTS...)
 
 venv/bin/python manage.py migrate
+venv/bin/python manage.py setup_roles
+venv/bin/python scripts/i18n_sync.py            # يجمّع django.mo (بديل compilemessages — البيئة بلا GNU gettext)
 venv/bin/python manage.py collectstatic --noinput
-venv/bin/python manage.py compilemessages
 venv/bin/python manage.py createsuperuser
 
 # 4. فعّل systemd service (الملف موجود بـ deploy/lowcalories.service)

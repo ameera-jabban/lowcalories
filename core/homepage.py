@@ -13,19 +13,25 @@ from django.conf import settings
 from django.urls import NoReverseMatch, reverse
 from django.utils.translation import gettext_lazy as _
 
-# صورة بديلة مؤقتة موحّدة لكل بطاقات الخطط/الوجبات لحد ما تُرفع صور فردية.
-# ملف موجود بالفعل بالمشروع (media/branding/) — ما ننسخه ولا نخترع صور.
+# صورة بديلة موحّدة تُستخدم فقط لبطاقات الوجبات (MenuItem) اللي ما إلها صورة مرفوعة
+# ولقسم المرونة. بطاقات الخطط ما تستخدمها — تعتمد على Plan.image / MealType.image
+# أو بديل التدرّج في _media_card.html.
 CARD_FALLBACK_IMAGE = settings.MEDIA_URL.rstrip("/") + "/branding/ChickenSatayBowl.webp"
 
 
-def _card_image(image_field):
-    """رابط الصورة الحقيقية إن وُجدت، وإلا الصورة البديلة الموحّدة."""
+def _image_url_or_none(image_field):
+    """رابط الصورة لو مرفوعة فعلاً، وإلا None (يتركها لبديل التدرّج بالقالب)."""
     try:
         if image_field and image_field.url:
             return image_field.url
     except (ValueError, AttributeError):
         pass
-    return CARD_FALLBACK_IMAGE
+    return None
+
+
+def _card_image(image_field):
+    """لبطاقات الوجبات: رابط الصورة الحقيقية إن وُجدت، وإلا الصورة البديلة الموحّدة."""
+    return _image_url_or_none(image_field) or CARD_FALLBACK_IMAGE
 
 
 def _url(url_name):
@@ -301,7 +307,9 @@ def get_meal_plans(request=None):
         rows.append((popular, min_price, {
             "variant": "plan",
             "href": plans_url,
-            "image": _card_image(getattr(mt, "image", None)),
+            # بطاقة نوع الخطة على الصفحة الرئيسية: صورة نوع الوجبة الافتراضية، وإلا
+            # بديل التدرّج (بطاقات الخطط ما تستخدم صورة موحّدة ثابتة).
+            "image": _image_url_or_none(getattr(mt, "image", None)),
             "image_alt": mt.name,
             "badge": _("الأكثر طلباً") if popular else None,
             "title": mt.name,

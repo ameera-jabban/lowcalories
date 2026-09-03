@@ -1,525 +1,299 @@
-# Low Calories Jordan — موقع Django ديناميكي بالكامل
+# Low Calories Jordan
 
-موقع + لوحة تحكم (Admin Panel) شغّالين فعلياً ومُختبرين، مبنيين على نفس مبدأ
-ومزايا mightygainz.com.
+منصّة اشتراك وجبات صحية في عمّان — **واتساب-أولاً، بدون سلة أو دفع أونلاين**.
+كل طلب (اشتراك، استشارة، عرض شركات، إحالة) يُخزَّن في قاعدة البيانات ثم يُحوَّل
+إلى واتساب برسالة جاهزة، والفريق يتابع يدوياً.
 
-## 🌐 الترجمة (عربي/إنجليزي)
-الترجمة **حقيقية ومُختبرة** — مو بس بنية روابط `/en/`. تشمل:
-- كل نصوص الواجهة الثابتة (أزرار، عناوين، رسائل) — مترجمة بملف `locale/en/LC_MESSAGES/django.po`
-- المحتوى الديناميكي (أسماء الوجبات، المقالات، اسم البراند) — عبر حقول `_ar`/`_en` بكل موديل + property ذكي يختار تلقائياً
+الموقع ثنائي اللغة بالكامل: **عربي RTL على `/`** و **إنجليزي LTR على `/en/`**.
 
-⚠️ **مهم**: لو عدّلت أي نص `{% trans %}` بالتمبلتس أو أضفت نص جديد، لازم:
-```bash
-python manage.py makemessages -l en   # يستخرج النصوص الجديدة لملف django.po
-# ← افتح locale/en/LC_MESSAGES/django.po وترجم أي msgstr "" فاضي يدوياً
-python manage.py compilemessages     # يولّد django.mo (هذا اللي Django فعلياً يقرأه)
+---
+
+## 1. نظرة عامة على المعمارية
+
+- **Django monolith** — قوالب مُخدَّمة من السيرفر (server-rendered)، لا SPA ولا API عامة.
+- **مصدر حقيقة واحد لكل شيء قابل للتغيير**: بيانات التواصل والهوية في `SiteSettings`
+  (singleton مع cache)، التنقّل في `core/navigation.py`، محتوى أقسام الصفحة الرئيسية
+  في `core/homepage.py` — لا نصوص/أرقام ثابتة في القوالب.
+- **CSS/JS مكتوب يدوياً** فوق قوالب Django — بلا Bootstrap/Tailwind build. نظام
+  design tokens في `:root` بأعلى `static/css/style.css`.
+- **لوحة تحكم Enterprise** على `django-unfold` مع أدوار (RBAC) وتتبّع تعديلات
+  (`django-simple-history`).
+- **تكامل واتساب** عبر `WhatsApp Business Cloud API` الرسمي (`core/whatsapp_service.py`)
+  مع fallback آمن يسجّل في الـ logs بدون توكن.
+
+---
+
+## 2. المكدّس التقني (Tech Stack)
+
+| الطبقة | الأداة |
+|---|---|
+| Backend | Django 6.1 (متوافق مع `>=5.0,<7.0`)، Python 3.12+ |
+| قاعدة البيانات | SQLite للتطوير · PostgreSQL للإنتاج (`psycopg2-binary` + `DATABASE_URL`) |
+| القوالب | Django Templates (بدون framework أمامي) |
+| الأنماط | CSS/JS يدوي · خطوط Cairo (عربي) + Inter (إنجليزي) من Google Fonts |
+| الترجمة | نظام i18n القياسي لـ Django + `scripts/i18n_sync.py` (بديل GNU gettext عبر `polib`) |
+| لوحة التحكم | `django-unfold` |
+| تتبّع التعديلات | `django-simple-history` |
+| الإعدادات | `django-environ` (12-factor — كل قيمة حسّاسة من متغيّر بيئة) |
+| الملفات الثابتة | `whitenoise` (ضغط + hash للـ cache-busting، عبر `core.storage.ForgivingManifestStaticFilesStorage`) |
+| Cache | LocMem افتراضياً · `django-redis` تلقائياً لو `REDIS_URL` مضبوط |
+| WSGI | `gunicorn` للإنتاج |
+| تكامل خارجي | WhatsApp Business Cloud API · Meta Pixel (اختياري) · خدمة تقييمات embed (اختياري) |
+
+---
+
+## 3. الميزات الرئيسية (الموجودة فعلياً)
+
+- **خطط الاشتراك والأسعار** — `/plans/` — بطاقات `.mcard` مبنية من `Plan` + `MealType`،
+  مجمّعة حسب عدد الأيام، مع خانة كود خصم (عرض استرشادي).
+- **مُكوّن الخطة** — `/plans/build/` — تجربة موجّهة (نوع → وجبات/يوم → مدّة) تشتق
+  كل التركيبات والأسعار من صفوف `Plan` (لا مصفوفة أسعار مكرّرة)، ملخّص لاصق، ومتابعة عبر واتساب.
+- **المنيو الأسبوعي** — `/menu/` — من `WeeklyMenu.get_current()` (منيو مفعّل واحد
+  في أي وقت)، تبويبات أيام + شبكة بطاقات.
+- **حاسبة السعرات** — `/tools/calorie-calculator/` — حساب Mifflin-St Jeor على
+  السيرفر + اقتراح خطة + إمكانية حفظ النتيجة بكود متابعة.
+- **متابعة التقدّم** — تبويب داخل «حسابي» للمستخدم المسجّل؛ ولغير المسجّل
+  `/tools/my-progress/` (تحقّق برقم الهاتف + كود المتابعة معاً — خصوصية).
+- **طلبات استشارة التغذية** — `/consultations/` — نموذج بسيط: العميل يرسل طلب →
+  يصل الأدمن → الفريق يتواصل يدوياً. **لا اختيار أخصائي، لا تقويم، لا مواعيد، لا دفع.**
+- **طلبات عروض الشركات (B2B)** — `/corporate/` — نموذج (شركة، مسؤول، هاتف،
+  عدد موظفين، موقع توصيل) → `CorporateInquiry` + رسالة واتساب.
+- **برنامج الإحالة** — `/referral/get-code/` (توليد كود/رابط) و `/r/<code>/`
+  (صفحة دعوة الصديق) — مكافأة يوم مجاني للطرفين، يؤكّدها الأدمن.
+- **حسابي / بوابة العميل** — `/account/` — تسجيل دخول برقم هاتف + كود دخول
+  (بديل مؤقت عن OTP)، تبويبات: نظرة عامة / الاشتراكات / متابعة تقدّمي / بياناتي /
+  الإحالة. إدارة الاشتراك (تجميد/استئناف/تغيير نوع الوجبات) — كلها تجهّز رسالة واتساب.
+- **أتمتة واتساب** — تأكيد اشتراك تلقائي عند `Subscription` جديد + أوامر
+  `send_weekly_reminders` و `send_review_requests`.
+- **صفحات قانونية ديناميكية** — `/policies/<slug>/` من `Policy` + `PolicySection`
+  (لا تُنشر إلا بعد إضافة نص معتمد).
+- **تعدّد اللغات** — عربي/إنجليزي كامل، RTL/LTR، مع إبقاء القيم التقنية (هاتف،
+  إيميل، أكواد، تواريخ ISO) اتجاهها LTR عبر أداة `.ltr-value`.
+- **لوحة تحكم** — إدارة كل ما سبق بلا كود (أنظر §8).
+
+---
+
+## 4. بنية المشروع
+
 ```
-بدون `compilemessages`، أي تعديل على `.po` ما راح ينعكس بالموقع.
-
-⚠️ **محتوى بدون ترجمة إنجليزية**: لو أضفت وجبة/مقالة وتركت حقل `_en` فاضي،
-الموقع تلقائياً بيعرض النسخة العربية كـ fallback (بدل ما يطلع فاضي) — هذا
-سلوك مقصود، بس لازم تعرف إنه موجود.
-
-## 🏭 جاهز للإنتاج
-المشروع صار مبني بنمط 12-factor (كل إعداد حساس من متغيرات بيئة، مو Hardcoded)
-ومُختبر فعلياً بوضع الإنتاج (`DEBUG=False` + HTTPS redirect + gunicorn + WhiteNoise).
-
-**دليل النشر الكامل (3 طرق: PaaS / VPS / Docker) موجود بملف `DEPLOYMENT.md`.**
-
-نسخة سريعة:
-```bash
-cp .env.example .env
-nano .env   # عبّي DJANGO_SECRET_KEY, DJANGO_ALLOWED_HOSTS, DATABASE_URL
-python manage.py migrate
-python manage.py collectstatic --noinput
-python manage.py compilemessages
-gunicorn lowcalories.wsgi:application --bind 0.0.0.0:8000 --workers 3
+lowcalories/
+├── lowcalories/       # settings, urls, wsgi/asgi
+├── core/              # SiteSettings (singleton) · الصفحة الرئيسية · navigation.py · homepage.py
+│                      #   · whatsapp_service.py · audit.py · unfold_conf.py · admin_dashboard.py
+│                      #   · middleware.py (AdminLocaleMiddleware) · storage.py
+├── menu/              # MealType · WeeklyMenu · MenuItem
+├── plans/             # Plan · DeliveryArea · DiscountCode · مُكوّن الخطة (builder)
+├── calculator/        # CalorieCalculation · حاسبة السعرات · متابعة التقدّم العامة
+├── leads/             # Lead — تسجيل كل ضغطة زر واتساب (صفحة، خطة، كود خصم)
+├── accounts/          # Customer · Subscription · بوابة العميل + signals + review
+├── corporate/         # CorporatePlan · CorporateInquiry
+├── consultations/     # ConsultationRequest (تدفّق بسيط)
+├── referrals/         # ReferralCode · Referral
+├── templates/         # كل صفحات HTML + templates/core/icons/*.svg + templates/admin/*
+├── static/css,js      # style.css · main.js · plan-builder.js · discount.js · admin/css/*
+├── locale/en/LC_MESSAGES/  # django.po / django.mo (تُدار عبر scripts/i18n_sync.py)
+├── scripts/i18n_sync.py    # مزامنة وتجميع الترجمات بدون GNU gettext
+├── seed_data.py            # بيانات تجريبية — استبدلها بالحقيقية قبل النشر
+├── .env.example · DEPLOYMENT.md
 ```
 
-## 🚀 التشغيل المحلي للتطوير (5 دقائق)
+---
+
+## 5. التشغيل المحلي للتطوير
 
 ```bash
 cd lowcalories
 
-# 1. تثبيت المكتبات
-pip install -r requirements.txt --break-system-packages   # أو بدون الفلاغ إذا مو Ubuntu/Debian محمي
+# 1. بيئة افتراضية + المكتبات
+python -m venv .venv && source .venv/bin/activate      # ويندوز: .venv\Scripts\activate
+pip install -r requirements.txt
 
-# 2. ملف البيئة المحلي — ⚠️ ضروري: بدونه DEBUG=False و runserver ما يخدم
-#    ملفات media (اللوجو، صور المنيو) → صور مكسورة. المشروع فيه .env جاهز للتطوير
-#    (DJANGO_DEBUG=True). للإنتاج انسخ .env.example واضبطه.
-#    (لو ما في .env عندك:  cp .env.example .env  ثم غيّر DJANGO_DEBUG لـ True)
+# 2. ملف البيئة (ضروري: بدونه DEBUG=False و runserver لا يخدم media/)
+cp .env.example .env
+#   عدّل .env:  DJANGO_DEBUG=True   ويكفي مفتاح SECRET_KEY أي قيمة للتطوير
 
-# 3. إنشاء قاعدة البيانات
+# 3. قاعدة البيانات + بيانات تجريبية
 python manage.py migrate
-
-# 3. تحميل بيانات تجريبية (منيو، خطط، مناطق توصيل) — Placeholder قابلة للتعديل
 python manage.py shell < seed_data.py
 
-# 4. إنشاء حساب مدير (أو استخدم الحساب الجاهز تحت)
+# 4. الأدوار + (اختياري) مستخدمو تجربة
+python manage.py setup_roles
+python manage.py seed_admin_users        # ينشئ gm_demo / menu_demo / orders_demo
+
+# 5. حساب مدير عام
 python manage.py createsuperuser
 
-# 5. تشغيل السيرفر
+# 6. تجميع الترجمات + الملفات الثابتة
+python scripts/i18n_sync.py
+python manage.py collectstatic --noinput
+
+# 7. التشغيل
 python manage.py runserver
 ```
 
-بعدها افتح:
-- **الموقع**: http://127.0.0.1:8000/
-- **لوحة التحكم**: http://127.0.0.1:8000/admin/
+- الموقع: <http://127.0.0.1:8000/>  ·  لوحة التحكم: <http://127.0.0.1:8000/admin/>
+- `healthz/` نقطة فحص صحّة ثابتة بلا بادئة لغة.
 
-## 🔑 حساب أدمن جاهز للتجربة (بيئة الاختبار بس — غيّره فوراً بالإنتاج)
-- **يوزر**: `admin`
-- **باسورد**: `LowCal2026!`
-
-> ⚠️ هذا الحساب موجود بس إذا شغّلت `createsuperuser` بنفس الاسم عندك محلياً،
-> أو إذا رفعت db.sqlite3 من بيئة الاختبار (ما رفعتها بالزيب — لازم تعمل migrate بنفسك).
-
-## 🎛️ شو تقدر تعمل من لوحة التحكم (admin) بدون ما تلمس كود
-
-| القسم | شو تتحكم فيه |
-|---|---|
-| **إعدادات الموقع** | رقم الواتساب، اللوجو، روابط التطبيق، Instagram |
-| **المنيو → أنواع الوجبات** | دجاج/لحم/سمك/زيرو كارب + إيموجي |
-| **المنيو → المنيو الأسبوعي** | أضف أسبوع جديد، فعّله، وضيف الوجبات ليوم بيوم (سعرات وماكروز) |
-| **الخطط → خطط الاشتراك** | أضف/عدّل الأسعار وعدد الأيام مباشرة من القائمة (list_editable) |
-| **الخطط → مناطق التوصيل** | فعّل/عطّل منطقة بضغطة وحدة |
-| **حاسبة السعرات → نتائج** | شوف كل شخص حسب سعراته (Leads تحليلية) |
-| **المدونة** | أضف مقالات SEO جديدة + Meta Title منفصل لكل مقالة (اختياري) |
-| **نوايا الشراء (Leads)** | شوف مين ضغط واتساب، من أي صفحة، ولأي خطة — بدون ما يشترك فعلياً |
-| **تقييمات العملاء** | أضف تقييمات يدوية (تظهر تلقائياً)، أو الصق كود embed لخدمة خارجية (ReputationHub/Elfsight) من إعدادات الموقع |
-| **إعدادات الموقع → التتبع الإعلاني** | حط رقم Facebook/Meta Pixel — ينحقن تلقائياً بكل الموقع، وبيسجل حدث "Lead" بكل ضغطة واتساب |
-
-لوحة التحكم فيها كمان **إحصائيات سريعة** فوق (leads اليوم، إجمالي الاستخدام، أشهر خطة).
+> **مستخدمو التجربة** (`seed_admin_users`) — للتطوير فقط، احذفهم قبل الإنتاج:
+> `gm_demo` (مدير عام) · `menu_demo` (مسؤول منيو) · `orders_demo` (موظف متابعة طلبات).
+> كلمات السر في `accounts` command المصدري.
 
 ---
 
-## 🏢 لوحة تحكم Enterprise (أدوار + ثيم + تتبع تعديلات)
+## 6. متغيّرات البيئة
 
-لوحة التحكم مرفوعة لمستوى Enterprise عبر 3 محاور:
+كلها في `.env` (انظر `.env.example`). **لا تضع أي سرّ حقيقي في المستودع.**
 
-### 1) الأدوار والصلاحيات (Role-Based Access Control)
+| المتغيّر | الوصف |
+|---|---|
+| `DJANGO_DEBUG` | `True` للتطوير، `False` للإنتاج |
+| `DJANGO_SECRET_KEY` | مفتاح عشوائي ≥ 50 حرفاً — **إلزامي في الإنتاج** |
+| `DJANGO_ALLOWED_HOSTS` | نطاقاتك مفصولة بفواصل |
+| `DATABASE_URL` | `postgres://user:pass@host:5432/db` — لو غير مضبوط يُستخدم SQLite |
+| `REDIS_URL` | اختياري — يفعّل cache عبر Redis لو موجود |
+| `DJANGO_CONN_MAX_AGE` · `DJANGO_HSTS_SECONDS` · `DJANGO_LOG_LEVEL` | ضبط إنتاج |
+| `SITE_BASE_URL` | العنوان المطلق — لبناء الروابط في رسائل واتساب من أوامر الإدارة |
+| `WHATSAPP_CLOUD_API_TOKEN` · `WHATSAPP_PHONE_NUMBER_ID` · `WHATSAPP_CLOUD_API_VERSION` | تفعيل إرسال واتساب الفعلي (فارغة = وضع log فقط) |
 
-3 أدوار جاهزة (Django Groups). تُنشأ بأمر واحد **idempotent** (تقدر تعيده وقت ما بدك):
+---
+
+## 7. الترجمة (i18n) و RTL/LTR
+
+- **لغتان**: `ar` (افتراضية، `/`) و `en` (`/en/`) عبر `i18n_patterns(prefix_default_language=False)`.
+- **نصوص الواجهة**: `{% trans %}` / `gettext_lazy` — المفتاح بالعربي، الإنجليزي في `locale/en/LC_MESSAGES/django.po`.
+- **المحتوى الديناميكي**: حقول `_ar`/`_en` بكل موديل + خاصية `name`/`title` تختار
+  حسب اللغة (`core/utils.localized_field`) وترجع للعربي لو `_en` فاضي.
+- **البيئة بلا GNU gettext** — بديلها:
+  ```bash
+  python scripts/i18n_sync.py    # يملأ الترجمات في django.po ويجمّع django.mo عبر polib
+  ```
+  شغّله بعد إضافة أي نص `{% trans %}` أو `_()` جديد. (القاموس داخل السكربت هو
+  **مصدر الحقيقة** — أي اختلاف يُحدَّث، وأي مفتاح غير مستخدم يُحذف.)
+- **RTL/LTR**: الاتجاه من `LANGUAGE_BIDI`. استخدم خصائص CSS منطقية
+  (`margin-inline`, `inset-inline-start` …). القيم التقنية (هاتف، إيميل، رابط،
+  كود، ID، تاريخ ISO) تبقى LTR عبر `class="ltr-value" dir="ltr"` (يعرّف
+  `direction: ltr; unicode-bidi: isolate;`) — **لا تطبّقها على نص عربي عادي.**
+
+---
+
+## 8. لوحة التحكم (django-unfold)
+
+- **الثيم**: `django-unfold` — shell حديث، RTL-aware، هوية البراند من `SiteSettings`
+  ديناميكياً (`core/unfold_conf.py`: `SITE_HEADER`/`SITE_ICON` كـ callables، لون
+  primary = برتقالي البراند). ملف `static/admin/css/admin-rtl.css` يصلح فجوات RTL
+  في Unfold (بنطاق `[dir="rtl"]` فقط).
+- **الشريط الجانبي مجمّع** حسب الأعمال: نظرة عامة · العملاء والطلبات · الاشتراكات
+  والتسعير · المنيو والتغذية · التوصيل · المحتوى والإعدادات · المستخدمون والصلاحيات.
+  كل عنصر مقيّد بصلاحية (يختفي لمن لا يملكها).
+- **لوحة القيادة** (`core/admin_dashboard.dashboard_callback`): بطاقات مؤشرات
+  تشغيلية حقيقية (طلبات جديدة، اشتراكات فعّالة، leads اليوم …) + رسم 7 أيام +
+  آخر نشاط الفريق — كلها تحترم صلاحيات المستخدم.
+- **مبدّل اللغة** في الـ shell (عربي/English) — يعمل عبر `core.middleware.AdminLocaleMiddleware`
+  الذي يحترم كوكي اللغة لمسارات `/admin/`.
+- **صفحة «آخر 20 تعديل عبر الموقع»**: `/admin/audit/recent-changes/` (للمدير العام).
+
+### الأدوار (RBAC) — Django Groups
 
 ```bash
-python manage.py setup_roles
+python manage.py setup_roles      # idempotent
 ```
 
-| الدور | وظيفته | صلاحياته |
-|---|---|---|
-| **مدير عام** | يدير كل المحتوى والتجارة والإعدادات | كل شي (add/change/delete/view) على `core`, `menu`, `plans`, `calculator`, `blog`, `leads` — **ما عدا** إدارة المستخدمين والمجموعات (`auth`) |
-| **مسؤول منيو** | يدير المنيو والمدونة فقط | CRUD كامل على `menu` (أنواع الوجبات، المنيو الأسبوعي، الوجبات) و `blog` (المقالات). **ما يشوف** `plans` ولا `leads` ولا إعدادات الموقع ولا المستخدمين (403 + ما يظهروا بالـ sidebar) |
-| **موظف متابعة طلبات** | يراقب نوايا الشراء ونتائج الحاسبة | **قراءة فقط (view)** على `leads.Lead` و `calculator.CalorieCalculation`. ما يقدر يضيف/يعدّل/يحذف أي شي |
+| الدور | الصلاحيات |
+|---|---|
+| **مدير عام** | كل شيء ما عدا إدارة المستخدمين/المجموعات (`auth`) والبنية التحتية |
+| **مسؤول منيو** | CRUD على تطبيق `menu` فقط |
+| **موظف متابعة طلبات** | قراءة فقط على `leads.Lead` و `calculator.CalorieCalculation` |
 
-> ملاحظة: صلاحية الـ singleton في «إعدادات الموقع» محمية فوق صلاحيات Django —
-> يعني حتى لو أحد أُعطي `core.*` بالغلط، ما يقدر يضيف صف ثاني.
+> صلاحية singleton في «إعدادات الموقع» محمية فوق صلاحيات Django (لا يمكن إضافة صف ثانٍ).
+> إنشاء مستخدم بدور: أضِفه، فعّل `is_staff`، اختر المجموعة — دون صلاحيات فردية.
 
-#### كيف تنشئ مستخدم بدور معيّن
+### تتبّع التعديلات
 
-**من لوحة التحكم (الأسهل):**
-1. `المستخدمون والمجموعات → المستخدمون → إضافة`
-2. عبّي اليوزر والباسورد، احفظ
-3. بصفحة التعديل: فعّل **`is_staff`** (حالة الطاقم) — ضروري عشان يدخل لوحة التحكم
-4. تحت **المجموعات (Groups)** اختر الدور المطلوب (مدير عام / مسؤول منيو / موظف متابعة طلبات) — **لا تعطيه صلاحيات فردية**، خلّي الدور يتكفّل
-5. احفظ. خلص.
+مفعّل على: `SiteSettings`, `Plan`, `DeliveryArea`, `WeeklyMenu`, `MenuItem`, `Policy`.
+تبويب **History** بكل صفحة تعديل + الربط بالمستخدم عبر `simple_history.middleware.HistoryRequestMiddleware`.
 
-**عبر سطر الأوامر (3 مستخدمين تجريبيين، واحد لكل دور):**
+---
+
+## 9. تدفّقات الأعمال المهمة
+
+- **الاشتراك**: العميل يختار خطة (أو يبني واحدة) → زر «اطلب/اشترك» يفتح واتساب
+  برسالة جاهزة + يُسجَّل `Lead`. الأدمن يؤكّد على واتساب ثم يضيف `Customer`
+  (يتولّد `access_code`) و `Subscription` → signal يرسل تأكيداً. العميل يدخل
+  `/account/login/` بالرقم + الكود.
+- **الاستشارة**: نموذج `/consultations/` → `ConsultationRequest` بحالة `new` →
+  الأدمن يراه في «طلبات الاستشارات»، يتواصل، ويحدّث الحالة. رابط «تواصل عبر واتساب»
+  جاهز في صفحة الطلب.
+- **عرض الشركات**: نموذج `/corporate/` → `CorporateInquiry` + حالة نجاح فيها
+  رابط واتساب بتفاصيل الشركة.
+- **الإحالة**: صاحب الكود من `/referral/get-code/` → يشارك `/r/<code>/` → الصديق
+  يملأ النموذج → `Referral` (`pending`) → الأدمن يعلّمه `redeemed` (أكشن يمدّد
+  اشتراك الطرفين يوماً لو فعّال).
+- **الوصول للحساب**: رقم هاتف + كود دخول (بديل OTP). لا تسجيل، لا كلمة سر، لا إيميل.
+
+---
+
+## 10. إرشادات التطوير
+
+- **منطق الأعمال خارج القوالب** — القوالب للعرض فقط. التسعير/الخصم/حساب السعرات/
+  تحوّلات الحالة لها تنفيذ مرجعي واحد في الـ backend.
+- **مصدر حقيقة واحد** — لا تكرّر سعراً أو رقم واتساب أو تسمية حالة عبر
+  template/JS/backend/ترجمة. أضِف محتوى الأقسام في `core/homepage.py` (نمط `navigation.py`).
+- **أعِد استخدام المكوّنات** — بطاقة `templates/core/_media_card.html` (`.mcard`)،
+  أداة `.ltr-value`، تنسيقات `.form-row` المشتركة، الهيدر/الفوتر.
+- **حافظ على EN/AR + RTL/LTR + الاستجابة** في كل تغيير.
+- **احذف الكود الميت فعلياً** — لا تعليقات على كود قديم، لا مكوّنات مكرّرة.
+- بعد تعديل CSS/JS: `collectstatic`. بعد نص ترجمة: `scripts/i18n_sync.py`.
+  بعد تغيير موديل: `makemigrations` + `migrate`.
+
+---
+
+## 11. الاختبار / QA
+
+سكربتات تحقّق قائمة على `django.test.Client` و Playwright في مجلّد scratchpad
+المحلّي (غير مرفوعة): `verify.py` (RBAC)، `verify_spec1..3.py`، `verify_contact_policies.py`،
+`admin_smoke*.py`، وفحوص Playwright بصرية للصفحات المُعاد تصميمها.
+
+الفحوص الأساسية المتاحة دائماً:
+
 ```bash
-python manage.py seed_admin_users     # يستدعي setup_roles تلقائياً أولاً
+python manage.py check
+python manage.py makemigrations --check --dry-run     # لا هجرات ناقصة
+python scripts/i18n_sync.py                            # لا msgstr فارغ
 ```
 
-| اليوزر | الدور | الباسورد (اختبار فقط) |
-|---|---|---|
-| `gm_demo` | مدير عام | `LowCalGM2026!` |
-| `menu_demo` | مسؤول منيو | `LowCalMenu2026!` |
-| `orders_demo` | موظف متابعة طلبات | `LowCalOrders2026!` |
+> لا توجد حزمة `pytest`/`tox` في المشروع حالياً؛ التحقّق يدوي عبر السكربتات أعلاه
+> ونتائج `manage.py check`.
 
-> ⚠️ احذف هالمستخدمين أو غيّر كلمات سرهم قبل الإنتاج.
+---
 
-### 2) الثيم الحديث (django-jazzmin)
+## 12. ملاحظات النشر
 
-- **اخترنا `django-jazzmin`** مش `django-admin-interface` لأنه يوفّر sidebar
-  قابل للتنظيم بمجموعات منطقية + روابط مخصصة + إخفاء عناصر حسب الصلاحية،
-  وهذا جوهر المطلوب (تجربة أدوار)، بينما `admin-interface` تركيزه الألوان فقط.
-- ألوان الثيم = هوية البراند (برتقالي `#F0791E` / أخضر `#4C8C3C`) — مطبّقة عبر
-  `static/admin/css/brand.css`.
-- **اسم البراند بالـ sidebar يُقرأ ديناميكياً** من `SiteSettings.get_solo()`
-  (شوف `core/jazzmin_conf.py`) — لو غيّرت `brand_name_en` من الإعدادات بينعكس فوراً.
-- السايدبار مرتّب: المحتوى (منيو + مدونة) ← التجارة والطلبات (خطط + leads +
-  حاسبة) ← الإعدادات (core) ← المستخدمون.
-- **كل الميزات القديمة محفوظة**: `list_editable` على الأسعار، الـ inlines
-  للمنيو الأسبوعي، الـ color picker لألوان الهوية، والـ fieldsets.
-
-### 3) تتبع التعديلات (Audit Log — django-simple-history)
-
-مفعّل على الموديلات الحساسة فقط:
-`SiteSettings`, `Plan`, `DeliveryArea`, `WeeklyMenu`, `MenuItem`, `BlogPost`.
-
-- كل موديل من هدول فيه تبويب **«History»** بصفحة التعديل: مين عدّل، إمتى،
-  والقيم القديمة/الجديدة.
-- صفحة ملخّص **«آخر 20 تعديل عبر الموقع»**: `/admin/audit/recent-changes/`
-  (رابط بالـ sidebar تحت «الإعدادات» + بالـ topmenu) — تظهر للمدير العام فقط.
-- ما فعّلناه على `Lead` ولا `CalorieCalculation` لأنها بيانات مولّدة تلقائياً
-  مش تُعدَّل يدوياً.
-
-> الربط بالمستخدم يتم عبر `simple_history.middleware.HistoryRequestMiddleware`.
-
-### القوالب المخصصة
-
-كل صفحة أدمن مخصصة تحت `templates/admin/dashboard/`:
-- `_base_panel.html` — القالب الأساسي الموحّد (يوسّع `admin/base_site.html`،
-  يوفّر panel بتصميم موحّد + يحمّل `static/admin/css/dashboard.css`)
-- `templates/admin/index.html` و `recent_changes.html` — **يوسّعان**
-  `_base_panel.html`. أي تعديل على الشكل العام = مكان واحد (`_base_panel.html`
-  + `dashboard.css`).
-
-### بعد سحب هالتحديث
+الدليل الكامل في **`DEPLOYMENT.md`** (3 طرق: PaaS / VPS / Docker). النسخة السريعة:
 
 ```bash
+cp .env.example .env      # اضبط SECRET_KEY, ALLOWED_HOSTS, DATABASE_URL, DEBUG=False
 pip install -r requirements.txt
-python manage.py migrate           # جداول history الجديدة
-python manage.py setup_roles        # الأدوار الثلاثة
+python manage.py migrate
+python manage.py setup_roles
+python scripts/i18n_sync.py
 python manage.py collectstatic --noinput
+gunicorn lowcalories.wsgi:application --bind 0.0.0.0:8000 --workers 3
 ```
 
-> `core/storage.py` يستخدم نسخة WhiteNoise بـ `manifest_strict=False` (ضروري
-> لأن jazzmin يشير لمجلد عبر `{% static %}`).
+- `DEBUG=False` → `runserver` لا يخدم `media/`؛ استخدم nginx / كائن تخزين للوسائط.
+- الملفات الثابتة عبر WhiteNoise (`ForgivingManifestStaticFilesStorage` — `manifest_strict=False`).
+- HSTS / SSL redirect / secure cookies تُفعَّل تلقائياً عند `DEBUG=False`.
+- لتفعيل إرسال واتساب الفعلي: املأ متغيّرات `WHATSAPP_*` (تطبيق Meta + منتج WhatsApp).
+  للرسائل خارج نافذة 24 ساعة يلزم **Message Templates** معتمدة من Meta.
 
 ---
 
-## 🚀 ميزات النمو (Growth Features)
+## قبل الإنتاج — Checklist
 
-### 1) بوابة العميل — متابعة الاشتراك (`accounts` app)
-
-بوابة بسيطة يشوف فيها العميل حالة اشتراكه ويتحكم فيه بأزرار — **بدون سلة/دفع
-إلكتروني**. كل زر يجهّز رسالة واتساب جاهزة (نفس نمط باقي الموقع).
-
-**تسجيل الدخول** — برقم الهاتف + كود دخول ثابت:
-- ⚠️ **ما في OTP/SMS حقيقي** (يحتاج مزوّد مدفوع — مؤجّل). البديل المؤقت: لكل
-  عميل `access_code` عشوائي يُنشأ تلقائياً، يظهر للأدمن جنب اسم العميل في
-  `العملاء`، والأدمن يشاركه معه يدوياً (زي كود دعوة). موثّق في
-  `accounts/models.py`.
-
-| الصفحة | الوظيفة |
-|---|---|
-| `/account/login/` | رقم الهاتف + كود الدخول |
-| `/account/` | تفاصيل الاشتراك الحالي + أيام متبقية + 3 أزرار |
-| `/account/review/<code>/` | فورم تقييم قصير (يصله من رسالة واتساب) → ينشئ `Testimonial` غير منشور للمراجعة |
-
-**الأزرار الثلاثة** (كلها تجهّز رسالة واتساب، والتأكيد النهائي يدوي من الأدمن):
-- **تجميد**: `status=frozen` + يسجّل `frozen_at`
-- **استئناف**: يمدّد `end_date` بعدد أيام التجميد ويرجّع `status=active`
-- **تغيير نوع الوجبات**: رسالة واتساب فقط — ما يعدّل الاشتراك (قد يترتب عليه فرق سعر)
-
-**كيف يستخدمها الأدمن**: يضيف `Customer` (الكود يتولّد تلقائياً) → يضيف له
-`Subscription` (بعد تأكيد الطلب على واتساب) → يشارك كود الدخول مع العميل.
-
-### 2) أتمتة واتساب (WhatsApp Business Cloud API الرسمي)
-
-`core/whatsapp_service.py` — كلاس `WhatsAppService` بـ 3 ميثودات:
-`send_order_confirmation` / `send_weekly_menu_reminder` / `send_review_request`.
-
-- يستخدم **Meta WhatsApp Business Cloud API الرسمي** (مش مكتبات غير رسمية).
-- **بدون توكن (الوضع الافتراضي محلياً)**: الخدمة تسجّل `"would send to X"` في
-  الـ logs ولا تعمل أي طلب شبكة — الموقع يشتغل بدون حساب Meta Business.
-- كل فشل اتصال (timeout، رد غير متوقع) يُلتقط ويُسجَّل، وما يكسر الصفحة/الأمر.
-
-**الأتمتة الفعلية:**
-- عند إنشاء `Subscription` جديد → `post_save` signal يرسل تأكيد الطلب تلقائياً
-  (`accounts/signals.py`).
-- `python manage.py send_weekly_reminders` — تذكير المنيو لكل عميل باشتراك فعّال.
-- `python manage.py send_review_requests` — طلب تقييم للاشتراكات اللي مرّ على
-  بدايتها 7 أيام+ وما انبعتلها قبل (تُعلَّم بـ `review_requested_at`).
-
-**تفعيل الإرسال الحقيقي بالإنتاج:**
-1. أنشئ تطبيق على [Meta for Developers](https://developers.facebook.com/) وفعّل
-   منتج **WhatsApp**.
-2. من لوحة WhatsApp → API Setup: انسخ **Temporary/Permanent access token** و
-   **Phone number ID**.
-3. حطهم في `.env`:
-   ```
-   WHATSAPP_CLOUD_API_TOKEN=EAAG...
-   WHATSAPP_PHONE_NUMBER_ID=123456789012345
-   SITE_BASE_URL=https://lowcaloriesjordan.com
-   ```
-4. للرسائل خارج نافذة الـ 24 ساعة لازم **Message Templates** معتمدة من Meta —
-   عدّل `WhatsAppService._send_text` لاستخدام `type: "template"` حينها.
-5. جدول الأوامر عبر cron (مثال: `send_weekly_reminders` كل أحد 8 ص).
-
-### 3) خطط الشركات (B2B) — `corporate` app
-
-- `/corporate/` و `/en/corporate/` — صفحة تعريفية + فورم (اسم الشركة، الشخص
-  المسؤول، رقم التواصل، عدد الموظفين، موقع التوصيل، ملاحظات).
-- عند الإرسال: ينشئ `CorporateInquiry` بقاعدة البيانات ثم يحوّل لواتساب برسالة
-  فيها كل التفاصيل (نفس نمط `leads/views.py`).
-- `CorporatePlan` (شرائح: 10-25 / 26-50 / 50+ ...) — يديرها الأدمن، تظهر بالصفحة.
-- الأدمن: `CorporatePlanAdmin` + `CorporateInquiryAdmin` (list_display/filter/بحث).
-
-### متغيرات البيئة الجديدة
-شوف `.env.example`: `WHATSAPP_CLOUD_API_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`,
-`WHATSAPP_CLOUD_API_VERSION`, `SITE_BASE_URL`.
-
----
-
-## 🥗 حجز استشارة أخصائي تغذية (`consultations` app)
-
-خدمة مدفوعة (جلسة 15-20 دقيقة) كـ upsell بعد حاسبة السعرات. نفس فلسفة الموقع:
-الحجز يخزّن بقاعدة البيانات ثم يحوّل لواتساب — التأكيد والدفع يدوي من الأدمن.
-
-### الموديلات
-- **`Nutritionist`**: `name`, `bio_ar/en`, `specialty_ar/en`, `photo`, `is_active`
-- **`ConsultationSlot`**: `nutritionist`, `date`, `start_time`, `end_time`, `is_booked`
-- **`ConsultationBooking`**: `slot` (PROTECT), `customer_name/phone`, `goal_notes`,
-  `price_jod` (**نسخة ثابتة وقت الحجز** — مش FK حي)، `status` (pending/confirmed/
-  completed/cancelled)، `source` (calculator_upsell / consultations_page)، `created_at`
-
-سعر الجلسة ومدتها يُقرآن من **`SiteSettings`** (`إعدادات الموقع → استشارة التغذية`):
-`consultation_price_jod` / `consultation_duration_min`.
-
-### الصفحات
-- `/consultations/` + `/en/consultations/`: تعريف بالخدمة + بطاقات الأخصائيين +
-  المواعيد المتاحة مجمّعة حسب اليوم.
-- `/consultations/book/<slot_id>/`: فورم (اسم، هاتف، ملاحظة اختيارية) → عند الإرسال:
-  1. فحص مزدوج إن الموعد لسا متاح (داخل `transaction.atomic()` + `select_for_update()`)
-  2. إنشاء `ConsultationBooking` بحالة `pending`
-  3. تعليم الموعد `is_booked=True`
-  4. تحويل لواتساب برسالة فيها الاسم والموعد والسعر
-- **upsell بالحاسبة**: بانر تحت الخطة المقترحة بصفحة نتيجة الحاسبة → يوصل لـ
-  `/consultations/?source=calculator_upsell`. يظهر **فقط لو في موعد متاح فعلاً**
-  (الفحص بالـ view مش بالتمبلت).
-
-**منع الحجز المزدوج**: القفل داخل transaction يمنع حجزين لنفس الموعد في نفس اللحظة
-(مُختبر: تسلسلي + 5 threads متزامنة → حجز واحد فقط ينجح).
-
-### كيف يستخدمها الأدمن
-1. **إضافة أخصائي**: `استشارات التغذية → أخصائيو التغذية → إضافة` (اسم، نبذة
-   عربي/إنجليزي، تخصص، صورة، `is_active`).
-2. **توليد المواعيد بضغطة**: `مواعيد الاستشارات` → اختر أي صف → أكشن
-   **«توليد أسبوع كامل من المواعيد»** → حدّد الأخصائي والفترة (مثلاً 5-8 مساءً)
-   ومدة الموعد وعدد الأيام → يولّد موعد لكل نصف ساعة لكل يوم (idempotent — ما يكرّر).
-3. **متابعة الحجوزات**: `حجوزات الاستشارات` — `list_editable` على `status`
-   للتأكيد/الإلغاء السريع من القائمة، فلترة حسب `status` و `source`.
-
-### حقول SiteSettings الجديدة
-`consultation_price_jod` (Decimal)، `consultation_duration_min` (int) — migration
-`core/0005_*`.
-
----
-
-## 🎁 برنامج الإحالة + كود الخصم + متابعة التقدّم
-
-### 1) برنامج الإحالة (`referrals` app)
-
-عميل يشارك كود/رابط → صاحبه يشترك لأول مرة → الاثنين ياخدوا يوم مجاني.
-
-- **`ReferralCode`**: `referrer_name`, `referrer_phone` (unique), `code` (يتولّد
-  تلقائياً: أول 4 أحرف من الاسم + 4 أرقام؛ `allow_unicode` فبيدعم الأسماء العربية)
-- **`Referral`**: `referral_code`, `referred_name/phone`, `status`
-  (pending/redeemed/expired)، `redeemed_at`
-
-| الصفحة | الوظيفة |
-|---|---|
-| `/referral/get-code/` | فورم (اسم + هاتف) → ينشئ كود (أو يرجّع الموجود لنفس الرقم) + رابط `{domain}/r/{code}/` + زر مشاركة واتساب |
-| `/r/<code>/` | صفحة الصديق: "صديقك [الاسم] دعاك" + فورم → ينشئ `Referral` بحالة `pending` → واتساب برسالة فيها اسم صاحب الكود والكود. **كود غير موجود → صفحة "رابط غير صالح" (404، بدون خطأ)** |
-
-**كيف يشارك العميل كوده**: يفتح `/referral/get-code/`، يحط اسمه ورقمه، يطلع له
-الكود + رابط جاهز + زر "شارك على واتساب".
-
-**الأدمن** (`الإحالات`): `list_editable` على `status`، وأكشن
-**«تعليم كمُستبدلة + تسجيل اليوم المجاني»**:
-- لو تطبيق `accounts` موجود (وهو موجود) → يمدّد `end_date` يوم واحد **لكل من**
-  صاحب الكود والصديق إذا عند أي طرف اشتراك `active` (يتخطّى بصمت لو ما في)
-- الرسالة توضّح شو صار بالضبط
-
-### 2) كود خصم أول اشتراك (`plans.DiscountCode`)
-
-- `code` (unique)، `discount_percent` (1-100)، `is_active`، `valid_until` (اختياري)،
-  `max_uses` (اختياري)، `used_count` — و `is_valid()` تفحص الثلاثة.
-- `leads.Lead` صار فيه `discount_code` (FK, nullable) — migration `leads/0002`.
-- **صفحة الخطط**: خانة "عندك كود خصم؟" → JS ينادي `/plans/validate-code/<code>/`
-  (JSON: `{valid, discount_percent}`) → لو صالح: يعرض السعر المخفّض مشطوب عليه
-  السعر الأصلي، ويضيف `&code=` لأزرار الاشتراك.
-- **عند الاشتراك بكود صالح**: يُضاف للرسالة (السعر الأصلي + المخفّض + اسم الكود)،
-  يُسجّل `discount_code` على الـ `Lead`، و `used_count += 1`.
-- ⚠️ **عرض السعر استرشادي فقط** — الخصم النهائي يطبّقه الأدمن يدوياً على واتساب
-  (ما في دفع أونلاين). موثّق بالكود.
-- **الأدمن** (`أكواد الخصم`): `list_editable` على `is_active`، عمود الاستخدامات
-  "3 / 20".
-
-**كيف يضيف الأدمن كود خصم**: `الخطط → أكواد الخصم → إضافة` — الكود، النسبة،
-(اختياري) تاريخ انتهاء وحد أقصى استخدامات.
-
-### 3) متابعة تقدّم العميل (`calculator`)
-
-- `CalorieCalculation` صار فيه `customer_phone` + `progress_code` (اختياريان) —
-  migration `calculator/0002`.
-- **حقل اختياري بالحاسبة**: "رقم هاتفك (اختياري) — احفظ نتيجتك لتقارنها المرة
-  الجاية". لو انعبّى → يظهر **كود متابعة** بعد النتيجة (نفس الكود لكل رقم عبر
-  كل حساباته).
-- **`/tools/my-progress/`**: فورm (هاتف + كود) → يعرض كل الحسابات السابقة
-  مرتّبة (تاريخ، وزن، سعرات، الهدف) + مقارنة نصّية "من [تاريخ] إلى [تاريخ]:
-  وزنك تغيّر من X إلى Y" (لو أكثر من حساب).
-- 🔒 **خصوصية**: بيانات الوزن حسّاسة. **رقم الهاتف لوحده ما يكفي** — الكود
-  إلزامي للوصول. لو الرقم صح والكود غلط → رسالة عامة **"بيانات غير صحيحة"**
-  بدون كشف إذا الرقم موجود أصلاً (منع تسريب مين استخدم الحاسبة). موثّق بالكود.
-
-**كيف يستخدمها العميل**: يحسب سعراته ويحط رقمه → يحفظ كود المتابعة → يرجع
-لاحقاً على `/tools/my-progress/` ويدخل الرقم + الكود.
-
-### بعد سحب هالتحديث
-```bash
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py setup_roles
-python manage.py collectstatic --noinput   # ملف static/js/discount.js الجديد
-python scripts/i18n_sync.py
-```
-
----
-
-## 🎨 التصميم (Premium UI/UX)
-
-الواجهة مبنية على CSS/JS مكتوب يدوياً فوق قوالب Django — **بدون أي framework**
-(لا Bootstrap ولا Tailwind build). كل المنطق (`{% for %}`، `{% if %}`) كما هو.
-
-### نظام التصميم (Design Tokens)
-كلها في `:root` بأعلى `static/css/style.css`:
-- **تباعد**: `--sp-1..--sp-9` (4→96px) — كل padding/margin/gap يجي من هون
-- **خطوط**: `--fs-xs..--fs-3xl` (13→48px) + `clamp()` للعناوين الكبيرة على الموبايل
-- **ظلال**: 3 مستويات (`--shadow-sm/md/lg`)
-- **حواف**: قيمتان فقط — `--radius-sm` (8px للأزرار/الحقول)، `--radius-lg` (16px للكروت)
-- **انتقالات**: `--t-fast` (150ms)، `--t-med` (220ms)
-- **الخطوط**: Cairo (عربي، أوزان 400/600/700/800) + Inter (إنجليزي)
-
-### نقاط التوقّف (Mobile-first، `min-width`)
-`≤767` موبايل (القاعدة) · `≥768` تابلت · `≥1024` ديسكتوب · `≥1440` واسع
-(الحاوية `max-width` تكبر لـ 1280px). مُختبرة فعلياً على **375/768/1024/1440**
-لكل صفحة وباللغتين (playwright): صفر overflow أفقي، صفر تداخل عناصر،
-كل زر/رابط ≥ 44px، الخط ما ينزل تحت 12px.
-
-### الهيدر + القائمة
-- **هامبرغر → درج جانبي** (`<button>` حقيقي بـ `aria-label`/`aria-expanded`):
-  يفتح من **اليمين بالعربي (RTL)** ومن **اليسار بالإنجليزي (LTR)**، طبقة تعتيم
-  خلفه، يغلق بـ Escape + زر إغلاق واضح + الضغط على الطبقة، والأيقونة تتحوّل لـ ✕.
-- **هيدر لاصق**: بعد أول 12px تمرير → `.header--scrolled` (blur + ظل + ارتفاع
-  أقل) بانتقال ناعم. المنطق في `static/js/main.js`.
-- حالة نشطة واضحة لرابط الصفحة الحالية (خط سفلي برتقالي).
-
-### مبدأ: صفر نص/رقم/رابط ثابت في الهيدر والفوتر
-كل شي يُقرأ من `SiteSettings`:
-- اللوجو (`logo`) أو نص `brand_name_en` كبديل · رقم واتساب من `whatsapp_link`
-- الفوتر يعرض **بشرط** فقط لو معبّأ: `phone_number`, `instagram_url`,
-  `working_hours_ar/en` (حقل جديد)، `privacy_policy_url` (حقل جديد)، وقسم
-  "التطبيق" كامل يختفي لو `app_store_url` و `google_play_url` الاثنين فاضيين،
-  والتقييم بالفوتر يظهر فقط لو `reviews_count > 0`.
-- **مزايا "ليش تختارنا"**: موديل جديد `core.SiteFeature` (أيقونة SVG inline +
-  عنوان/وصف عربي/إنجليزي + ترتيب + تفعيل) — يُدار من لوحة التحكم، مش نص ثابت.
-
-### حقول SiteSettings الجديدة (migration `core/0006`)
-`hero_image`, `working_hours_ar/en`, `privacy_policy_url` +
-القيم الافتراضية للألوان صارت ألوان اللوجو الرسمية (`#FD7B01` / `#00A850`).
-
-### تباين الألوان (WCAG AA — مُتحقَّق بأداة)
-أبيض على البرتقالي `#FD7B01` يفشل (2.6:1)، فالأزرار والشارات البرتقالية
-تستخدم **نص داكن** (`--btn-ink #1b1f24` = 6.3:1). الروابط/العناوين على أبيض
-تستخدم `--primary-dark` (نسخة داكنة تُشتق تلقائياً عبر `color-mix` من لون
-البراند، ≥ 4.5:1). كل الأزواج مُتحقَّقة في `scripts` (سكربت الفحص).
-
-### الكروت
-- **الخطط**: hover يرفع الكرت (`translateY(-4px)`) + ظل أقوى، "الأكثر شعبية"
-  شارة أنيقة بالوسط + إطار برتقالي.
-- **المنيو**: صورة بنسبة 4:3، وبديل أنيق (أيقونة نوع الوجبة + تدرّج) لو ما في صورة.
-- **التقييمات**: علامة اقتباس كبيرة خلفية + نجوم ★/☆ واضحة + اسم بارز.
-
-### الحاسبة
-فورم مجمّع (`بياناتك` / `نشاطك وهدفك`) + نتيجة بصرية: **دونات** (conic-gradient،
-بدون مكتبة) لتوزيع الماكروز مع السعرات بالمنتصف + أشرطة نسب للبروتين/الكارب/الدهون.
-
-> بعد أي تعديل على CSS/JS: `python manage.py collectstatic --noinput`
-
----
-
-## 🧱 إعادة الهيكلة (مستوحاة من Calo — بنية المحتوى فقط، مش الهوية)
-
-استعرنا **نمط تنظيم المحتوى** من calo.app (شركة اشتراكات وجبات خليجية) —
-مش ألوانهم ولا لوجوهم ولا نظام الحساب/الدفع (إحنا واتساب-أولاً). كل قطعة
-محتوى جديدة **قابلة للتعديل من لوحة التحكم**.
-
-| القسم | الموديل / المصدر |
-|---|---|
-| **عنوان Hero متغيّر** (يتبدّل بـ JS: خسارة وزن → بناء عضل → ...) | `core.HeroGoal` (نص عربي/إنجليزي + ترتيب + تفعيل) |
-| **سطر ثقة تحت الـ CTA** | `SiteSettings.hero_stat_ar/en` لو معبّأ؛ وإلا تقييم Google لو `reviews_count>0`؛ وإلا **عدد مناطق التوصيل الفعلي** — ما نخترع أرقام |
-| **شريط 3 مزايا** ("تحكّم كامل، ومرونة تامّة") | `core.SiteFeature` (أول 3) — نفس موديل "ليش تختارنا" |
-| **"كيف يعمل؟" — 3 خطوات مرقّمة** | `core.HowItWorksStep` |
-| **كروت الخطط + توزيع الماكروز** (45% بروتين · 35% كارب · 20% دهون) | حقول `typical_protein_pct/carbs_pct/fat_pct` على `menu.MealType` — يضبطها الأدمن مرة لكل نوع (migration `menu/0004`) |
-| **كاروسيل التقييمات** (سحب على الموبايل + أزرار + يتوقف عند hover/لمس) | `core.Testimonial` (+ حقل `photo` اختياري، وإلا أحرف الاسم الأولى) |
-| **أكورديون الأسئلة الشائعة** | `core.FAQ` (سؤال/جواب عربي/إنجليزي + ترتيب + نشر) — صفحة `/faq/` + مقتطف في صفحة الخطط |
-| **الفوتر** (مُعاد تصميمه — premium) | دارك مسطّح (بلا تدرّج)، حاوية 1200px متوسّطة، 4 أقسام: البراند (لوجو من `SiteSettings.logo` + وصف + واتساب) / روابط سريعة / خدمات / تواصل معنا. ديسكتوب: كتلة البراند على جهة ومجموعة الروابط (3 أعمدة متلاصقة) على الجهة الثانية بفراغ واحد مقصود؛ تابلت: البراند فوق + عمودان؛ موبايل: عمود واحد. بلا فواصل عمودية (التباعد يفصل) + فاصل أفقي خفيف قبل شريط الحقوق. أيقونات تواصل دائرية موحّدة (WhatsApp + Instagram) بخلفية وحدود خفيفة و hover لطيف. كله من `SiteSettings`، بدون "مبدّل دول/مناطق". زر واتساب العائم مُحدَّث (ظل خفيف، hover ناعم، مساحة سفلية بالفوتر تمنع تغطيته للنص على الموبايل). |
-
-- JS للكل في `static/js/main.js` (بدون مكتبات): تدوير عنوان الـ Hero،
-  الكاروسيل (`scrollIntoView` + snap، يتوقف عند التفاعل)، الأكورديون
-  (بند واحد مفتوح، Enter/Space، ARIA كامل).
-- الأدمن: `HeroGoal`, `HowItWorksStep`, `FAQ` مسجّلين بـ `list_editable` على
-  الترتيب/التفعيل؛ `MealType` صار فيه أعمدة الماكروز.
-- migrations: `core/0007`، `menu/0004`. مُختبر بـ playwright على
-  375/768/1024/1440 وباللغتين (305/305).
-
-### الترجمة (بدون GNU gettext)
-البيئة الحالية ما فيها أدوات gettext. استخدم البديل:
-```bash
-python scripts/i18n_sync.py    # يدمج الترجمات في django.po ويجمّع django.mo عبر polib
-```
-(لو عندك gettext: `makemessages -l en` + `compilemessages` بدله.)
-
-### بعد سحب هالتحديث
-```bash
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py setup_roles        # يعطي "المدير العام" صلاحيات الموديلات الجديدة
-python scripts/i18n_sync.py
-```
-
----
-
-## 📂 بنية المشروع
-```
-lowcalories/
-├── core/          # إعدادات الموقع (SiteSettings singleton) + الصفحة الرئيسية
-├── menu/          # المنيو الأسبوعي الديناميكي
-├── plans/         # الخطط ومناطق التوصيل
-├── calculator/    # حاسبة السعرات (حساب Mifflin-St Jeor فعلي على السيرفر)
-├── blog/          # مدونة SEO
-├── leads/         # تتبع كل ضغطة واتساب
-├── accounts/      # بوابة العميل: دخول بالهاتف + تجميد/استئناف/تغيير الاشتراك
-├── corporate/     # خطط الشركات B2B + طلبات عروض الأسعار
-├── consultations/ # حجز استشارة أخصائي تغذية (upsell بعد الحاسبة)
-├── referrals/     # برنامج الإحالة (كود/رابط لكل عميل + مكافأة يوم مجاني)
-├── templates/core/icons/  # أيقونات SVG inline موحّدة (واتساب، انستغرام، هاتف...)
-├── templates/core/faq.html + _faq_accordion.html + _testimonials_carousel.html
-├── core/whatsapp_service.py  # طبقة تجريد WhatsApp Business Cloud API
-├── templates/     # كل صفحات HTML (عربي RTL / English LTR)
-├── static/css,js  # التنسيق
-├── scripts/i18n_sync.py  # مزامنة/تجميع الترجمات بدون GNU gettext
-└── seed_data.py   # بيانات تجريبية — 🔴 استبدلها بالحقيقية قبل النشر
-```
-
-## 🔴 قبل ما تنشر بالإنتاج — Checklist
-- [ ] **ارفع اللوجو الرسمي**: `لوحة التحكم → إعدادات الموقع → logo`. الهيدر
-      والفوتر يعرضونه تلقائياً (`{{ site_settings.logo.url }}`)؛ لو الحقل فاضي
-      يظهر اسم البراند نصّاً كبديل نظيف. مطلوب صيغة صورة (PNG/JPG/WebP، شفافية
-      مدعومة) — SVG ما يمر من `ImageField`. المقاس بالفوتر ارتفاع ~44px تلقائي.
-- [ ] بدّل `SECRET_KEY` بـ `lowcalories/settings.py` وحطه بمتغير بيئة
-- [ ] `DEBUG = False` وحدد `ALLOWED_HOSTS` بدومينك الحقيقي — ⚠️ حينها
-      `runserver` ما يعود يخدم `media/`؛ استخدم nginx/S3 (`django-storages`)
-      لملفات الوسائط بالإنتاج
-- [ ] حدّث رقم الواتساب الحقيقي من لوحة التحكم (إعدادات الموقع)
-- [ ] حدّث كل الأسعار/الخطط/مناطق التوصيل بالبيانات الحقيقية
-- [ ] حط رقم Facebook Pixel الحقيقي (إعدادات الموقع → التتبع الإعلاني) لو بدك تتبع إعلانات
-- [ ] اربط خدمة تقييمات حقيقية (ReputationHub/Elfsight) أو اترك التقييمات اليدوية وحدّثها بمراجعات حقيقية
-- [ ] بدّل قاعدة البيانات من SQLite إلى PostgreSQL (أفضل للإنتاج)
-- [ ] فعّل HTTPS واعمل `collectstatic`
-
-## 🧩 مزايا ممكن نضيفها لاحقاً (لو حابب)
-- صفحة `create-plan` (المعالج التفاعلي زي مايتي جينز)
-- دفع إلكتروني حقيقي بدل التحويل لواتساب فقط
-- تطبيق موبايل يستهلك نفس الـ Backend عبر Django REST Framework
-- نظام حسابات للعملاء (تتبع اشتراكهم، تجميد، تعديل وجبات)
+- [ ] ارفع اللوجو الرسمي (إعدادات الموقع → `logo`) — PNG/JPG/WebP (لا SVG).
+- [ ] `DJANGO_SECRET_KEY` جديد + `DEBUG=False` + `ALLOWED_HOSTS` الحقيقية.
+- [ ] `DATABASE_URL` لـ PostgreSQL.
+- [ ] رقم واتساب + الأسعار + الخطط + مناطق التوصيل الحقيقية من لوحة التحكم.
+- [ ] احذف مستخدمي التجربة (`gm_demo` …) أو غيّر كلمات سرهم.
+- [ ] (اختياري) رقم Meta Pixel + خدمة تقييمات + نص السياسات القانونية (لنشرها).
+- [ ] `collectstatic` + HTTPS.

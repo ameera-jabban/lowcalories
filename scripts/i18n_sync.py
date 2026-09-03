@@ -22,6 +22,10 @@ import polib
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PO_PATH = os.path.join(_ROOT, "locale", "en", "LC_MESSAGES", "django.po")
 MO_PATH = os.path.join(_ROOT, "locale", "en", "LC_MESSAGES", "django.mo")
+# كتالوج عربي — فقط لسلاسل django-unfold الإنجليزية (الحزمة ما تشحن ترجمات).
+# سلاسل admin القياسية من Django مترجمة أصلاً بكتالوج django/ar، فما نكرّرها هون.
+AR_PO_PATH = os.path.join(_ROOT, "locale", "ar", "LC_MESSAGES", "django.po")
+AR_MO_PATH = os.path.join(_ROOT, "locale", "ar", "LC_MESSAGES", "django.mo")
 
 # msgid عربي -> msgstr إنجليزي (سلاسل features specs 1)
 TRANSLATIONS = {
@@ -175,20 +179,10 @@ TRANSLATIONS = {
     "استشارة أخصائي تغذية": "Nutritionist Consultation",
     "اطلب استشارة تغذية وفريق Low Calories بيتواصل معك لترتيب الجلسة.":
         "Request a nutrition consultation and the Low Calories team will contact you to arrange it.",
-    "اطلب استشارة وفريقنا بيتواصل معك لترتيب جلسة مع أخصائي تغذية — بتراجعوا فيها هدفك وسعراتك وبتطلع بخطة عملية مفصّلة عليك.":
-        "Submit a request and our team will contact you to arrange a session with a nutritionist — "
-        "you'll review your goal and calories together and leave with a practical, tailored plan.",
-    "رسوم الجلسة %(price)s د.أ (يؤكّدها الفريق).": "Session fee %(price)s JOD (confirmed by the team).",
     "إرشاد تغذوي مخصّص لهدفك": "Personalized nutrition guidance",
     "دعم بخطة الوجبات وتوزيع الماكروز": "Meal-plan and macro-split support",
     "توصيات مبنية على وضعك وهدفك": "Goal-based recommendations",
     "اطلب استشارة": "Request a Consultation",
-    "إرسال الطلب": "Submit Request",
-    "ما في اختيار موعد — بعد ما تبعت الطلب، الفريق بيتواصل معك لترتيب الجلسة.":
-        "No slot to pick — after you submit, the team contacts you to arrange the session.",
-    "استلمنا طلب استشارتك": "Your consultation request has been received",
-    "رح نتواصل معك قريباً لترتيب موعد الاستشارة.":
-        "We'll contact you shortly to arrange your consultation.",
     "رقم الطلب: %(ref)s": "Request %(ref)s",
     "العودة للرئيسية": "Back to home",
     # -- إعادة تصميم الصفحة (عمودين: معلومات + كرت نموذج) --
@@ -210,8 +204,6 @@ TRANSLATIONS = {
         "Thank you. Our team will review your details and contact you shortly.",
     "خبّرنا باختصار عن هدفك — خسارة وزن، بناء عضل، تخطيط وجبات، إرشاد سعرات…":
         "Tell us briefly about your goal — weight loss, muscle gain, meal planning, calorie guidance, etc.",
-    "بدك خطة مفصّلة عليك بالضبط؟ اطلب استشارة مع أخصائي تغذية.":
-        "Want a plan tailored exactly to you? Request a consultation with a nutritionist.",
     # form fields + choices
     "الاسم الكامل": "Full Name",
     "رقم الموبايل": "Mobile Number",
@@ -569,6 +561,9 @@ TRANSLATIONS = {
     "أيام الأسبوع": "Days of the week",
     # -- المنيو الأسبوعي --
     "منيو أسبوع": "Menu for week of",
+    "منيو أسبوع %(d)s": "Menu — week of %(d)s",
+    "%(days)s يوم · %(type)s · %(meals)s وجبة/يوم · %(price)s د.أ":
+        "%(days)s days · %(type)s · %(meals)s meals/day · %(price)s JOD",
     "يتجدد كل أحد": "Updated every Sunday",
     "سعرة": "kcal",
     "المنيو غير متوفر حالياً — تواصل معنا على واتساب لمعرفة وجبات هذا الأسبوع.":
@@ -804,7 +799,189 @@ TRANSLATIONS = {
     # leads
     "صفحة المصدر": "Source page",
     "كود الخصم المستخدم": "Discount code used",
+
+    # ==== نصوص مساعدة في نماذج الأدمن (help_text) ====
+    "بصيغة دولية بدون + (مثال: 962795551234)": "International format without + (e.g. 962795551234)",
+    "يُنشأ تلقائياً. شاركه مع العميل ليدخل بوابته (بديل مؤقت عن OTP).":
+        "Generated automatically. Share it with the customer to access their portal (temporary OTP substitute).",
+    "يُستخدم لتمديد تاريخ الانتهاء بشكل صحيح عند استئناف الاشتراك.":
+        "Used to extend the end date correctly when the subscription is resumed.",
+    "يمنع إرسال طلب تقييم أكثر من مرة (أمر send_review_requests).":
+        "Prevents sending a review request more than once (send_review_requests command).",
+    "مثال: 20 / 24 / 26": "e.g. 20 / 24 / 26",
+    "يظهر عليها وسم 'الأكثر شعبية'": "Shows a \"Most popular\" badge",
+    "مثال: WELCOME15": "e.g. WELCOME15",
+    "فاضي = بدون تاريخ انتهاء": "Empty = no expiry date",
+    "فاضي = بدون حد": "Empty = no limit",
+    "عادة يوم الأحد": "Usually a Sunday",
+    "فعّل هذا المنيو ليظهر بالموقع (يعطل تلقائياً القديم)":
+        "Activate this menu to show it on the site (auto-deactivates the previous one)",
+    "اتركه فاضي للشريحة المفتوحة (مثال: 50+).": "Leave empty for an open-ended tier (e.g. 50+).",
+    "مدة جلسة الاستشارة بالدقائق (تظهر بصفحة الاستشارات).":
+        "Consultation session length in minutes (shown on the consultations page).",
+    "مثلاً: plans_page, calculator, home_hero": "e.g. plans_page, calculator, home_hero",
+    "افصل كل فقرة بسطر فارغ.": "Separate each paragraph with a blank line.",
+    "عنصر واحد بكل سطر.": "One item per line.",
+    "اختياري — للتنظيم المستقبلي (خطط، وجبات، توصيل...). ما يظهر كفلتر إلا لو احتجناه.":
+        "Optional — for future organization (plans, meals, delivery…). Not shown as a filter unless needed.",
+    "يظهر بالرابط: /policies/<slug>/ (مثال: privacy, terms).":
+        "Appears in the URL: /policies/<slug>/ (e.g. privacy, terms).",
+    "التاريخ اللي يظهر بأعلى الصفحة ('آخر تحديث: ...').":
+        "The date shown at the top of the page (\"Last updated: …\").",
+    "ما تنشرها إلا بعد ما يتأكد المحتوى القانوني. غير منشورة = ما إلها رابط بالفوتر ولا صفحة (404).":
+        "Only publish after the legal content is confirmed. Unpublished = no footer link and no page (404).",
+    # SiteSettings help_text
+    "رقم واتساب برمز الدولة (مثال: 962791234567 أو +962 79 123 4567). يُنظَّف آلياً لتوليد رابط wa.me. اتركه فاضي = تختفي كل عناصر واتساب.":
+        "WhatsApp number with country code (e.g. 962791234567 or +962 79 123 4567). Cleaned automatically to build the wa.me link. Empty = all WhatsApp elements disappear.",
+    "الصيغة المعروضة للزوار (مثال: +962 79 123 4567). لو فاضي نعرض الرقم المنسّق آلياً من whatsapp_number.":
+        "The format shown to visitors (e.g. +962 79 123 4567). If empty, the number is formatted automatically from whatsapp_number.",
+    "رسالة مبدئية تُملأ في واتساب عند الضغط على أي زر عام (اختياري).":
+        "A pre-filled WhatsApp message when any generic button is tapped (optional).",
+    "رابط صفحة إنستغرام كامل. اتركه فاضي = يختفي أيقونة إنستغرام.":
+        "Full Instagram page URL. Empty = the Instagram icon disappears.",
+    "اسم المستخدم بدون @ (اختياري — للعرض النصي فقط).":
+        "Username without @ (optional — for text display only).",
+    "الموقع كما يظهر بالفوتر وصفحات السياسات (مثال: عمّان، الأردن).":
+        "Location as shown in the footer and policy pages (e.g. Amman, Jordan).",
+    "بريد الدعم/التواصل (يظهر بصفحات السياسات إذا معبّأ).":
+        "Support/contact email (shown on policy pages if set).",
+    "رقم Meta/Facebook Pixel (بدون حروف). لو فاضي، ما رح ينحقن أي كود تتبع بالموقع.":
+        "Meta/Facebook Pixel ID (digits only). If empty, no tracking code is injected.",
+    "صورة الـ Hero بالصفحة الرئيسية. لو فاضية، يظهر رسم توضيحي بألوان الهوية.":
+        "Homepage hero image. If empty, a brand-colored illustration is shown.",
+    "نقطة تركيز قص صورة الـ Hero (object-position)، مثال: center center أو 60% 40%.":
+        "Hero image crop focus (object-position), e.g. center center or 60% 40%.",
+    "object-position، مثال: center center أو 50% 30%.":
+        "object-position, e.g. center center or 50% 30%.",
+    "رابط فيديو mp4 للـ Hero (اختياري). لو معبّأ يُعرض بدل الصورة (صامت، تلقائي، مع احترام تفضيل تقليل الحركة). صورة الـ Hero تصير poster.":
+        "Hero mp4 video URL (optional). If set, it replaces the image (muted, autoplay, respecting reduced-motion). The hero image becomes the poster.",
+    "مثال: نوصّل يومياً داخل عمّان": "e.g. We deliver daily within Amman",
+    "مثال: يومياً ٩ ص – ٩ م (يظهر بالفوتر إذا معبّأ)":
+        "e.g. Daily 9am – 9pm (shown in the footer if set)",
+    "رابط سياسة الخصوصية (يظهر بالفوتر إذا معبّأ)": "Privacy policy URL (shown in the footer if set)",
+    "رابط الشروط والأحكام (يظهر بالفوتر إذا معبّأ)": "Terms & conditions URL (shown in the footer if set)",
+    "اللون البرتقالي الأساسي (أزرار، هيدر, تمييز)": "Primary orange (buttons, header, accents)",
+    "اللون البرتقالي الأساسي (أزرار، هيدر، تمييز)": "Primary orange (buttons, header, accents)",
+    "اللون الأخضر (لوجو 'Low' بالخط اليدوي، تفاصيل ثانوية)":
+        "Green (the handwritten \"Low\" logo, secondary details)",
+    "لون الخلفية الكريمية الفاتحة (خلفيات السكاشن)": "Soft cream background (section backgrounds)",
+    "سعر جلسة استشارة التغذية (د.أ). يُنسخ للحجز وقت إنشائه.":
+        "Nutrition consultation session price (JOD). Copied to the booking when created.",
+    # صور بطاقات الخطط
+    "صورة خاصة بالخطة": "Plan-specific image",
+    "صورة خاصة بهذه الخطة تحديداً. لو فاضية نستخدم صورة نوع الوجبة.":
+        "An image specific to this plan. If empty, the meal type's image is used.",
+    "صورة افتراضية": "Default image",
+    "صورة افتراضية لكل خطط هذا النوع اللي ما إلها صورة خاصة.":
+        "A default image for every plan of this type that has no plan-specific image.",
 }
+
+
+# msgid إنجليزي (من django-unfold) -> msgstr عربي.
+# ما نضع هون سلاسل Django القياسية (Save/Add/Delete/Log out/Yes/No...) — مترجمة
+# أصلاً بكتالوج django/ar. فقط السلاسل الخاصة بـ Unfold اللي تظهر إنجليزية بالعربي.
+UNFOLD_AR = {
+    "Filters": "الفلاتر",
+    "Apply Filters": "تطبيق الفلاتر",
+    "Clear all filters": "مسح كل الفلاتر",
+    "Reset filters": "إعادة ضبط الفلاتر",
+    "Toggle filter": "إظهار/إخفاء الفلتر",
+    "Clear": "مسح",
+    "Clear selection": "مسح التحديد",
+    "Toggle sorting": "تبديل الترتيب",
+    "Toggle sidebar": "إظهار/إخفاء الشريط الجانبي",
+    "Toggle dark/light mode": "تبديل الوضع الداكن/الفاتح",
+    "Toggle password visibility": "إظهار/إخفاء كلمة السر",
+    "Show counts": "إظهار الأعداد",
+    "Hide counts": "إخفاء الأعداد",
+    "Show all": "عرض الكل",
+    "Type to search": "اكتب للبحث",
+    "Search apps and models...": "ابحث في التطبيقات والموديلات…",
+    "No results found": "لا نتائج",
+    "No data": "لا بيانات",
+    "Nothing matched your search": "لا شيء يطابق بحثك",
+    "Recent searches": "عمليات البحث الأخيرة",
+    "All applications": "كل التطبيقات",
+    "Navigate": "تنقّل",
+    "Open command tool": "فتح أداة الأوامر",
+    "Available shortcuts": "الاختصارات المتاحة",
+    "Global shortcuts": "اختصارات عامة",
+    "Changelist shortcuts": "اختصارات القائمة",
+    "Command tool shortcuts": "اختصارات أداة الأوامر",
+    "Open shortcuts list": "فتح قائمة الاختصارات",
+    "Dark": "داكن",
+    "Light": "فاتح",
+    "System": "النظام",
+    "Go back": "رجوع",
+    "Create new record": "إنشاء سجل جديد",
+    "Record picture": "صورة السجل",
+    "Select": "اختر",
+    "Select record": "اختر سجلاً",
+    "Select value": "اختر قيمة",
+    "Select currency": "اختر العملة",
+    "Select format": "اختر الصيغة",
+    "Select action": "اختر إجراءً",
+    "Select action to run": "اختر إجراءً للتنفيذ",
+    "Run": "تنفيذ",
+    "Run the selected action": "تنفيذ الإجراء المحدّد",
+    "Submit": "إرسال",
+    "Summary": "ملخّص",
+    "General": "عام",
+    "Value": "القيمة",
+    "Date from": "التاريخ من",
+    "Date to": "التاريخ إلى",
+    "From": "من",
+    "To": "إلى",
+    "and": "و",
+    "Unknown": "غير معروف",
+    "Click to download": "اضغط للتنزيل",
+    "Click to cancel": "اضغط للإلغاء",
+    "Open selection": "فتح المحدّد",
+    "Open selection in new tab": "فتح المحدّد في تبويب جديد",
+    "No, take me back": "لا، ارجعني",
+    "This page yielded into no results. Create a new item or reset your filters.":
+        "لا نتائج في هذه الصفحة. أنشئ عنصراً جديداً أو أعد ضبط الفلاتر.",
+    "Add row": "إضافة صف",
+    "Remove from sorting": "إزالة من الترتيب",
+    "Choose file to upload": "اختر ملفاً للرفع",
+    "Date/time": "التاريخ/الوقت",
+    "Image preview": "معاينة الصورة",
+    "Return to site": "العودة للموقع",
+    "Save and view": "احفظ واعرض",
+    "This item will be deleted.": "سيُحذف هذا العنصر.",
+    "Unknown content": "محتوى غير معروف",
+    "View on site": "اعرض على الموقع",
+}
+
+
+def _build_catalog(po_path, mo_path, mapping, *, language):
+    """يبني ملف .po/.mo كامل من `mapping` (idempotent، القاموس مصدر الحقيقة)."""
+    os.makedirs(os.path.dirname(po_path), exist_ok=True)
+    po = polib.pofile(po_path) if os.path.exists(po_path) else polib.POFile()
+    po.metadata = {
+        "Content-Type": "text/plain; charset=UTF-8",
+        "Content-Transfer-Encoding": "8bit",
+        "Language": language,
+    }
+    existing = {e.msgid: e for e in po}
+    added = updated = skipped = 0
+    for msgid, msgstr in mapping.items():
+        if msgid in existing:
+            e = existing[msgid]
+            if e.msgstr != msgstr:
+                e.msgstr = msgstr
+                updated += 1
+            else:
+                skipped += 1
+        else:
+            po.append(polib.POEntry(msgid=msgid, msgstr=msgstr))
+            added += 1
+    stale = [e for e in po if e.msgid and e.msgid not in mapping]
+    for e in stale:
+        po.remove(e)
+    po.save(po_path)
+    po.save_as_mofile(mo_path)
+    print(f"[{language}] added={added} filled={updated} kept={skipped} pruned={len(stale)} total={len(po)}")
 
 
 def main():
@@ -836,11 +1013,15 @@ def main():
     po.save(PO_PATH)
     po.save_as_mofile(MO_PATH)
 
-    print(f"added={added} filled={updated} kept={skipped} pruned={removed} total={len(po)}")
+    print(f"[en] added={added} filled={updated} kept={skipped} pruned={removed} total={len(po)}")
     if empty:
         print("STILL EMPTY:", empty)
         sys.exit(1)
-    print("OK — django.po + django.mo written")
+
+    # كتالوج العربي لسلاسل django-unfold
+    _build_catalog(AR_PO_PATH, AR_MO_PATH, UNFOLD_AR, language="ar")
+
+    print("OK — locale/en + locale/ar written")
 
 
 if __name__ == "__main__":
