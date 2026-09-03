@@ -3,7 +3,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-
+from django.views.static import serve as media_serve
 from core.views import health_check
 
 urlpatterns = [
@@ -26,4 +26,6 @@ urlpatterns += i18n_patterns(
     prefix_default_language=False,
 )
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [
+    path("media/<path:path>", media_serve, {"document_root": settings.MEDIA_ROOT}),
+]
