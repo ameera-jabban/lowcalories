@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "رابط غير صالح" %} | {{ site_settings.brand_name }}{% endblock %}
+
+{% block content %}
+<section class="container page-header">
+    <h1>🔗 {% trans "هذا الرابط غير صالح" %}</h1>
+    <p>{% trans "كود الإحالة مش موجود أو انتهى. تواصل مع صاحبك ليبعتلك رابط جديد، أو اشترك مباشرة." %}</p>
+    <a href="{% url 'plans:plans_list' %}" class="btn btn-primary">{% trans "شوف الخطط" %}</a>
+</section>
+{% endblock %}

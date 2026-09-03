@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "متابعة تقدّمي" %} | {{ site_settings.brand_name }}{% endblock %}
+
+{% block content %}
+<section class="container page-header">
+    <h1>📈 {% trans "متابعة تقدّمي" %}</h1>
+    <p>{% trans "ادخل رقم هاتفك وكود المتابعة لتشوف تاريخ حساباتك والمقارنة بينها." %}</p>
+</section>
+
+<section class="container">
+    <form method="post" class="calculator-form no-print">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-row">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">{% trans "اعرض تقدّمي" %}</button>
+    </form>
+
+    {% if error %}
+        <p class="field-error">{% trans "بيانات غير صحيحة." %}</p>
+    {% endif %}
+
+    {% if calcs %}
+    <div class="calculator-result" style="margin-top:24px;">
+        {% if comparison %}
+        <p>
+            {% blocktrans with f=comparison.from_date|date:"Y-m-d" t=comparison.to_date|date:"Y-m-d" fw=comparison.from_weight tw=comparison.to_weight %}
+            من {{ f }} إلى {{ t }}: وزنك تغيّر من {{ fw }} كغ إلى {{ tw }} كغ.
+            {% endblocktrans %}
+        </p>
+        {% else %}
+        <p>{% trans "ما عندك سجل كافٍ للمقارنة بعد — ارجع بعد كم أسبوع واحسب مرة ثانية." %}</p>
+        {% endif %}
+
+        <div style="overflow-x:auto;">
+            <table class="progress-table">
+                <thead>
+                    <tr>
+                        <th>{% trans "التاريخ" %}</th>
+                        <th>{% trans "الوزن (كغ)" %}</th>
+                        <th>{% trans "السعرات" %}</th>
+                        <th>{% trans "الهدف" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in calcs %}
+                    <tr>
+                        <td>{{ c.created_at|date:"Y-m-d" }}</td>
+                        <td>{{ c.weight_kg }}</td>
+                        <td>{{ c.result_calories }}</td>
+                        <td>{{ c.get_goal_display }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "accounts/_profile_base.html" %}
+{% load i18n %}
+{% block profile_title %}{% trans "الاشتراكات" %}{% endblock %}
+
+{% block profile_content %}
+<h2 class="profile__h2">{% trans "الاشتراكات" %}</h2>
+
+{% if rows %}
+<div class="sub-cards">
+    {% for row in rows %}
+    <article class="sub-card">
+        <div class="sub-card__top">
+            <h3 class="sub-card__title">{{ row.sub.plan.meal_type.name }}</h3>
+            <span class="pill pill--{{ row.sub.status }}">{{ row.sub.get_status_display }}</span>
+        </div>
+        <p class="sub-card__meta">
+            {% blocktrans with days=row.sub.plan.days meals=row.sub.plan.meals_per_day %}{{ days }} يوم · {{ meals }} وجبة/يوم{% endblocktrans %}
+        </p>
+        <dl class="sub-card__dates">
+            {% if row.sub.start_date %}<div><dt>{% trans "بدأ" %}</dt><dd>{{ row.sub.start_date|date:"j M Y" }}</dd></div>{% endif %}
+            {% if row.sub.end_date %}<div><dt>{% trans "ينتهي" %}</dt><dd>{{ row.sub.end_date|date:"j M Y" }}</dd></div>{% endif %}
+        </dl>
+
+        {% if row.progress %}
+        <div class="sub-card__progress">
+            <p class="sub-card__progress-t">
+                {% blocktrans with done=row.progress.done total=row.progress.total %}{{ done }} من {{ total }} يوم{% endblocktrans %}
+            </p>
+            <div class="sub-card__bar"><span style="width: {{ row.progress.pct }}%"></span></div>
+            <p class="sub-card__progress-r">{% blocktrans with n=row.progress.remaining %}{{ n }} يوم متبقّي{% endblocktrans %}</p>
+        </div>
+        {% elif row.sub.is_active and row.sub.days_remaining %}
+        <p class="sub-card__meta">{% blocktrans with n=row.sub.days_remaining %}متبقّي {{ n }} يوم{% endblocktrans %}</p>
+        {% endif %}
+
+        <details class="sub-manage">
+            <summary class="sub-manage__toggle">{% trans "إدارة الاشتراك" %}<span aria-hidden="true"> →</span></summary>
+            <div class="sub-manage__body">
+                <p class="sub-manage__note">
+                    {% trans "بدك تغيّر شي باشتراكك؟ اختر إجراء وبنجهّزلك طلب واتساب لفريقنا." %}
+                </p>
+                <div class="sub-manage__actions">
+                    {% if row.sub.is_active %}
+                    <form method="post" action="{% url 'accounts:freeze' %}">
+                        {% csrf_token %}<input type="hidden" name="subscription" value="{{ row.sub.id }}">
+                        <button type="submit" class="btn btn-secondary">{% trans "تجميد الاشتراك" %}</button>
+                    </form>
+                    {% elif row.sub.is_frozen %}
+                    <form method="post" action="{% url 'accounts:resume' %}">
+                        {% csrf_token %}<input type="hidden" name="subscription" value="{{ row.sub.id }}">
+                        <button type="submit" class="btn btn-primary">{% trans "استئناف الاشتراك" %}</button>
+                    </form>
+                    {% endif %}
+                </div>
+                {% if row.other_meal_types %}
+                <form method="post" action="{% url 'accounts:swap_meal_type' %}" class="sub-manage__swap">
+                    {% csrf_token %}<input type="hidden" name="subscription" value="{{ row.sub.id }}">
+                    <label for="swap-{{ row.sub.id }}">{% trans "تغيير نوع الوجبات إلى" %}</label>
+                    <div class="sub-manage__swap-row">
+                        <select name="meal_type" id="swap-{{ row.sub.id }}" required>
+                            {% for mt in row.other_meal_types %}<option value="{{ mt.id }}">{{ mt.name }}</option>{% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-secondary">{% trans "اطلب التغيير" %}</button>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </details>
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<div class="profile__empty">
+    <p class="profile__empty-t">{% trans "ما عندك اشتراك مسجّل حالياً." %}</p>
+    <p class="profile__empty-d">{% trans "اختر خطة تناسب هدفك ونكمّل معك من هناك." %}</p>
+    <a href="{% url 'plans:plans_list' %}" class="btn btn-primary">{% trans "شوف الخطط" %}</a>
+</div>
+{% endif %}
+{% endblock %}

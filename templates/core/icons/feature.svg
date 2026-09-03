@@ -1,0 +1,15 @@
+{% spaceless %}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+{% if key == "delivery" %}
+    <path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>
+{% elif key == "variety" %}
+    <circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/>
+{% elif key == "fresh" %}
+    <path d="M20 5c-8 0-13 4-13 10 0 2 1 4 1 4s7 0 10-4c2.5-3 2-10 2-10Z"/><path d="M8 19c1-4 3-7 7-9"/>
+{% elif key == "support" %}
+    <path d="M4 12a8 8 0 1 1 16 0v4a2 2 0 0 1-2 2h-2v-6h4M4 12v4a2 2 0 0 0 2 2h2v-6H4"/>
+{% else %}
+    <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>
+{% endif %}
+</svg>
+{% endspaceless %}

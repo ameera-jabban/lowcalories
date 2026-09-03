@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktrans with name=referral_code.referrer_name %}{{ name }} دعاك إلى Low Calories{% endblocktrans %}{% endblock %}
+{% block meta_description %}{% trans "اشترك لأول مرة عبر هالدعوة والاثنين تاخدوا يوم مجاني." %}{% endblock %}
+
+{% block content %}
+<main class="referral">
+    <div class="referral__grid">
+
+        <div class="referral__intro">
+            <span class="referral__eyebrow">
+                {% include "core/icons/gift.svg" %}<span>{% trans "دعوة صديق" %}</span>
+            </span>
+            <h1 class="referral__title">
+                {% blocktrans with name=referral_code.referrer_name %}{{ name }} دعاك إلى{% endblocktrans %}<br>{{ site_settings.brand_name_en|default:"Low Calories" }}
+            </h1>
+            <p class="referral__lead">
+                {% blocktrans with name=referral_code.referrer_name %}انضم عبر دعوة {{ name }}، وأول ما تبدأ أول اشتراك إلك، الاثنين تاخدوا يوم مجاني.{% endblocktrans %}
+            </p>
+
+            <div class="rclaim__reward">
+                <div class="rclaim__reward-item">
+                    <span class="rclaim__reward-v">+١ {% trans "يوم مجاني" %}</span>
+                    <span class="rclaim__reward-l">{% trans "إلك" %}</span>
+                </div>
+                <div class="rclaim__reward-item">
+                    <span class="rclaim__reward-v">+١ {% trans "يوم مجاني" %}</span>
+                    <span class="rclaim__reward-l">{% trans "لصاحبك" %}</span>
+                </div>
+            </div>
+
+            <ol class="referral__steps">
+                <li><span class="referral__step-n">01</span>
+                    <span class="referral__step-t">{% trans "دخّل بياناتك" %}</span></li>
+                <li><span class="referral__step-n">02</span>
+                    <span class="referral__step-t">{% trans "أكمل عبر واتساب" %}</span></li>
+                <li><span class="referral__step-n">03</span>
+                    <span class="referral__step-t">{% trans "اشترك واستلم يومك المجاني" %}</span></li>
+            </ol>
+        </div>
+
+        <div class="referral__card">
+            <p class="referral__code-label">{% trans "احصل على يومك المجاني" %}</p>
+            <p class="referral__lead" style="margin-bottom:var(--sp-4);font-size:var(--fs-sm)">{% trans "دخّل بياناتك ومنجهّزلك طلب الإحالة." %}</p>
+            <form method="post" class="referral__form">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-row">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary referral__cta" data-once>
+                    {% include "core/icons/whatsapp.svg" %}<span>{% trans "أكمل عبر واتساب" %}</span>
+                </button>
+            </form>
+            <p class="hero-note" style="text-align:center">{% trans "منجهّزلك طلب الإحالة ونفتح واتساب — الفريق بيأكد العرض معك. ما في دفع بهالخطوة." %}</p>
+        </div>
+
+    </div>
+</main>
+{% endblock %}

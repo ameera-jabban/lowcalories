@@ -1,0 +1,21 @@
+{% load i18n %}
+{# كاروسيل أنواع الخطط — بيانات MealType + Plan. بطاقات .mcard الموحّدة. يستهلك `mp`. #}
+<section class="mediacaro mealplans" id="home-meal-plans" aria-labelledby="mealplans-heading" data-carousel>
+    <div class="mediacaro__inner">
+        <div class="mediacaro__head">
+            <h2 id="mealplans-heading" class="mediacaro__title">{{ mp.title }}</h2>
+            {% if mp.min_price %}
+            <p class="mediacaro__sub">{% blocktrans with price=mp.min_price %}تبدأ من {{ price }} د.أ{% endblocktrans %}</p>
+            {% endif %}
+            {% if mp.cta %}<a href="{{ mp.cta.url }}" class="btn btn-primary mediacaro__cta">{{ mp.cta.label }}</a>{% endif %}
+        </div>
+        <div class="mediacaro__nav">
+            <button type="button" class="carousel__nav" data-carousel-prev aria-label="{% trans 'الخطط السابقة' %}">‹</button>
+            <button type="button" class="carousel__nav" data-carousel-next aria-label="{% trans 'الخطط التالية' %}">›</button>
+        </div>
+    </div>
+
+    <div class="mediacaro__track" data-carousel-track role="group" aria-label="{{ mp.title }}">
+        {% for c in mp.cards %}{% include "core/_media_card.html" with card=c %}{% endfor %}
+    </div>
+</section>

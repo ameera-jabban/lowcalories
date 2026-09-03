@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "استشارة أخصائي تغذية" %} | {{ site_settings.brand_name }}{% endblock %}
+{% block meta_description %}{% trans "اطلب استشارة تغذية وفريق Low Calories بيتواصل معك لترتيب الجلسة." %}{% endblock %}
+
+{% block content %}
+<main class="consult">
+    <div class="consult__inner">
+
+    {% if submitted %}
+    {# ---- حالة النجاح (بدون تأكيد موعد — الفريق بيتواصل) ---- #}
+    <section class="consult__success" role="status">
+        <span class="consult__check" aria-hidden="true">✓</span>
+        <h1>{% trans "استلمنا طلب استشارتك" %}</h1>
+        <p>{% trans "رح نتواصل معك قريباً لترتيب موعد الاستشارة." %}</p>
+        <p class="consult__ref">{% blocktrans with ref=submitted.reference %}رقم الطلب: {{ ref }}{% endblocktrans %}</p>
+        <a class="btn btn-secondary" href="{% url 'core:home' %}">{% trans "العودة للرئيسية" %}</a>
+    </section>
+
+    {% else %}
+    <section class="consult__intro">
+        <h1>{% trans "استشارة أخصائي تغذية" %}</h1>
+        <p>
+            {% trans "اطلب استشارة وفريقنا بيتواصل معك لترتيب جلسة مع أخصائي تغذية — بتراجعوا فيها هدفك وسعراتك وبتطلع بخطة عملية مفصّلة عليك." %}
+            {% if site_settings.consultation_price_jod %}
+            <br><strong>{% blocktrans with price=site_settings.consultation_price_jod %}رسوم الجلسة {{ price }} د.أ (يؤكّدها الفريق).{% endblocktrans %}</strong>
+            {% endif %}
+        </p>
+        <ul class="consult__benefits">
+            <li>{% trans "إرشاد تغذوي مخصّص لهدفك" %}</li>
+            <li>{% trans "دعم بخطة الوجبات وتوزيع الماكروز" %}</li>
+            <li>{% trans "توصيات مبنية على وضعك وهدفك" %}</li>
+        </ul>
+    </section>
+
+    <section class="consult__form-wrap" id="request">
+        <h2>{% trans "اطلب استشارة" %}</h2>
+        <form method="post" class="calculator-form consult__form no-print" novalidate>
+            {% csrf_token %}
+            <input type="hidden" name="source" value="{{ source }}">
+            {% if form.non_field_errors %}<p class="field-error">{{ form.non_field_errors|striptags }}</p>{% endif %}
+            {% for field in form %}
+            {% if field.name == 'preferred_contact' %}
+            <div class="form-row form-row--segmented">
+                <span class="form-row__label" id="pref-contact-label">
+                    {{ field.label }}{% if field.field.required %} <span aria-hidden="true">*</span>{% endif %}
+                </span>
+                <div class="segmented" role="radiogroup" aria-labelledby="pref-contact-label">
+                    {% for radio in field %}
+                    <label class="segmented__opt" for="{{ radio.id_for_label }}">
+                        {{ radio.tag }}
+                        <span>{{ radio.choice_label }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+                {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+            </div>
+            {% else %}
+            <div class="form-row">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}{% if field.field.required %} <span aria-hidden="true">*</span>{% endif %}
+                </label>
+                {{ field }}
+                {% if field.help_text %}<span class="form-hint">{{ field.help_text }}</span>{% endif %}
+                {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+            </div>
+            {% endif %}
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">{% trans "إرسال الطلب" %}</button>
+        </form>
+        <p class="hero-note">{% trans "ما في اختيار موعد — بعد ما تبعت الطلب، الفريق بيتواصل معك لترتيب الجلسة." %}</p>
+    </section>
+    {% endif %}
+
+    </div>
+</main>
+{% endblock %}

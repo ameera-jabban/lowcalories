@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "ادعُ صديق" %} | {{ site_settings.brand_name }}{% endblock %}
+{% block meta_description %}{% trans "شارك رابط الإحالة الخاص فيك — أول ما صاحبك يشترك، الاثنين تاخدوا يوم مجاني." %}{% endblock %}
+
+{% block content %}
+<main class="referral">
+    <div class="referral__grid">
+
+        <div class="referral__intro">
+            <span class="referral__eyebrow">
+                {% include "core/icons/gift.svg" %}<span>{% trans "ادعُ صديق" %}</span>
+            </span>
+            <h1 class="referral__title">{% trans "ادعُ صديق." %}<br>{% trans "الاثنين تاخدوا يوم مجاني." %}</h1>
+            <p class="referral__lead">
+                {% trans "شارك رابط الإحالة الخاص فيك. أول ما صاحبك يشترك لأول مرة، الاثنين تاخدوا يوم مجاني على اشتراككم." %}
+            </p>
+
+            <ol class="referral__steps">
+                <li>
+                    <span class="referral__step-n">01</span>
+                    <span class="referral__step-t">{% trans "شارك رابطك" %}</span>
+                    <span class="referral__step-d">{% trans "ابعت رابط الإحالة الخاص فيك لصاحبك." %}</span>
+                </li>
+                <li>
+                    <span class="referral__step-n">02</span>
+                    <span class="referral__step-t">{% trans "صاحبك يشترك" %}</span>
+                    <span class="referral__step-d">{% trans "صاحبك يكمّل أول اشتراك إله." %}</span>
+                </li>
+                <li>
+                    <span class="referral__step-n">03</span>
+                    <span class="referral__step-t">{% trans "الاثنين تستفيدوا" %}</span>
+                    <span class="referral__step-d">{% trans "كل واحد فيكم بياخد يوم مجاني." %}</span>
+                </li>
+            </ol>
+        </div>
+
+        <div class="referral__card">
+        {% if code_obj %}
+            <p class="referral__ready">
+                <span class="referral__ready-dot" aria-hidden="true"></span>{% trans "جاهز للمشاركة" %}
+            </p>
+
+            <p class="referral__code-label">{% trans "كود الإحالة الخاص فيك" %}</p>
+            <div class="referral__code-box">
+                <span class="referral__code" dir="ltr">{{ code_obj.code }}</span>
+                <button type="button" class="referral__copy" data-copy="{{ code_obj.code }}"
+                        data-copied="{% trans 'تم النسخ' %}" aria-label="{% trans 'انسخ الكود' %}">
+                    {% include "core/icons/copy.svg" %}<span>{% trans "نسخ الكود" %}</span>
+                </button>
+            </div>
+
+            <p class="referral__code-label">{% trans "رابط الإحالة الخاص فيك" %}</p>
+            <div class="referral__link-box">
+                <input class="referral__link" type="text" readonly dir="ltr" value="{{ share_url }}"
+                       aria-label="{% trans 'رابط الإحالة' %}">
+                <button type="button" class="referral__copy referral__copy--sm" data-copy="{{ share_url }}"
+                        data-copied="{% trans 'تم النسخ' %}" aria-label="{% trans 'انسخ الرابط' %}">
+                    {% include "core/icons/copy.svg" %}<span>{% trans "نسخ" %}</span>
+                </button>
+            </div>
+
+            {% if whatsapp_url %}
+            <a href="{{ whatsapp_url }}" class="btn btn-primary referral__cta" rel="noopener" target="_blank">
+                {% include "core/icons/whatsapp.svg" %}<span>{% trans "شارك على واتساب" %}</span>
+            </a>
+            {% endif %}
+        {% else %}
+            <p class="referral__code-label">{% trans "احصل على كود الإحالة الخاص فيك" %}</p>
+            <form method="post" class="referral__form">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-row">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary referral__cta">{% trans "أنشئ كودي" %}</button>
+            </form>
+        {% endif %}
+        </div>
+
+    </div>
+</main>
+{% endblock %}

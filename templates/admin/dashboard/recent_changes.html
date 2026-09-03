@@ -1,0 +1,46 @@
+{% extends "admin/dashboard/_base_panel.html" %}
+{% load i18n %}
+{% comment %}
+    صفحة "آخر 20 تعديل عبر الموقع" — تجميع نشاط django-simple-history.
+    السياق يجي من core.audit.install_audit_dashboard.
+{% endcomment %}
+
+{% block title %}{% trans "آخر التعديلات" %}{% endblock %}
+{% block panel_heading %}{% trans "آخر 20 تعديل عبر الموقع" %}{% endblock %}
+
+{% block panel_actions %}
+    <a class="lc-panel__link" href="{% url 'admin:index' %}">← {% trans "لوحة القيادة" %}</a>
+{% endblock %}
+
+{% block dashboard_content %}
+    {% if entries %}
+    <div class="lc-tablewrap">
+        <table class="lc-audit">
+            <thead>
+                <tr>
+                    <th>{% trans "الإجراء" %}</th>
+                    <th>{% trans "العنصر" %}</th>
+                    <th>{% trans "الحقول المعدّلة" %}</th>
+                    <th>{% trans "المستخدم" %}</th>
+                    <th>{% trans "التاريخ" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in entries %}
+                <tr>
+                    <td><span class="lc-badge lc-badge--{{ e.action_css }}">{{ e.action_label }}</span></td>
+                    <td><strong>{{ e.model_label }}</strong><br>{{ e.object_repr }}</td>
+                    <td class="lc-audit__fields">
+                        {% if e.changed_fields %}{{ e.changed_fields|join:"، " }}{% else %}—{% endif %}
+                    </td>
+                    <td>{% if e.user %}{{ e.user }}{% else %}<em>{% trans "(بدون مستخدم)" %}</em>{% endif %}</td>
+                    <td>{{ e.date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="lc-empty">{% trans "لا يوجد أي تعديل مُسجّل بعد على الموديلات المتتبَّعة." %}</div>
+    {% endif %}
+{% endblock %}

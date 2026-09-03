@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ policy.title }} — {{ site_settings.brand_name }}{% endblock %}
+{% block meta_description %}{% if policy.meta_description %}{{ policy.meta_description }}{% else %}{{ policy.title }} — {{ site_settings.brand_name }}{% endif %}{% endblock %}
+
+{% block content %}
+<main class="policy-page">
+    <article class="policy-doc">
+        <header class="policy-doc__head">
+            <h1>{{ policy.title }}</h1>
+            <p class="policy-doc__meta">
+                {% if policy.last_updated %}
+                <span>{% blocktrans with d=policy.last_updated|date:"j F Y" %}آخر تحديث: {{ d }}{% endblocktrans %}</span>
+                {% endif %}
+                {% if policy.version %}
+                <span class="policy-doc__version">{% blocktrans with v=policy.version %}النسخة {{ v }}{% endblocktrans %}</span>
+                {% endif %}
+            </p>
+        </header>
+
+        {% for section in policy.visible_sections %}
+        <section class="policy-doc__section">
+            {% if section.heading %}<h2>{{ section.heading }}</h2>{% endif %}
+            {% for para in section.paragraphs %}
+            <p>{{ para }}</p>
+            {% endfor %}
+            {% if section.list_items %}
+                {% if section.list_type == "number" %}
+                <ol>{% for item in section.list_items %}<li>{{ item }}</li>{% endfor %}</ol>
+                {% else %}
+                <ul>{% for item in section.list_items %}<li>{{ item }}</li>{% endfor %}</ul>
+                {% endif %}
+            {% endif %}
+        </section>
+        {% endfor %}
+
+        {% if site_settings.support_email or site_settings.has_whatsapp or site_settings.location or site_settings.working_hours %}
+        <section class="policy-doc__section policy-doc__contact">
+            <h2>{% trans "للتواصل معنا" %}</h2>
+            <p>{% blocktrans with name=site_settings.brand_name %}لأي استفسار بخصوص هذه الصفحة، تواصل مع {{ name }}:{% endblocktrans %}</p>
+            <ul>
+                {% if site_settings.has_whatsapp %}
+                <li>{% trans "واتساب" %}:
+                    <a href="{{ site_settings.whatsapp_link }}" rel="noopener" target="_blank">{{ site_settings.whatsapp_number_display }}</a>
+                </li>
+                {% endif %}
+                {% if site_settings.support_email %}
+                <li>{% trans "البريد الإلكتروني" %}: <a href="mailto:{{ site_settings.support_email }}">{{ site_settings.support_email }}</a></li>
+                {% endif %}
+                {% if site_settings.location %}<li>{% trans "الموقع" %}: {{ site_settings.location }}</li>{% endif %}
+                {% if site_settings.working_hours %}<li>{% trans "ساعات العمل" %}: {{ site_settings.working_hours }}</li>{% endif %}
+            </ul>
+        </section>
+        {% endif %}
+    </article>
+</main>
+{% endblock %}

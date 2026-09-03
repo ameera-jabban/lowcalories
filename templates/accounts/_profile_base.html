@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{# تخطيط "حسابي" الموحّد — هيدر + تنقّل جانبي (ديسكتوب) / تبويبات (موبايل) + محتوى #}
+
+{% block title %}{% block profile_title %}{% trans "حسابي" %}{% endblock %} | {{ site_settings.brand_name }}{% endblock %}
+
+{% block content %}
+<main class="profile">
+    <div class="profile__inner">
+        <header class="profile__header">
+            <p class="profile__eyebrow">{% trans "حسابي" %}</p>
+            <h1 class="profile__title">{% trans "أهلاً بعودتك،" %} <bdi>{{ customer.name }}</bdi></h1>
+            <p class="profile__meta">
+                <span dir="ltr">{{ customer.phone_number }}</span>
+            </p>
+        </header>
+
+        <div class="profile__grid">
+            <nav class="profile__nav" aria-label="{% trans 'تنقّل الحساب' %}">
+                {% for key, label, urlname in profile_tabs %}
+                <a href="{% url urlname %}" class="profile__nav-link{% if key == active_tab %} is-active{% endif %}"
+                   {% if key == active_tab %}aria-current="page"{% endif %}>{{ label }}</a>
+                {% endfor %}
+                <a href="{% url 'accounts:logout' %}" class="profile__nav-link profile__nav-link--logout">{% trans "تسجيل الخروج" %}</a>
+            </nav>
+
+            <section class="profile__content">
+                {% if messages %}
+                <div class="profile__messages">
+                    {% for message in messages %}<p class="field-error">{{ message }}</p>{% endfor %}
+                </div>
+                {% endif %}
+                {% block profile_content %}{% endblock %}
+            </section>
+        </div>
+    </div>
+</main>
+{% endblock %}

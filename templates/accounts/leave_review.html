@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "قيّم تجربتك" %} | {{ site_settings.brand_name }}{% endblock %}
+
+{% block content %}
+<section class="container page-header">
+    <h1>🌟 {% trans "قيّم تجربتك" %}</h1>
+</section>
+
+<section class="container">
+    {% if submitted %}
+    <div class="plan-card" style="max-width:520px;text-align:start;">
+        <h2>{% trans "شكراً إلك! 🙏" %}</h2>
+        <p>{% trans "وصلنا تقييمك ورح يظهر بالموقع بعد مراجعة سريعة من الفريق." %}</p>
+        <a href="{% url 'core:home' %}" class="btn btn-primary">{% trans "الصفحة الرئيسية" %}</a>
+    </div>
+    {% else %}
+    <p>{% blocktrans with name=customer.name %}مرحبا {{ name }}، رأيك بيهمنا كتير.{% endblocktrans %}</p>
+    <form method="post" class="calculator-form no-print">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-row">
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">{% trans "أرسل التقييم" %}</button>
+    </form>
+    {% endif %}
+</section>
+{% endblock %}

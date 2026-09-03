@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% with hero=home.hero %}
+{% if hero %}
+<section class="hero" aria-label="{% trans 'مقدمة' %}">
+    <div class="hero__left">
+        <div class="hero__main">
+            {% if hero.eyebrow %}<span class="hero__eyebrow">{{ hero.eyebrow }}</span>{% endif %}
+            <h1 class="hero__headline">{{ hero.headline_parts.before }}{% if hero.headline_parts.highlight %}<span class="hero__hl">{{ hero.headline_parts.highlight }}</span>{{ hero.headline_parts.after }}{% endif %}</h1>
+            {% if hero.goals %}
+            <p class="hero__rotator-wrap"><span class="hero__rotator" aria-live="polite">
+                {% for g in hero.goals %}<span class="hero__rotator-item{% if forloop.first %} is-active{% endif %}">{{ g.text }}</span>{% endfor %}
+            </span></p>
+            {% endif %}
+            {% if hero.description %}<p class="hero__lead">{{ hero.description }}</p>{% endif %}
+            {% if hero.cta or hero.secondary_cta %}
+            <div class="hero-actions">
+                {% if hero.cta %}<a href="{{ hero.cta.url }}" class="btn btn-primary btn-lg">{{ hero.cta.label }}</a>{% endif %}
+                {% if hero.secondary_cta %}<a href="{{ hero.secondary_cta.url }}" class="btn btn-secondary btn-lg">{{ hero.secondary_cta.label }}</a>{% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if hero_stat %}
+        <p class="hero__stat">{{ hero_stat }}</p>
+        {% elif popular_plan %}
+        <p class="hero__stat">{% trans "أشهر خطة:" %} {{ popular_plan.days }} {% trans "يوم" %} — {{ popular_plan.price_jod }} {% trans "د.أ" %}</p>
+        {% endif %}
+    </div>
+
+    <div class="hero__visual {% if not hero.media %}hero__visual--illustration{% endif %}">
+        {% if hero.media.type == 'video' %}
+            <video class="hero__video" autoplay muted loop playsinline preload="metadata"
+                   {% if hero.media.poster %}poster="{{ hero.media.poster }}"{% endif %}
+                   data-hero-video>
+                <source src="{{ hero.media.src }}" type="video/mp4">
+            </video>
+        {% elif hero.media.type == 'image' %}
+            <img src="{{ hero.media.src }}" alt="{% trans 'طبق وجبة صحية من Low Calories Jordan' %}"
+                 style="object-position: {{ hero.media.focus }};" fetchpriority="high" decoding="async">
+        {% else %}
+            <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="60" cy="60" r="46" fill="#fff" fill-opacity=".9"/>
+                <path d="M60 26a34 34 0 1 0 0 68 34 34 0 0 0 0-68Zm0 10a24 24 0 0 1 24 24H36a24 24 0 0 1 24-24Z" fill="var(--primary)"/>
+                <path d="M62 20c2-5 7-8 13-7-.5 6-4 10-9 12-2 1-5 1-7-.4.6-1.8 1.7-3.3 3-4.6Z" fill="var(--secondary)"/>
+            </svg>
+        {% endif %}
+    </div>
+
+    {% if hero.scroll_target %}
+    <a href="{{ hero.scroll_target }}" class="hero__scroll" data-scroll-to aria-label="{{ hero.scroll_label }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </a>
+    {% endif %}
+</section>
+{% endif %}
+{% endwith %}
+
+{% if home.meal_plans %}
+    {% with mp=home.meal_plans %}{% include "core/_meal_plans_section.html" %}{% endwith %}
+{% endif %}
+
+{% if home.weekly_menu %}
+    {% with wm=home.weekly_menu %}{% include "core/_weekly_menu_section.html" %}{% endwith %}
+{% endif %}
+
+{% if home.flex %}
+    <span id="home-features"></span>
+    {% with flex=home.flex %}{% include "core/_flex_section.html" %}{% endwith %}
+{% endif %}
+
+{% if home.how %}{% with how=home.how %}
+<section class="how" aria-labelledby="how-heading">
+    <div class="how__inner">
+        <header class="how__head">
+            <h2 id="how-heading" class="how__title">{{ how.title }}</h2>
+            {% if how.subtitle %}<p class="how__subtitle">{{ how.subtitle }}</p>{% endif %}
+            {% if how.cta %}<a href="{{ how.cta.url }}" class="btn btn-primary how__cta">{{ how.cta.label }}</a>{% endif %}
+        </header>
+        <ol class="how__steps">
+            {% for s in how.steps %}
+            <li class="how__step">
+                <div class="how__media">
+                    <span class="how__num" aria-hidden="true">{{ s.display_number }}</span>
+                    <div class="how__media-inner">
+                        {% if s.image %}
+                        <img src="{{ s.image.url }}" alt="{{ s.title }}" loading="lazy" decoding="async"
+                             style="object-position: {{ s.image_focus|default:'center center' }};">
+                        {% endif %}
+                    </div>
+                </div>
+                <h3 class="how__step-title"><span class="sr-only">{% blocktrans with n=s.display_number %}الخطوة {{ n }}:{% endblocktrans %} </span>{{ s.title }}</h3>
+                <p class="how__step-text">{{ s.text }}</p>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</section>
+{% endwith %}{% endif %}
+
+{% if home.testimonials %}
+    {% with ts=home.testimonials %}{% include "core/_testimonials_section.html" %}{% endwith %}
+{% endif %}
+
+{% if home.faq %}
+    {% with faq=home.faq %}{% include "core/_faq_section.html" %}{% endwith %}
+{% endif %}
+{% endblock %}

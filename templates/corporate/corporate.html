@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "خطط الشركات" %} | {{ site_settings.brand_name }}{% endblock %}
+{% block meta_description %}{% trans "وجبات صحية يومية لفريق شركتك، توصيل لموقع واحد وسعر واضح لكل موظف." %}{% endblock %}
+
+{% block content %}
+<main class="corp">
+    <section class="corp__hero">
+        <div class="corp__hero-text">
+            <p class="corp__eyebrow">{% trans "خطط الشركات" %}</p>
+            <h1 class="corp__title">{% trans "وجبات صحية لفريقك،" %}<br>{% trans "توصيل لمقر الشركة." %}</h1>
+            <p class="corp__lead">{% trans "خطط وجبات مرنة للشركات — وجبات محسوبة السعرات، توصيل يومي، وسعر واضح لكل موظف." %}</p>
+            <a href="#quote" class="btn btn-primary" data-scroll-to>{% trans "اطلب عرض سعر" %}</a>
+        </div>
+        <div class="corp__hero-visual" aria-hidden="true">
+            {% if site_settings.hero_image %}<img src="{{ site_settings.hero_image.url }}" alt="" loading="lazy" decoding="async">{% endif %}
+        </div>
+    </section>
+
+    <section class="corp__section">
+        <div class="corp__inner">
+            <h2 class="corp__h2">{% trans "مصمّمة للفرق" %}</h2>
+            <p class="corp__h2-sub">{% trans "خطط وجبات بسيطة لشركات بأحجام مختلفة." %}</p>
+            <div class="corp__benefits">
+                <article class="corp__benefit">
+                    <span class="corp__benefit-icon">{% include "core/icons/feature.svg" with key="variety" %}</span>
+                    <h3>{% trans "منيو متنوّع" %}</h3>
+                    <p>{% trans "وجبات مختلفة محسوبة السعرات على مدار الأسبوع." %}</p>
+                </article>
+                <article class="corp__benefit">
+                    <span class="corp__benefit-icon">{% include "core/icons/truck.svg" %}</span>
+                    <h3>{% trans "توصيل لموقع واحد" %}</h3>
+                    <p>{% trans "توصيل كل الطلبات دفعة وحدة لمقر الشركة بالوقت المتفق عليه." %}</p>
+                </article>
+                <article class="corp__benefit">
+                    <span class="corp__benefit-icon">{% include "core/icons/tag.svg" %}</span>
+                    <h3>{% trans "سعر واضح لكل موظف" %}</h3>
+                    <p>{% trans "تسعير واضح حسب حجم فريقك والخطة المختارة." %}</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="corp__section corp__section--alt">
+        <div class="corp__inner">
+            <h2 class="corp__h2">{% trans "كيف تشتغل خطط الشركات" %}</h2>
+            <ol class="corp__steps">
+                <li><span class="corp__step-n">01</span>
+                    <div><strong>{% trans "خبّرنا عن فريقك" %}</strong><p>{% trans "ابعت بيانات شركتك وعدد الموظفين التقريبي." %}</p></div>
+                </li>
+                <li><span class="corp__step-n">02</span>
+                    <div><strong>{% trans "نجهّز خطتك" %}</strong><p>{% trans "فريقنا بيراجع متطلباتك ويجهّز العرض المناسب للشركات." %}</p></div>
+                </li>
+                <li><span class="corp__step-n">03</span>
+                    <div><strong>{% trans "نتواصل معك" %}</strong><p>{% trans "فريقنا بيتواصل معك لتأكيد الخطة والسعر وتفاصيل التوصيل." %}</p></div>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="corp__quote" id="quote">
+        <div class="corp__inner corp__quote-grid">
+            <div class="corp__quote-intro">
+                <p class="corp__eyebrow">{% trans "طلب عرض سعر" %}</p>
+                <h2 class="corp__h2">{% trans "خلّينا نبني الخطة المناسبة لفريقك." %}</h2>
+                <p class="corp__lead">{% trans "خبّرنا شوي عن شركتك وفريقنا بيتواصل معك بالخطة المناسبة." %}</p>
+                <ul class="corp__reassure">
+                    <li>{% trans "بدون التزام" %}</li>
+                    <li>{% trans "مفصّلة على حجم فريقك" %}</li>
+                    <li>{% trans "فريقنا بيتواصل معك مباشرة" %}</li>
+                </ul>
+            </div>
+
+            <div class="corp__form-card">
+            {% if submitted %}
+                <div class="corp__success" role="status">
+                    <span class="corp__check" aria-hidden="true">✓</span>
+                    <h3>{% trans "استلمنا طلبك" %}</h3>
+                    <p>{% trans "شكراً — استلم فريقنا طلب وجبات شركتك وبيتواصل معك قريباً." %}</p>
+                    {% if wa_url %}
+                    <a href="{{ wa_url }}" class="btn btn-primary" rel="noopener" target="_blank">
+                        {% include "core/icons/whatsapp.svg" %}<span>{% trans "تابع على واتساب" %}</span>
+                    </a>
+                    {% endif %}
+                </div>
+            {% else %}
+                <h3 class="corp__form-h">{% trans "اطلب عرض سعر" %}</h3>
+                <p class="corp__form-d">{% trans "شارك بياناتك ونرجعلك قريباً." %}</p>
+                <form method="post" class="corp__form" novalidate>
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}<p class="field-error">{{ form.non_field_errors|striptags }}</p>{% endif %}
+                    <div class="corp__form-grid">
+                        {% for field in form %}
+                        <div class="form-row{% if field.name == 'notes' or field.name == 'delivery_location' %} corp__form-full{% endif %}">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-primary corp__submit">{% trans "أرسل طلب عرض السعر" %}</button>
+                    <p class="corp__form-note">{% trans "ما في دفع بهالخطوة." %}</p>
+                </form>
+            {% endif %}
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

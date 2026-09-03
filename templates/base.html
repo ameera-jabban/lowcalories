@@ -1,0 +1,274 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site_settings.brand_name }}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{{ site_settings.tagline }}{% endblock %}">
+
+    {# أيقونة تبويب المتصفح — علامة البراند الموحّدة (نفسها بالأدمن). SVG للمتصفحات الحديثة، ICO/PNG للباقي. #}
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" sizes="32x32">
+    <link rel="icon" href="{% static 'img/brand-mark.svg' %}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{% static 'img/favicon.png' %}">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ألوان الهوية — تُقرأ من لوحة التحكم (إعدادات الموقع)، تتجاوز fallback style.css.
+           نضبط الألوان الأساسية فقط؛ style.css يشتق منها الدرجات الداكنة (WCAG AA)
+           تلقائياً عبر color-mix حيث يدعمه المتصفح. */
+        :root {
+            --primary: {{ site_settings.primary_color }};
+            --secondary: {{ site_settings.secondary_color }};
+            --bg-soft: {{ site_settings.soft_bg_color }};
+        }
+        @supports (color: color-mix(in srgb, red, blue)) {
+            :root {
+                --primary-dark: color-mix(in srgb, {{ site_settings.primary_color }} 60%, #000);
+                --primary-hover: color-mix(in srgb, {{ site_settings.primary_color }} 88%, #000);
+                --secondary-dark: color-mix(in srgb, {{ site_settings.secondary_color }} 62%, #000);
+            }
+        }
+    </style>
+
+    {% if site_settings.facebook_pixel_id %}
+    <!-- Meta Pixel — ينحقن بس لو الأدمن ضاف رقم الـ Pixel من إعدادات الموقع -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '{{ site_settings.facebook_pixel_id }}');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id={{ site_settings.facebook_pixel_id }}&ev=PageView&noscript=1"
+    /></noscript>
+    {% endif %}
+</head>
+<body>
+{% get_current_language as CURRENT_LANGUAGE %}
+
+<header class="site-header no-print" id="site-header">
+    <div class="container header-inner">
+        <a href="{% url 'core:home' %}" class="logo" aria-label="{{ site_settings.brand_name }}">
+            {% if site_settings.logo %}
+                <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.brand_name }}">
+            {% else %}
+                <span class="logo-text">{{ site_settings.brand_name_en|default:site_settings.brand_name }}</span>
+            {% endif %}
+        </a>
+
+        {# نافبار مبسّط: لوغو + لغة + CTA + هامبرغر. كل روابط التنقّل داخل القائمة الكبيرة. #}
+        <div class="header-actions">
+            <div class="lang-switch-wrap" data-lang-menu>
+                <button type="button" class="icon-btn lang-switch" id="lang-toggle"
+                        aria-label="{% trans 'تغيير اللغة' %}" aria-haspopup="true" aria-expanded="false">
+                    {% include "core/icons/globe.svg" %}
+                </button>
+                <div class="lang-menu" role="menu" aria-label="{% trans 'اللغة' %}">
+                    {% if CURRENT_LANGUAGE == 'ar' %}
+                        <a role="menuitem" aria-current="true" class="is-active">العربية</a>
+                        <a role="menuitem" href="/en{{ request.path }}" rel="alternate" hreflang="en">English</a>
+                    {% else %}
+                        <a role="menuitem" href="{{ request.path|slice:'3:' }}" rel="alternate" hreflang="ar">العربية</a>
+                        <a role="menuitem" aria-current="true" class="is-active">English</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% if nav.cta %}
+            <a href="{{ nav.cta.url }}" class="btn btn-primary nav-cta">{{ nav.cta.label }}</a>
+            {% endif %}
+            <button type="button" class="nav-toggle" id="nav-toggle"
+                    aria-label="{% trans 'افتح القائمة' %}" aria-expanded="false" aria-controls="nav-panel"
+                    data-label-open="{% trans 'افتح القائمة' %}" data-label-close="{% trans 'أغلق القائمة' %}">
+                <span class="nav-toggle__bar"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+{# القائمة الكبيرة — نفس التجربة على كل المقاسات (سبليت على الديسكتوب) #}
+<div class="nav-panel no-print" id="nav-panel" hidden>
+    <button type="button" class="nav-panel__scrim" data-nav-close tabindex="-1" aria-hidden="true"></button>
+
+    <div class="nav-panel__visual" aria-hidden="true" data-nav-close>
+        {% if site_settings.hero_image %}
+        <img src="{{ site_settings.hero_image.url }}" alt="" loading="lazy" decoding="async">
+        {% elif site_settings.logo %}
+        <img src="{{ site_settings.logo.url }}" alt="" loading="lazy" decoding="async" class="nav-panel__visual-logo">
+        {% endif %}
+        <div class="nav-panel__promo">
+            <p class="nav-panel__promo-title">{% trans "ابدأ رحلتك الصحية اليوم" %}</p>
+            {% if nav.cta %}
+            <a href="{{ nav.cta.url }}" class="btn btn-primary" tabindex="-1">{{ nav.cta.label }}</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="nav-panel__menu" role="dialog" aria-modal="true" aria-label="{% trans 'قائمة التنقل' %}" id="nav-panel-menu">
+        <div class="nav-panel__top">
+            <a href="{% url 'core:home' %}" class="logo" data-nav-close-link aria-label="{{ site_settings.brand_name }}">
+                {% if site_settings.logo %}
+                    <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.brand_name }}">
+                {% else %}
+                    <span class="logo-text">{{ site_settings.brand_name_en|default:site_settings.brand_name }}</span>
+                {% endif %}
+            </a>
+            <button type="button" class="nav-panel__close" id="nav-close" aria-label="{% trans 'أغلق القائمة' %}">&times;</button>
+        </div>
+
+        <nav class="nav-panel__list" aria-label="{% trans 'التنقل' %}">
+            {% for item in nav.full %}
+            <a href="{{ item.url }}" class="nav-panel__item{% if item.is_active %} is-active{% endif %}"
+               data-nav-close-link
+               {% if item.external %}target="_blank" rel="noopener"{% endif %}
+               {% if item.is_active %}aria-current="page"{% endif %}>
+                <span class="nav-panel__item-label">{{ item.label }}</span>
+                <span class="nav-panel__item-arrow" aria-hidden="true"></span>
+            </a>
+            {% endfor %}
+        </nav>
+
+        <div class="nav-panel__foot">
+            <div class="nav-panel__lang">
+                <span class="nav-panel__lang-label">{% trans "اللغة" %}</span>
+                <span class="nav-panel__lang-links">
+                    {% if CURRENT_LANGUAGE == 'ar' %}
+                        <a aria-current="true">عربي</a>
+                        <a href="/en{{ request.path }}" rel="alternate" hreflang="en">English</a>
+                    {% else %}
+                        <a href="{{ request.path|slice:'3:' }}" rel="alternate" hreflang="ar">عربي</a>
+                        <a aria-current="true">English</a>
+                    {% endif %}
+                </span>
+            </div>
+            {% if site_settings.has_whatsapp or site_settings.instagram_url %}
+            <div class="nav-panel__social">
+                {% if site_settings.has_whatsapp %}
+                <a href="{{ site_settings.whatsapp_link }}" rel="noopener" target="_blank" aria-label="{% trans 'واتساب' %}">{% include "core/icons/whatsapp.svg" %}</a>
+                {% endif %}
+                {% if site_settings.instagram_url %}
+                <a href="{{ site_settings.instagram_url }}" rel="noopener" target="_blank" aria-label="Instagram">{% include "core/icons/instagram.svg" %}</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<main id="main-content">
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer no-print">
+    <div class="container footer-inner">
+
+        {# 1 · Brand — اللوجو الرسمي من لوحة التحكم (SiteSettings.logo) #}
+        <div class="footer-brand">
+            <a href="{% url 'core:home' %}" class="footer-logo" aria-label="{{ site_settings.brand_name }}">
+                {% if site_settings.logo %}
+                    <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.brand_name }}">
+                {% else %}
+                    <span class="logo-text">{{ site_settings.brand_name_en|default:site_settings.brand_name }}</span>
+                {% endif %}
+            </a>
+            <p class="footer-brand__desc">{{ site_settings.tagline }}</p>
+            {% if site_settings.has_whatsapp %}
+            <a class="footer-brand__phone" href="{{ site_settings.whatsapp_link }}" rel="noopener" target="_blank">
+                <span class="footer-brand__phone-icon">{% include "core/icons/whatsapp.svg" %}</span>
+                <span>{{ site_settings.whatsapp_number_display }}</span>
+            </a>
+            {% endif %}
+        </div>
+
+        {# 2 + 3 · مجموعة روابط (تصير أعمدة مستقلة على الديسكتوب عبر display:contents) #}
+        <div class="footer-links">
+            <nav class="footer-col" aria-labelledby="ft-quick">
+                <h4 id="ft-quick">{% trans "روابط سريعة" %}</h4>
+                <ul>
+                    <li><a href="{% url 'menu:menu_list' %}">{% trans "المنيو الأسبوعي" %}</a></li>
+                    <li><a href="{% url 'plans:plans_list' %}">{% trans "الخطط" %}</a></li>
+                    <li><a href="{% url 'calculator:calorie_calculator' %}">{% trans "حاسبة السعرات" %}</a></li>
+                    <li><a href="{% url 'core:faq' %}">{% trans "الأسئلة الشائعة" %}</a></li>
+                </ul>
+            </nav>
+
+            <nav class="footer-col" aria-labelledby="ft-services">
+                <h4 id="ft-services">{% trans "خدمات" %}</h4>
+                <ul>
+                    <li><a href="{% url 'consultations:list' %}">{% trans "استشارة أخصائي تغذية" %}</a></li>
+                    <li><a href="{% url 'corporate:corporate_page' %}">{% trans "خطط الشركات" %}</a></li>
+                    <li><a href="{% url 'referrals:get_code' %}">{% trans "برنامج الإحالة" %}</a></li>
+                    <li><a href="{% url 'accounts:dashboard' %}">{% trans "بوابة اشتراكي" %}</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        {# 4 · Contact Us #}
+        <div class="footer-col footer-contact">
+            <h4>{% trans "تواصل معنا" %}</h4>
+            {% if site_settings.working_hours %}
+            <p class="footer-meta">
+                {% include "core/icons/clock.svg" %}<span>{{ site_settings.working_hours }}</span>
+            </p>
+            {% endif %}
+            {% if site_settings.location %}
+            <p class="footer-meta">
+                {% include "core/icons/pin.svg" %}<span>{{ site_settings.location }}</span>
+            </p>
+            {% endif %}
+            {% if site_settings.phone_number or site_settings.support_email or site_settings.app_store_url or site_settings.google_play_url %}
+            <ul class="footer-contact__extra">
+                {% if site_settings.phone_number %}<li><a href="tel:{{ site_settings.phone_number }}">{% include "core/icons/phone.svg" %}<span>{{ site_settings.phone_number }}</span></a></li>{% endif %}
+                {% if site_settings.support_email %}<li><a href="mailto:{{ site_settings.support_email }}">{% include "core/icons/mail.svg" %}<span>{{ site_settings.support_email }}</span></a></li>{% endif %}
+                {% if site_settings.app_store_url %}<li><a href="{{ site_settings.app_store_url }}">App Store</a></li>{% endif %}
+                {% if site_settings.google_play_url %}<li><a href="{{ site_settings.google_play_url }}">Google Play</a></li>{% endif %}
+            </ul>
+            {% endif %}
+            {% if site_settings.has_whatsapp or site_settings.instagram_url %}
+            <div class="footer-social">
+                {% if site_settings.has_whatsapp %}
+                <a class="footer-social__wa" href="{{ site_settings.whatsapp_link }}" rel="noopener" target="_blank" aria-label="{% trans 'واتساب' %}">{% include "core/icons/whatsapp.svg" %}</a>
+                {% endif %}
+                {% if site_settings.instagram_url %}
+                <a class="footer-social__ig" href="{{ site_settings.instagram_url }}" rel="noopener" target="_blank" aria-label="Instagram">{% include "core/icons/instagram.svg" %}</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container footer-legal">
+        <span>© {% now "Y" %} {{ site_settings.brand_name_en|default:site_settings.brand_name }}</span>
+        {% if footer_policies or site_settings.privacy_policy_url or site_settings.terms_url %}
+        <span class="footer-legal__links">
+            {% for policy in footer_policies %}
+            <a href="{{ policy.get_absolute_url }}">{{ policy.title }}</a>
+            {% endfor %}
+            {% if not footer_policies %}
+                {% if site_settings.privacy_policy_url %}<a href="{{ site_settings.privacy_policy_url }}">{% trans "سياسة الخصوصية" %}</a>{% endif %}
+                {% if site_settings.terms_url %}<a href="{{ site_settings.terms_url }}">{% trans "الشروط والأحكام" %}</a>{% endif %}
+            {% endif %}
+        </span>
+        {% endif %}
+    </div>
+</footer>
+
+{% if site_settings.has_whatsapp %}
+<a href="{% url 'leads:go_to_whatsapp_general' %}?source=floating_button" class="whatsapp-float no-print" aria-label="{% trans 'تواصل واتساب' %}" onclick="fbqLead()">
+    {% include "core/icons/whatsapp.svg" %}
+</a>
+{% endif %}
+
+<script src="{% static 'js/main.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

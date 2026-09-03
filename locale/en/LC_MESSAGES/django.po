@@ -1,0 +1,1421 @@
+# Low Calories Jordan — English translations
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-09-01 00:00+0300\n"
+"Last-Translator: Low Calories Jordan\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "المنيو الأسبوعي"
+msgstr "Weekly Menu"
+
+msgid "الخطط"
+msgstr "Plans"
+
+msgid "حاسبة السعرات"
+msgstr "Calorie Calculator"
+
+msgid "واتساب"
+msgstr "WhatsApp"
+
+msgid "روابط سريعة"
+msgstr "Quick Links"
+
+msgid "تواصل معنا"
+msgstr "Contact Us"
+
+msgid "بروتين"
+msgstr "Protein"
+
+msgid "دهون"
+msgstr "Fat"
+
+msgid "وجبة"
+msgstr "meals"
+
+msgid "كارب"
+msgstr "Carbs"
+
+msgid "اشتراكي"
+msgstr "My Subscription"
+
+msgid "تسجيل خروج"
+msgstr "Log Out"
+
+msgid "اشتراكك الحالي"
+msgstr "Your Current Subscription"
+
+msgid "الحالة"
+msgstr "Status"
+
+msgid "ينتهي بتاريخ"
+msgstr "Ends on"
+
+msgid "إجراءات سريعة"
+msgstr "Quick Actions"
+
+msgid "كل زر بيجهّزلك رسالة واتساب جاهزة — الفريق بيأكد الطلب معك."
+msgstr ""
+"Each button prepares a ready WhatsApp message — the team confirms your "
+"request."
+
+msgid "تجميد الاشتراك"
+msgstr "Freeze Subscription"
+
+msgid "استئناف الاشتراك"
+msgstr "Resume Subscription"
+
+msgid "تغيير نوع الوجبات إلى"
+msgstr "Change meal type to"
+
+msgid "اطلب التغيير"
+msgstr "Request Change"
+
+msgid "ما عندك اشتراك مسجّل حالياً."
+msgstr "You don't have an active subscription right now."
+
+msgid "شوف الخطط"
+msgstr "See Plans"
+
+msgid "قيّم تجربتك"
+msgstr "Rate Your Experience"
+
+msgid "وصلنا تقييمك ورح يظهر بالموقع بعد مراجعة سريعة من الفريق."
+msgstr ""
+"We received your review — it will appear on the site after a quick check by "
+"the team."
+
+msgid "الصفحة الرئيسية"
+msgstr "Home"
+
+msgid "أرسل التقييم"
+msgstr "Submit Review"
+
+msgid "دخول العملاء"
+msgstr "Customer Login"
+
+msgid "بوابة اشتراكي"
+msgstr "My Subscription Portal"
+
+msgid "ادخل رقم هاتفك وكود الدخول اللي وصلك من الفريق لمتابعة اشتراكك."
+msgstr ""
+"Enter your phone number and the access code the team sent you to manage your"
+" subscription."
+
+msgid "دخول"
+msgstr "Log In"
+
+msgid "ما وصلك كود دخول؟ راسلنا على واتساب ونبعتلك ياه."
+msgstr ""
+"Didn't get an access code? Message us on WhatsApp and we'll send it to you."
+
+msgid "أهلاً %(name)s 👋"
+msgstr "Hi %(name)s 👋"
+
+msgid "متبقٍّ %(days)s يوم"
+msgstr "%(days)s days remaining"
+
+msgid "مرحبا %(name)s، رأيك بيهمنا كتير."
+msgstr "Hi %(name)s, your feedback means a lot to us."
+
+msgid "رقم الهاتف"
+msgstr "Phone number"
+
+msgid "كود الدخول"
+msgstr "Access code"
+
+msgid "تقييمك"
+msgstr "Your rating"
+
+msgid "رأيك بالتجربة"
+msgstr "Your experience"
+
+msgid "رقم الهاتف أو كود الدخول غير صحيح."
+msgstr "Phone number or access code is incorrect."
+
+msgid "ما في اشتراك فعّال يمكن تجميده."
+msgstr "There is no active subscription to freeze."
+
+msgid "ما في اشتراك مجمّد يمكن استئنافه."
+msgstr "There is no frozen subscription to resume."
+
+msgid "ما في اشتراك حالي لتغيير نوع وجباته."
+msgstr "There is no current subscription to change the meal type for."
+
+msgid "مرحبا، أنا %(name)s. أرغب بتجميد اشتراكي (%(plan)s) اعتباراً من اليوم."
+msgstr ""
+"Hello, I'm %(name)s. I'd like to freeze my subscription (%(plan)s) starting "
+"today."
+
+msgid ""
+"مرحبا، أنا %(name)s. أرغب باستئناف اشتراكي (%(plan)s). تاريخ الانتهاء الجديد"
+" بعد التمديد: %(end)s."
+msgstr ""
+"Hello, I'm %(name)s. I'd like to resume my subscription (%(plan)s). New end "
+"date after the extension: %(end)s."
+
+msgid ""
+"مرحبا، أنا %(name)s. أرغب بتغيير نوع وجبات اشتراكي من %(old)s إلى %(new)s."
+msgstr ""
+"Hello, I'm %(name)s. I'd like to change my subscription meal type from "
+"%(old)s to %(new)s."
+
+msgid "خطط الشركات"
+msgstr "Corporate Plans"
+
+msgid "منيو متنوّع"
+msgstr "Varied menu"
+
+msgid "توصيل لموقع واحد"
+msgstr "One delivery location"
+
+msgid "اطلب عرض سعر"
+msgstr "Request a Quote"
+
+msgid "اسم الشركة"
+msgstr "Company name"
+
+msgid "الشخص المسؤول"
+msgstr "Contact person"
+
+msgid "رقم التواصل"
+msgstr "Contact phone"
+
+msgid "عدد الموظفين التقريبي"
+msgstr "Approximate number of employees"
+
+msgid "موقع التوصيل"
+msgstr "Delivery location"
+
+msgid "ملاحظات (اختياري)"
+msgstr "Notes (optional)"
+
+msgid "استشارة أخصائي تغذية"
+msgstr "Nutritionist Consultation"
+
+msgid "ادعُ صاحبك واكسبوا يوم مجاني"
+msgstr "Invite a friend and both get a free day"
+
+msgid ""
+"شارك رابطك الخاص — أول ما صاحبك يشترك لأول مرة، الاثنين تاخدوا يوم مجاني على"
+" اشتراككم."
+msgstr ""
+"Share your personal link — as soon as your friend subscribes for the first "
+"time, you both get a free day on your subscription."
+
+msgid "كودك جاهز"
+msgstr "Your code is ready"
+
+msgid "رابط المشاركة"
+msgstr "Share link"
+
+msgid "شارك على واتساب"
+msgstr "Share on WhatsApp"
+
+msgid "أنشئ كودي"
+msgstr "Create My Code"
+
+msgid "اسمك"
+msgstr "Your name"
+
+msgid "رقم هاتفك"
+msgstr "Your phone number"
+
+msgid "دعوة صديق"
+msgstr "Friend Invite"
+
+msgid "صديقك %(name)s دعاك!"
+msgstr "Your friend %(name)s invited you!"
+
+msgid "اشترك لأول مرة عبر هالدعوة، والاثنين تاخدوا يوم مجاني على اشتراككم."
+msgstr ""
+"Subscribe for the first time through this invite, and you both get a free "
+"day."
+
+msgid "أكمل عبر واتساب"
+msgstr "Continue on WhatsApp"
+
+msgid "رح ننقلك لواتساب برسالة فيها كود الإحالة — الفريق بيأكد ويطبّق العرض."
+msgstr ""
+"We'll take you to WhatsApp with the referral code — the team confirms and "
+"applies the offer."
+
+msgid "رابط غير صالح"
+msgstr "Invalid link"
+
+msgid "هذا الرابط غير صالح"
+msgstr "This link is not valid"
+
+msgid ""
+"كود الإحالة مش موجود أو انتهى. تواصل مع صاحبك ليبعتلك رابط جديد، أو اشترك "
+"مباشرة."
+msgstr ""
+"The referral code doesn't exist or has expired. Ask your friend for a new "
+"link, or subscribe directly."
+
+msgid ""
+"بدعوتك تجرّب Low Calories Jordan! اشترك لأول مرة عبر رابطي وناخد الاثنين يوم مجاني:\n"
+"%(url)s"
+msgstr ""
+"I'm inviting you to try Low Calories Jordan! Subscribe for the first time through my link and we both get a free day:\n"
+"%(url)s"
+
+msgid ""
+"مرحبا! صديقي %(referrer)s دعاني لـ Low Calories Jordan (كود الإحالة: "
+"%(code)s). بدي أشترك لأول مرة."
+msgstr ""
+"Hi! My friend %(referrer)s invited me to Low Calories Jordan (referral code:"
+" %(code)s). I'd like to subscribe for the first time."
+
+msgid "عندك كود خصم؟"
+msgstr "Have a discount code?"
+
+msgid "تطبيق"
+msgstr "Apply"
+
+msgid "السعر المخفّض استرشادي — الفريق بيأكد الخصم النهائي على واتساب."
+msgstr ""
+"The discounted price is for reference — the team confirms the final discount"
+" on WhatsApp."
+
+msgid "هذا الكود غير صالح أو منتهي."
+msgstr "This code is not valid or has expired."
+
+msgid "كود متابعة تقدّمك"
+msgstr "Your progress tracking code"
+
+msgid "احفظه — بتحتاجه لتشوف تقدّمك لاحقاً من صفحة «متابعة تقدّمي»."
+msgstr ""
+"Save it — you'll need it to check your progress later from the “My Progress”"
+" page."
+
+msgid "متابعة تقدّمي"
+msgstr "My Progress"
+
+msgid "ادخل رقم هاتفك وكود المتابعة لتشوف تاريخ حساباتك والمقارنة بينها."
+msgstr ""
+"Enter your phone number and tracking code to see your calculation history "
+"and comparison."
+
+msgid "اعرض تقدّمي"
+msgstr "Show My Progress"
+
+msgid "بيانات غير صحيحة."
+msgstr "Invalid details."
+
+msgid "التاريخ"
+msgstr "Date"
+
+msgid "الوزن (كغ)"
+msgstr "Weight (kg)"
+
+msgid "السعرات"
+msgstr "Calories"
+
+msgid "الهدف"
+msgstr "Goal"
+
+msgid "ما عندك سجل كافٍ للمقارنة بعد — ارجع بعد كم أسبوع واحسب مرة ثانية."
+msgstr ""
+"You don't have enough history to compare yet — come back in a few weeks and "
+"calculate again."
+
+msgid "من %(f)s إلى %(t)s: وزنك تغيّر من %(fw)s كغ إلى %(tw)s كغ."
+msgstr "From %(f)s to %(t)s: your weight changed from %(fw)s kg to %(tw)s kg."
+
+msgid "رقم هاتفك (اختياري) — احفظ نتيجتك لتقارنها المرة الجاية"
+msgstr ""
+"Your phone number (optional) — save your result to compare it next time"
+
+msgid "كود المتابعة"
+msgstr "Tracking code"
+
+msgid "التنقل الرئيسي"
+msgstr "Main navigation"
+
+msgid "افتح القائمة"
+msgstr "Open menu"
+
+msgid "قائمة التنقل"
+msgstr "Navigation menu"
+
+msgid "أغلق القائمة"
+msgstr "Close menu"
+
+msgid "تواصل واتساب"
+msgstr "Contact on WhatsApp"
+
+msgid "سياسة الخصوصية"
+msgstr "Privacy Policy"
+
+msgid "ليش تختارنا؟"
+msgstr "Why choose us?"
+
+msgid "بياناتك"
+msgstr "Your Info"
+
+msgid "نشاطك وهدفك"
+msgstr "Your Activity & Goal"
+
+msgid "اطبع النتيجة أو احفظها PDF"
+msgstr "Print the result or save as PDF"
+
+msgid "آراء عملائنا"
+msgstr "What our customers say"
+
+msgid "طبق وجبة صحية من Low Calories Jordan"
+msgstr "A healthy meal from Low Calories Jordan"
+
+msgid "الأسئلة الشائعة"
+msgstr "FAQ"
+
+msgid "أشهر خطة:"
+msgstr "Most popular plan:"
+
+msgid "تحكّم كامل، ومرونة تامّة"
+msgstr "Total control. Full flexibility."
+
+msgid "كيف يعمل؟"
+msgstr "How it works"
+
+msgid "ما لقيت جوابك؟ راسلنا على واتساب."
+msgstr "Didn't find your answer? Message us on WhatsApp."
+
+msgid "لسا ما في أسئلة شائعة — راسلنا على واتساب لأي استفسار."
+msgstr "No FAQs yet — message us on WhatsApp with any question."
+
+msgid "توزيع الماكروز"
+msgstr "Macro breakdown"
+
+msgid "كل الأسئلة الشائعة"
+msgstr "All FAQs"
+
+msgid "حسابي"
+msgstr "My Account"
+
+msgid "خدمات"
+msgstr "Services"
+
+msgid "برنامج الإحالة"
+msgstr "Referral Program"
+
+msgid "ادعُ صديق واكسبوا يوم مجاني"
+msgstr "Invite a friend and both get a free day"
+
+msgid ""
+"شارك رابطك الخاص — أول ما صاحبك يشترك لأول مرة، الاثنين تاخدوا يوم مجاني."
+msgstr ""
+"Share your personal link — as soon as your friend subscribes for the first "
+"time, you both get a free day."
+
+msgid "احصل على رابط الإحالة"
+msgstr "Get your referral link"
+
+msgid "عمّان، الأردن"
+msgstr "Amman, Jordan"
+
+msgid "الشروط والأحكام"
+msgstr "Terms & Conditions"
+
+msgid "آخر تحديث: %(d)s"
+msgstr "Last updated: %(d)s"
+
+msgid "النسخة %(v)s"
+msgstr "Version %(v)s"
+
+msgid "للتواصل معنا"
+msgstr "Contact Us"
+
+msgid "لأي استفسار بخصوص هذه الصفحة، تواصل مع %(name)s:"
+msgstr "For any questions about this page, contact %(name)s:"
+
+msgid "البريد الإلكتروني"
+msgstr "Email"
+
+msgid "الموقع"
+msgstr "Location"
+
+msgid "ساعات العمل"
+msgstr "Working Hours"
+
+msgid "الرئيسية"
+msgstr "Home"
+
+msgid "شوف المنيو"
+msgstr "View Menu"
+
+msgid "انتقل للقسم التالي"
+msgstr "Scroll to next section"
+
+msgid "مقدمة"
+msgstr "Introduction"
+
+msgid "عندك أسئلة؟"
+msgstr "Still have questions?"
+
+msgid "شوف الأسئلة الشائعة"
+msgstr "Check out our FAQ"
+
+msgid "عندك سؤال ثاني؟"
+msgstr "Got more questions?"
+
+msgid "فريقنا جاهز يساعدك — راسلنا على واتساب وبنرد عليك بأسرع وقت."
+msgstr ""
+"Our team is here to help — message us on WhatsApp and we'll get back to you "
+"shortly."
+
+msgid "تواصل على واتساب"
+msgstr "Chat on WhatsApp"
+
+msgid "مرحبا، عندي سؤال عن Low Calories Jordan"
+msgstr "Hi, I have a question about Low Calories Jordan"
+
+msgid ""
+"أجوبة على أكثر الأسئلة تكراراً عن خطط Low Calories Jordan، الاشتراك، "
+"التوصيل، والدفع."
+msgstr ""
+"Answers to the most common questions about Low Calories Jordan plans, "
+"subscriptions, delivery, and payment."
+
+msgid "توصل لهدفك بثلاث خطوات بسيطة."
+msgstr "Reach your goal in three simple steps."
+
+msgid "الخطوة %(n)s:"
+msgstr "Step %(n)s:"
+
+msgid "نتائج حقيقية، قصص حقيقية"
+msgstr "Real results, real stories"
+
+msgid "موثوقون من مجتمع Low Calories"
+msgstr "Trusted by our Low Calories community"
+
+msgid "★ %(rating)s — %(count)s تقييم"
+msgstr "★ %(rating)s — %(count)s reviews"
+
+msgid "%(r)s من 5"
+msgstr "%(r)s out of 5"
+
+msgid "عرض كل الأسئلة الشائعة"
+msgstr "View all FAQs"
+
+msgid "لاقِ خطتك المثالية"
+msgstr "Find your perfect meal plan"
+
+msgid "شوف كل الخطط"
+msgstr "See all plans"
+
+msgid "تبدأ من %(price)s د.أ"
+msgstr "Starting from %(price)s JOD"
+
+msgid "الأكثر طلباً"
+msgstr "Most Popular"
+
+msgid "منيو يتجدّد كل أسبوع"
+msgstr "A menu that changes every week"
+
+msgid "وجبات طازة محسوبة السعرات، جاهزة لأسبوعك."
+msgstr "Fresh, calorie-counted meals ready for your week."
+
+msgid "سعرات محسوبة"
+msgstr "Calorie counted"
+
+msgid "مكوّنات طازة"
+msgstr "Fresh ingredients"
+
+msgid "خيارات بروتين متعددة"
+msgstr "Multiple protein options"
+
+msgid "يتجدّد كل أسبوع"
+msgstr "Updated weekly"
+
+msgid "شوف المنيو الكامل"
+msgstr "See full menu"
+
+msgid "%(c)s سعرة"
+msgstr "%(c)s kcal"
+
+msgid "%(g)sغ بروتين"
+msgstr "%(g)sg protein"
+
+msgid "%(g)sغ كارب"
+msgstr "%(g)sg carbs"
+
+msgid "%(g)sغ دهون"
+msgstr "%(g)sg fat"
+
+msgid "نوصّل لـ %(count)s منطقة داخل عمّان"
+msgstr "Delivering to %(count)s areas across Amman"
+
+msgid "انتقل إلى خطط الوجبات"
+msgstr "Scroll to meal plans"
+
+msgid "اصنع خطتك المثالية"
+msgstr "Build your perfect plan"
+
+msgid "اختر تفضيلاتك خطوة بخطوة وشوف السعر مباشرة."
+msgstr "Choose your preferences step by step and see the price instantly."
+
+msgid "اختر نوع الخطة"
+msgstr "Choose your plan"
+
+msgid "كم وجبة باليوم؟"
+msgstr "How many meals per day?"
+
+msgid "اختر مدة الاشتراك"
+msgstr "Choose your subscription duration"
+
+msgid "وجبات"
+msgstr "meals"
+
+msgid "خطتك"
+msgstr "Your plan"
+
+msgid "النوع"
+msgstr "Type"
+
+msgid "الوجبات"
+msgstr "Meals"
+
+msgid "المدة"
+msgstr "Duration"
+
+msgid "المجموع"
+msgstr "Total"
+
+msgid "متابعة عبر واتساب"
+msgstr "Continue on WhatsApp"
+
+msgid "هذه التركيبة غير متاحة حالياً — جرّب خياراً آخر."
+msgstr "This combination is currently unavailable — try another option."
+
+msgid "تبدأ من"
+msgstr "Starting from"
+
+msgid "الجنس"
+msgstr "Gender"
+
+msgid "العمر"
+msgstr "Age"
+
+msgid "الطول (سم)"
+msgstr "Height (cm)"
+
+msgid "مستوى النشاط"
+msgstr "Activity level"
+
+msgid "هدفك"
+msgstr "Your goal"
+
+msgid "ذكر"
+msgstr "Male"
+
+msgid "أنثى"
+msgstr "Female"
+
+msgid "خسارة وزن"
+msgstr "Lose weight"
+
+msgid "تثبيت الوزن"
+msgstr "Maintain weight"
+
+msgid "بناء عضل"
+msgstr "Build muscle"
+
+msgid "قليل الحركة (مكتب، بدون رياضة)"
+msgstr "Sedentary (desk job, no exercise)"
+
+msgid "نشاط خفيف (رياضة 1-3 أيام بالأسبوع)"
+msgstr "Lightly active (exercise 1–3 days/week)"
+
+msgid "نشاط متوسط (رياضة 4-5 أيام بالأسبوع)"
+msgstr "Moderately active (exercise 4–5 days/week)"
+
+msgid "نشيط (رياضة يومية أو مكثفة 3-4 أيام)"
+msgstr "Active (daily exercise, or intense 3–4 days)"
+
+msgid "نشيط جداً (رياضة مكثفة 6-7 أيام)"
+msgstr "Very active (intense exercise 6–7 days)"
+
+msgid "رياضي محترف أو عمل بدني شاق يومياً"
+msgstr "Athlete, or heavy physical work daily"
+
+msgid "مرحبا، بدي أسأل عن Low Calories Jordan"
+msgstr "Hi, I'd like to ask about Low Calories Jordan"
+
+msgid ""
+"مرحبا، أريد الاشتراك في خطة %(days)s يوم - %(type)s %(meals)s وجبة "
+"(%(price)s د)"
+msgstr ""
+"Hi, I'd like to subscribe to the %(days)s-day plan - %(type)s, %(meals)s "
+"meals (%(price)s JOD)"
+
+msgid ""
+"كود خصم: %(code)s (-%(pct)s%%) — السعر بعد الخصم تقريباً %(new)s د بدل "
+"%(old)s د"
+msgstr ""
+"Discount code: %(code)s (-%(pct)s%%) — price after discount approx. %(new)s "
+"JOD instead of %(old)s JOD"
+
+msgid "تغيير اللغة"
+msgstr "Change language"
+
+msgid "تعذّر التحقق، حاول مجدداً."
+msgstr "Couldn't verify — please try again."
+
+msgid "اللغة"
+msgstr "Language"
+
+msgid "ابدأ رحلتك الصحية اليوم"
+msgstr "Start your healthy journey today"
+
+msgid "الأحد"
+msgstr "Sunday"
+
+msgid "الاثنين"
+msgstr "Monday"
+
+msgid "الثلاثاء"
+msgstr "Tuesday"
+
+msgid "الأربعاء"
+msgstr "Wednesday"
+
+msgid "الخميس"
+msgstr "Thursday"
+
+msgid "الجمعة"
+msgstr "Friday"
+
+msgid "السبت"
+msgstr "Saturday"
+
+msgid "%(g)sغ"
+msgstr "%(g)sg"
+
+msgid "الخطط السابقة"
+msgstr "Previous plans"
+
+msgid "الخطط التالية"
+msgstr "Next plans"
+
+msgid "وجبات سابقة"
+msgstr "Previous meals"
+
+msgid "وجبات تالية"
+msgstr "Next meals"
+
+msgid "تحكّم كامل."
+msgstr "Total control."
+
+msgid "مرونة تامّة."
+msgstr "Full flexibility."
+
+msgid "سعرات وماكروز تناسب هدفك بالضبط."
+msgstr "Calories and macros that match your goals."
+
+msgid "اختر يلي بتحبه، وبدّل يلي ما بتحبه."
+msgstr "Choose what you like. Swap what you don't."
+
+msgid "جمّد. تخطَّ. غيّر. وقت ما بدك."
+msgstr "Pause. Skip. Change. Anytime."
+
+msgid ""
+"حياتك بتتغيّر وخطتك بتتغيّر معك — عدّل لحد ٢٤ ساعة قبل التوصيل بدون أي "
+"تعقيد."
+msgstr ""
+"Life changes and your plan can too. Adjust up to 24 hours before delivery, "
+"no hassle."
+
+msgid "أي أيام بتحب توصلك وجبات Low Calories؟"
+msgstr "Which days do you want Low Calories meals?"
+
+msgid "أحد"
+msgstr "Sun"
+
+msgid "إثنين"
+msgstr "Mon"
+
+msgid "ثلاثاء"
+msgstr "Tue"
+
+msgid "أربعاء"
+msgstr "Wed"
+
+msgid "خميس"
+msgstr "Thu"
+
+msgid "جمعة"
+msgstr "Fri"
+
+msgid "سبت"
+msgstr "Sat"
+
+msgid "العنوان"
+msgstr "Address"
+
+msgid "البيت"
+msgstr "Home"
+
+msgid "الوقت"
+msgstr "Time"
+
+msgid "٧ ص – ١١ ص"
+msgstr "7 AM – 11 AM"
+
+msgid "التوصيل متخطّى ليوم الأربعاء"
+msgstr "Delivery skipped for Wednesday"
+
+msgid "مثال توضيحي لإدارة أيام التوصيل"
+msgstr "Illustration of delivery-day management"
+
+msgid "اطلب استشارة تغذية وفريق Low Calories بيتواصل معك لترتيب الجلسة."
+msgstr ""
+"Request a nutrition consultation and the Low Calories team will contact you "
+"to arrange it."
+
+msgid ""
+"اطلب استشارة وفريقنا بيتواصل معك لترتيب جلسة مع أخصائي تغذية — بتراجعوا فيها"
+" هدفك وسعراتك وبتطلع بخطة عملية مفصّلة عليك."
+msgstr ""
+"Submit a request and our team will contact you to arrange a session with a "
+"nutritionist — you'll review your goal and calories together and leave with "
+"a practical, tailored plan."
+
+msgid "رسوم الجلسة %(price)s د.أ (يؤكّدها الفريق)."
+msgstr "Session fee %(price)s JOD (confirmed by the team)."
+
+msgid "إرشاد تغذوي مخصّص لهدفك"
+msgstr "Personalized nutrition guidance"
+
+msgid "دعم بخطة الوجبات وتوزيع الماكروز"
+msgstr "Meal-plan and macro-split support"
+
+msgid "توصيات مبنية على وضعك وهدفك"
+msgstr "Goal-based recommendations"
+
+msgid "اطلب استشارة"
+msgstr "Request a Consultation"
+
+msgid "إرسال الطلب"
+msgstr "Submit Request"
+
+msgid ""
+"ما في اختيار موعد — بعد ما تبعت الطلب، الفريق بيتواصل معك لترتيب الجلسة."
+msgstr ""
+"No slot to pick — after you submit, the team contacts you to arrange the "
+"session."
+
+msgid "استلمنا طلب استشارتك"
+msgstr "Your consultation request has been received"
+
+msgid "رح نتواصل معك قريباً لترتيب موعد الاستشارة."
+msgstr "We'll contact you shortly to arrange your consultation."
+
+msgid "رقم الطلب: %(ref)s"
+msgstr "Request %(ref)s"
+
+msgid "العودة للرئيسية"
+msgstr "Back to home"
+
+msgid "بدك خطة مفصّلة عليك بالضبط؟ اطلب استشارة مع أخصائي تغذية."
+msgstr ""
+"Want a plan tailored exactly to you? Request a consultation with a "
+"nutritionist."
+
+msgid "الاسم الكامل"
+msgstr "Full Name"
+
+msgid "رقم الموبايل"
+msgstr "Mobile Number"
+
+msgid "طريقة التواصل المفضّلة"
+msgstr "Preferred Contact Method"
+
+msgid "الهدف / سبب الاستشارة"
+msgstr "Goal / Reason for Consultation"
+
+msgid "ملاحظات إضافية"
+msgstr "Additional Notes"
+
+msgid "مثال: خسارة وزن، خطة وجبات، نصائح رياضية…"
+msgstr "e.g. weight loss, meal plan, training advice…"
+
+msgid "اتصال هاتفي"
+msgstr "Phone Call"
+
+msgid "جديد"
+msgstr "New"
+
+msgid "تم التواصل"
+msgstr "Contacted"
+
+msgid "تم تحديد موعد"
+msgstr "Scheduled"
+
+msgid "تمّت"
+msgstr "Completed"
+
+msgid "ملغى"
+msgstr "Cancelled"
+
+msgid "ادعُ صديق"
+msgstr "Refer a friend"
+
+msgid "ادعُ صديق."
+msgstr "Invite a friend."
+
+msgid "الاثنين تاخدوا يوم مجاني."
+msgstr "You both get a free day."
+
+msgid ""
+"شارك رابط الإحالة الخاص فيك — أول ما صاحبك يشترك، الاثنين تاخدوا يوم مجاني."
+msgstr ""
+"Share your personal referral link — when your friend subscribes, you both "
+"get a free day."
+
+msgid ""
+"شارك رابط الإحالة الخاص فيك. أول ما صاحبك يشترك لأول مرة، الاثنين تاخدوا يوم"
+" مجاني على اشتراككم."
+msgstr ""
+"Share your personal referral link. When your friend subscribes for the first"
+" time, you both receive a free day."
+
+msgid "شارك رابطك"
+msgstr "Share your link"
+
+msgid "ابعت رابط الإحالة الخاص فيك لصاحبك."
+msgstr "Send your personal referral link to a friend."
+
+msgid "صاحبك يشترك"
+msgstr "They subscribe"
+
+msgid "صاحبك يكمّل أول اشتراك إله."
+msgstr "Your friend completes their first subscription."
+
+msgid "الاثنين تستفيدوا"
+msgstr "You both benefit"
+
+msgid "كل واحد فيكم بياخد يوم مجاني."
+msgstr "You both receive a free day."
+
+msgid "جاهز للمشاركة"
+msgstr "Ready to share"
+
+msgid "كود الإحالة الخاص فيك"
+msgstr "Your referral code"
+
+msgid "نسخ الكود"
+msgstr "Copy code"
+
+msgid "انسخ الكود"
+msgstr "Copy code"
+
+msgid "تم النسخ"
+msgstr "Copied"
+
+msgid "رابط الإحالة الخاص فيك"
+msgstr "Your referral link"
+
+msgid "رابط الإحالة"
+msgstr "Referral link"
+
+msgid "انسخ الرابط"
+msgstr "Copy link"
+
+msgid "نسخ"
+msgstr "Copy"
+
+msgid "احصل على كود الإحالة الخاص فيك"
+msgstr "Get your referral code"
+
+msgid "تنقّل الحساب"
+msgstr "Account navigation"
+
+msgid "نظرة عامة"
+msgstr "Overview"
+
+msgid "الاشتراكات"
+msgstr "Subscriptions"
+
+msgid "بياناتي"
+msgstr "Personal Details"
+
+msgid "الإحالة والمكافآت"
+msgstr "Referral & Rewards"
+
+msgid "تسجيل الخروج"
+msgstr "Log Out"
+
+msgid "اشتراكات فعّالة"
+msgstr "Active subscriptions"
+
+msgid "أيام متبقية"
+msgstr "Days remaining"
+
+msgid "الخطة الحالية"
+msgstr "Current plan"
+
+msgid "أقرب تاريخ انتهاء"
+msgstr "Next end date"
+
+msgid "اشتراكاتك"
+msgstr "Your subscriptions"
+
+msgid "إدارة الاشتراكات"
+msgstr "Manage subscriptions"
+
+msgid "%(days)s يوم · %(meals)s وجبة/يوم"
+msgstr "%(days)s days · %(meals)s meals/day"
+
+msgid "ينتهي"
+msgstr "Ends"
+
+msgid "متبقّي %(n)s يوم"
+msgstr "%(n)s days remaining"
+
+msgid "ما عندك اشتراك فعّال حالياً."
+msgstr "No active subscriptions yet."
+
+msgid "اختر خطة تناسب هدفك ونكمّل معك من هناك."
+msgstr "Choose a plan that fits your goals and we'll take it from there."
+
+msgid "ادعُ صديق — أول ما يشترك، الاثنين تاخدوا يوم مجاني."
+msgstr "Invite a friend — when they subscribe, you both get a free day."
+
+msgid "بدأ"
+msgstr "Started"
+
+msgid "%(done)s من %(total)s يوم"
+msgstr "%(done)s of %(total)s days"
+
+msgid "%(n)s يوم متبقّي"
+msgstr "%(n)s days remaining"
+
+msgid "إدارة الاشتراك"
+msgstr "Manage subscription"
+
+msgid "بدك تغيّر شي باشتراكك؟ اختر إجراء وبنجهّزلك طلب واتساب لفريقنا."
+msgstr ""
+"Need to change your subscription? Select an action and we'll prepare a "
+"WhatsApp request for our team."
+
+msgid "لتعديل بياناتك، راسل الفريق على واتساب ونحدّثها إلك."
+msgstr ""
+"To update your details, message the team on WhatsApp and we'll change them "
+"for you."
+
+msgid "الاسم"
+msgstr "Name"
+
+msgid "عضو منذ"
+msgstr "Member since"
+
+msgid "من %(f)s إلى %(t)s"
+msgstr "From %(f)s to %(t)s"
+
+msgid "كغ"
+msgstr "kg"
+
+msgid "ما عندك سجل كافٍ للمقارنة بعد — احسب سعراتك مرة ثانية بعد كم أسبوع."
+msgstr ""
+"Not enough history to compare yet — calculate your calories again in a few "
+"weeks."
+
+msgid "ما في سجل تقدّم بعد."
+msgstr "No progress recorded yet."
+
+msgid "استخدم حاسبة السعرات واحفظ نتيجتك برقم هاتفك لتتابع رحلتك مع الوقت."
+msgstr ""
+"Use the calorie calculator and save your result with your phone number to "
+"track your journey over time."
+
+msgid "احسب سعراتي"
+msgstr "Calculate My Calories"
+
+msgid "أهلاً بعودتك،"
+msgstr "Welcome back,"
+
+msgid "اشتراك وجبات صحية — عمّان، الأردن"
+msgstr "Healthy meal subscription — Amman, Jordan"
+
+msgid "سعرات محسوبة، ماكروز مضبوطة، وتوصيل يومي داخل عمّان."
+msgstr ""
+"Calorie-counted meals, precise macros, and daily delivery across Amman."
+
+msgid "اطلب الآن"
+msgstr "Order Now"
+
+msgid "حاسبة السعرات الحرارية"
+msgstr "Calorie Calculator"
+
+msgid "احسب سعراتك وماكروزك بدقة، واحصل فوراً على خطة اشتراك مناسبة."
+msgstr ""
+"Calculate your calories and macros precisely, and get a matching "
+"subscription plan instantly."
+
+msgid "احسب سعراتي 🔥"
+msgstr "Calculate My Calories"
+
+msgid "نتيجتك"
+msgstr "Your Result"
+
+msgid "سعرة/يوم"
+msgstr "kcal/day"
+
+msgid "كربوهيدرات"
+msgstr "Carbs"
+
+msgid "الخطة المقترحة إلك"
+msgstr "Your Suggested Plan"
+
+msgid "يوم"
+msgstr "days"
+
+msgid "د.أ"
+msgstr "JOD"
+
+msgid "ابعتلي هالخطة على واتساب"
+msgstr "Send me this plan on WhatsApp"
+
+msgid "شوف وجبات هذا الأسبوع"
+msgstr "See this week's meals"
+
+msgid "خطط وأسعار"
+msgstr "Plans & Pricing"
+
+msgid "اشترك الآن"
+msgstr "Subscribe Now"
+
+msgid "الخطط غير متوفرة حالياً — تواصل معنا على واتساب."
+msgstr "Plans aren't available right now — contact us on WhatsApp."
+
+msgid "منيو أسبوع"
+msgstr "Menu for week of"
+
+msgid "يتجدد كل أحد"
+msgstr "Updated every Sunday"
+
+msgid "سعرة"
+msgstr "kcal"
+
+msgid ""
+"المنيو غير متوفر حالياً — تواصل معنا على واتساب لمعرفة وجبات هذا الأسبوع."
+msgstr ""
+"The menu isn't available right now — contact us on WhatsApp for this week's "
+"meals."
+
+msgid "خليه يوصلك كل يوم"
+msgstr "Get it delivered every day"
+
+msgid "شوف خطط الاشتراك"
+msgstr "See subscription plans"
+
+msgid "شوف الخطط الأسبوعية"
+msgstr "See weekly plans"
+
+msgid "التنقل"
+msgstr "Navigation"
+
+msgid "السابق"
+msgstr "Previous"
+
+msgid "التالي"
+msgstr "Next"
+
+msgid "شكراً إلك! 🙏"
+msgstr "Thank you!"
+
+msgid "فعّال"
+msgstr "Active"
+
+msgid "مجمّد"
+msgstr "Paused"
+
+msgid "منتهي"
+msgstr "Expired"
+
+msgid "لوحة القيادة"
+msgstr "Dashboard"
+
+msgid "أخرى"
+msgstr "Other"
+
+msgid "صفحة الاستشارات"
+msgstr "Consultations page"
+
+msgid "بعد حاسبة السعرات"
+msgstr "After calorie calculator"
+
+msgid "طلب استشارة"
+msgstr "Consultation request"
+
+msgid "طلبات الاستشارات"
+msgstr "Consultation requests"
+
+msgid "تاريخ الطلب"
+msgstr "Request date"
+
+msgid "المصدر"
+msgstr "Source"
+
+msgid "ملاحظات داخلية (للفريق فقط)"
+msgstr "Internal notes (team only)"
+
+msgid "المرجع"
+msgstr "Reference"
+
+msgid "الطلب"
+msgstr "Request"
+
+msgid "بيانات العميل"
+msgstr "Customer info"
+
+msgid "متابعة الفريق"
+msgstr "Team follow-up"
+
+msgid "تواصل مع العميل"
+msgstr "Contact customer"
+
+msgid "تواصل عبر واتساب"
+msgstr "Contact on WhatsApp"
+
+msgid "بريد إلكتروني"
+msgstr "Email"
+
+msgid "احسب سعراتك اليومية وماكروزك، ولاقِ الخطة اللي تناسب هدفك."
+msgstr ""
+"Calculate your daily calories and macros, and find the plan that fits your "
+"goal."
+
+msgid "اعرف شو جسمك بيحتاج"
+msgstr "Know what your body needs"
+
+msgid "بنحسبلك هدف يومي مبني على:"
+msgstr "We calculate a daily target based on:"
+
+msgid "عمرك وقياسات جسمك"
+msgstr "Your age and body measurements"
+
+msgid "مستوى نشاطك"
+msgstr "Your activity level"
+
+msgid "هدفك الحالي"
+msgstr "Your current goal"
+
+msgid "وبعد الحساب بنعرضلك:"
+msgstr "After calculating, we'll show you:"
+
+msgid "السعرات اليومية"
+msgstr "Daily calories"
+
+msgid "البروتين والكارب والدهون"
+msgstr "Protein, carbs and fat"
+
+msgid "الخطة اللي تناسب هدفك"
+msgstr "The plan that fits your goal"
+
+msgid "هدفك اليومي"
+msgstr "Your daily target"
+
+msgid "%(d)s يوم"
+msgstr "%(d)s days"
+
+msgid "%(m)s وجبة/يوم"
+msgstr "%(m)s meals/day"
+
+msgid "وجبات طازة محسوبة السعرات، تتجدد كل أسبوع."
+msgstr "Fresh, calorie-counted meals, updated every week."
+
+msgid "هذا الأسبوع"
+msgstr "This week"
+
+msgid "أسبوع %(d)s"
+msgstr "Week of %(d)s"
+
+msgid "أيام الأسبوع"
+msgstr "Days of the week"
+
+msgid "وجبات صحية يومية لفريق شركتك، توصيل لموقع واحد وسعر واضح لكل موظف."
+msgstr ""
+"Daily healthy meals for your company's team, delivered to one location with "
+"clear per-employee pricing."
+
+msgid ""
+"وجبات صحية يومية لفريق شركتك، توصيل لموقع واحد وسعر واضح لكل موظف. اطلب عرض "
+"سعر."
+msgstr "Daily healthy meals for your team. Request a quote."
+
+msgid "وجبات صحية لفريقك،"
+msgstr "Healthy meals for your team,"
+
+msgid "توصيل لمقر الشركة."
+msgstr "delivered to the office."
+
+msgid ""
+"خطط وجبات مرنة للشركات — وجبات محسوبة السعرات، توصيل يومي، وسعر واضح لكل "
+"موظف."
+msgstr ""
+"Flexible corporate meal plans — calorie-counted meals, daily delivery, and "
+"simple per-employee pricing."
+
+msgid "مصمّمة للفرق"
+msgstr "Made for teams"
+
+msgid "خطط وجبات بسيطة لشركات بأحجام مختلفة."
+msgstr "Simple meal plans for companies of different sizes."
+
+msgid "وجبات مختلفة محسوبة السعرات على مدار الأسبوع."
+msgstr "Different calorie-counted meals throughout the week."
+
+msgid "توصيل كل الطلبات دفعة وحدة لمقر الشركة بالوقت المتفق عليه."
+msgstr "Meals are delivered together to your office at the agreed time."
+
+msgid "سعر واضح لكل موظف"
+msgstr "Simple per-employee pricing"
+
+msgid "تسعير واضح حسب حجم فريقك والخطة المختارة."
+msgstr "Clear pricing based on your team size and selected plan."
+
+msgid "كيف تشتغل خطط الشركات"
+msgstr "How corporate plans work"
+
+msgid "خبّرنا عن فريقك"
+msgstr "Tell us about your team"
+
+msgid "ابعت بيانات شركتك وعدد الموظفين التقريبي."
+msgstr "Submit your company details and approximate number of employees."
+
+msgid "نجهّز خطتك"
+msgstr "We prepare your plan"
+
+msgid "فريقنا بيراجع متطلباتك ويجهّز العرض المناسب للشركات."
+msgstr ""
+"Our team reviews your requirements and prepares the appropriate corporate "
+"offer."
+
+msgid "نتواصل معك"
+msgstr "We contact you"
+
+msgid "فريقنا بيتواصل معك لتأكيد الخطة والسعر وتفاصيل التوصيل."
+msgstr ""
+"Our team gets in touch to confirm the plan, pricing, and delivery details."
+
+msgid "خلّينا نبني الخطة المناسبة لفريقك."
+msgstr "Let's build the right meal plan for your team."
+
+msgid "خبّرنا شوي عن شركتك وفريقنا بيتواصل معك بالخطة المناسبة."
+msgstr ""
+"Tell us a little about your company and our team will contact you with the "
+"appropriate corporate plan."
+
+msgid "بدون التزام"
+msgstr "No commitment"
+
+msgid "مفصّلة على حجم فريقك"
+msgstr "Tailored to your team size"
+
+msgid "فريقنا بيتواصل معك مباشرة"
+msgstr "Our team will contact you directly"
+
+msgid "استلمنا طلبك"
+msgstr "Request received"
+
+msgid "شكراً — استلم فريقنا طلب وجبات شركتك وبيتواصل معك قريباً."
+msgstr ""
+"Thanks — our team has received your corporate meal inquiry and will contact "
+"you shortly."
+
+msgid "تابع على واتساب"
+msgstr "Continue on WhatsApp"
+
+msgid "شارك بياناتك ونرجعلك قريباً."
+msgstr "Share your details and we'll get back to you."
+
+msgid "أرسل طلب عرض السعر"
+msgstr "Request Corporate Quote"
+
+msgid "ما في دفع بهالخطوة."
+msgstr "No payment required at this step."
+
+msgid "%(name)s دعاك إلى Low Calories"
+msgstr "%(name)s invited you to Low Calories"
+
+msgid "اشترك لأول مرة عبر هالدعوة والاثنين تاخدوا يوم مجاني."
+msgstr ""
+"Subscribe for the first time through this invite and you both get a free "
+"day."
+
+msgid "%(name)s دعاك إلى"
+msgstr "%(name)s invited you to"
+
+msgid ""
+"انضم عبر دعوة %(name)s، وأول ما تبدأ أول اشتراك إلك، الاثنين تاخدوا يوم "
+"مجاني."
+msgstr ""
+"Join through %(name)s's invitation and when you start your first "
+"subscription, you both get a free day."
+
+msgid "يوم مجاني"
+msgstr "free day"
+
+msgid "إلك"
+msgstr "For you"
+
+msgid "لصاحبك"
+msgstr "For your friend"
+
+msgid "دخّل بياناتك"
+msgstr "Enter your details"
+
+msgid "اشترك واستلم يومك المجاني"
+msgstr "Subscribe and receive your free day"
+
+msgid "احصل على يومك المجاني"
+msgstr "Claim your free day"
+
+msgid "دخّل بياناتك ومنجهّزلك طلب الإحالة."
+msgstr "Enter your details and we'll prepare your referral request."
+
+msgid ""
+"منجهّزلك طلب الإحالة ونفتح واتساب — الفريق بيأكد العرض معك. ما في دفع "
+"بهالخطوة."
+msgstr ""
+"We'll prepare your referral request and open WhatsApp. Our team will confirm"
+" the offer with you. No payment at this step."
+
+msgid "اختار الخطة اللي تناسب روتينك."
+msgstr "Choose the plan that fits your routine."
+
+msgid "حدّد عدد الأيام، نوع الوجبات، وعدد الوجبات باليوم."
+msgstr "Select your number of days, meal type, and meals per day."
+
+msgid ""
+"اختار الخطة اللي تناسب روتينك — حدّد عدد الأيام، نوع الوجبات، وعدد الوجبات "
+"باليوم."
+msgstr ""
+"Choose the plan that fits your routine — select your number of days, meal "
+"type, and meals per day."
+
+msgid "أدخل الكود"
+msgstr "Enter code"
+
+msgid "وجبة واحدة / اليوم"
+msgstr "1 meal / day"
+
+msgid "%(n)s وجبات / اليوم"
+msgstr "%(n)s meals / day"
+
+msgid "وجبة / اليوم"
+msgstr "meal / day"
+
+msgid "وجبات / اليوم"
+msgstr "meals / day"
+
+msgid "اختر تفضيلاتك ويظهر ملخّص خطتك هنا."
+msgstr "Choose your preferences and your plan summary appears here."

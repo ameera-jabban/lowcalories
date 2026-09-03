@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "المنيو الأسبوعي" %} | {{ site_settings.brand_name }}{% endblock %}
+{% block meta_description %}{% trans "وجبات طازة محسوبة السعرات، تتجدد كل أسبوع." %}{% endblock %}
+
+{% block content %}
+<main class="wmenu">
+    <div class="wmenu__inner">
+        <header class="wmenu__head">
+            <p class="wmenu__eyebrow">{% trans "هذا الأسبوع" %}</p>
+            <h1 class="wmenu__title">{% trans "المنيو الأسبوعي" %}</h1>
+            <p class="wmenu__lead">{% trans "وجبات طازة محسوبة السعرات، جاهزة لأسبوعك." %}</p>
+            {% if weekly_menu %}
+            <p class="wmenu__week">
+                {% blocktrans with d=weekly_menu.week_start_date|date:"j M Y" %}أسبوع {{ d }}{% endblocktrans %}
+                <span aria-hidden="true"> • </span>{% trans "يتجدد كل أحد" %}
+            </p>
+            {% endif %}
+        </header>
+
+        {% if days %}
+        <div class="wmenu__days" role="tablist" aria-label="{% trans 'أيام الأسبوع' %}" data-day-tabs>
+            {% for day in days %}
+            <button type="button" role="tab" class="wmenu__day{% if forloop.first %} is-active{% endif %}"
+                    aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                    aria-controls="day-{{ day.value }}" id="tab-{{ day.value }}">{{ day.label }}</button>
+            {% endfor %}
+        </div>
+
+        {% for day in days %}
+        <section class="wmenu__panel" id="day-{{ day.value }}" role="tabpanel"
+                 aria-labelledby="tab-{{ day.value }}"{% if not forloop.first %} hidden{% endif %}>
+            <div class="wmenu__grid">
+                {% for c in day.cards %}{% include "core/_media_card.html" with card=c %}{% endfor %}
+            </div>
+        </section>
+        {% endfor %}
+        {% else %}
+        <div class="empty-state">
+            <p>{% trans "المنيو غير متوفر حالياً — تواصل معنا على واتساب لمعرفة وجبات هذا الأسبوع." %}</p>
+            {% if site_settings.has_whatsapp %}
+            <a class="btn btn-primary" href="{{ site_settings.whatsapp_link }}" rel="noopener" target="_blank">{% trans "واتساب" %}</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="wmenu__cta">
+            <p>{% trans "خليه يوصلك كل يوم" %}</p>
+            <a href="{% url 'plans:plans_list' %}" class="btn btn-primary">{% trans "شوف خطط الاشتراك" %}</a>
+        </div>
+    </div>
+</main>
+{% endblock %}

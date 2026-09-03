@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "حاسبة السعرات الحرارية" %} | {{ site_settings.brand_name }}{% endblock %}
+{% block meta_description %}{% trans "احسب سعراتك اليومية وماكروزك، ولاقِ الخطة اللي تناسب هدفك." %}{% endblock %}
+
+{% block content %}
+<main class="calc">
+    <div class="calc__inner">
+        <header class="calc__head">
+            <h1 class="calc__title">{% trans "حاسبة السعرات الحرارية" %}</h1>
+            <p class="calc__lead">{% trans "احسب سعراتك اليومية وماكروزك، ولاقِ الخطة اللي تناسب هدفك." %}</p>
+        </header>
+
+        <div class="calc__grid">
+            <div class="calc__card">
+                <form method="post" class="calc__form no-print" novalidate>
+                    {% csrf_token %}
+
+                    <fieldset class="calc__fs">
+                        <legend>{% trans "بياناتك" %}</legend>
+                        <div class="calc__row calc__row--2">
+                            <div class="form-row">
+                                <label for="{{ form.gender.id_for_label }}">{{ form.gender.label }}</label>
+                                {{ form.gender }}
+                                {% if form.gender.errors %}<span class="field-error">{{ form.gender.errors|striptags }}</span>{% endif %}
+                            </div>
+                            <div class="form-row">
+                                <label for="{{ form.age.id_for_label }}">{{ form.age.label }}</label>
+                                {{ form.age }}
+                                {% if form.age.errors %}<span class="field-error">{{ form.age.errors|striptags }}</span>{% endif %}
+                            </div>
+                        </div>
+                        <div class="calc__row calc__row--2">
+                            <div class="form-row">
+                                <label for="{{ form.height_cm.id_for_label }}">{{ form.height_cm.label }}</label>
+                                {{ form.height_cm }}
+                                {% if form.height_cm.errors %}<span class="field-error">{{ form.height_cm.errors|striptags }}</span>{% endif %}
+                            </div>
+                            <div class="form-row">
+                                <label for="{{ form.weight_kg.id_for_label }}">{{ form.weight_kg.label }}</label>
+                                {{ form.weight_kg }}
+                                {% if form.weight_kg.errors %}<span class="field-error">{{ form.weight_kg.errors|striptags }}</span>{% endif %}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="calc__fs">
+                        <legend>{% trans "نشاطك وهدفك" %}</legend>
+                        <div class="form-row">
+                            <label for="{{ form.activity_level.id_for_label }}">{{ form.activity_level.label }}</label>
+                            {{ form.activity_level }}
+                            {% if form.activity_level.errors %}<span class="field-error">{{ form.activity_level.errors|striptags }}</span>{% endif %}
+                        </div>
+                        <div class="form-row">
+                            <label for="{{ form.goal.id_for_label }}">{{ form.goal.label }}</label>
+                            {{ form.goal }}
+                            {% if form.goal.errors %}<span class="field-error">{{ form.goal.errors|striptags }}</span>{% endif %}
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="calc__fs">
+                        <div class="form-row">
+                            <label for="{{ form.customer_phone.id_for_label }}">{{ form.customer_phone.label }}</label>
+                            {{ form.customer_phone }}
+                            {% if form.customer_phone.errors %}<span class="field-error">{{ form.customer_phone.errors|striptags }}</span>{% endif %}
+                        </div>
+                    </fieldset>
+
+                    <button type="submit" class="btn btn-primary calc__submit">{% trans "احسب سعراتي" %}</button>
+                </form>
+            </div>
+
+            <aside class="calc__panel">
+                <h2 class="calc__panel-h">{% trans "اعرف شو جسمك بيحتاج" %}</h2>
+                <p class="calc__panel-d">{% trans "بنحسبلك هدف يومي مبني على:" %}</p>
+                <ul class="calc__panel-list">
+                    <li>{% trans "عمرك وقياسات جسمك" %}</li>
+                    <li>{% trans "مستوى نشاطك" %}</li>
+                    <li>{% trans "هدفك الحالي" %}</li>
+                </ul>
+                <p class="calc__panel-d">{% trans "وبعد الحساب بنعرضلك:" %}</p>
+                <ul class="calc__panel-list">
+                    <li>{% trans "السعرات اليومية" %}</li>
+                    <li>{% trans "البروتين والكارب والدهون" %}</li>
+                    <li>{% trans "الخطة اللي تناسب هدفك" %}</li>
+                </ul>
+            </aside>
+        </div>
+
+        {% if result %}
+        <section class="calc__result" aria-live="polite">
+            <p class="calc__result-eyebrow">{% trans "هدفك اليومي" %}</p>
+            <p class="calc__result-cals"><strong>{{ result.calories }}</strong> <span>{% trans "سعرة/يوم" %}</span></p>
+
+            <div class="calc__macros">
+                <div class="calc__macro">
+                    <span class="calc__macro-dot calc__macro-dot--p" aria-hidden="true"></span>
+                    <span class="calc__macro-l">{% trans "بروتين" %}</span>
+                    <span class="calc__macro-v" dir="ltr">{{ result.protein_g }}g</span>
+                </div>
+                <div class="calc__macro">
+                    <span class="calc__macro-dot calc__macro-dot--c" aria-hidden="true"></span>
+                    <span class="calc__macro-l">{% trans "كربوهيدرات" %}</span>
+                    <span class="calc__macro-v" dir="ltr">{{ result.carbs_g }}g</span>
+                </div>
+                <div class="calc__macro">
+                    <span class="calc__macro-dot calc__macro-dot--f" aria-hidden="true"></span>
+                    <span class="calc__macro-l">{% trans "دهون" %}</span>
+                    <span class="calc__macro-v" dir="ltr">{{ result.fat_g }}g</span>
+                </div>
+            </div>
+
+            {% if progress_code %}
+            <div class="calc__note">
+                <p>{% trans "كود متابعة تقدّمك" %}: <strong dir="ltr">{{ progress_code }}</strong></p>
+                <p class="calc__note-d">{% trans "احفظه — بتحتاجه لتشوف تقدّمك لاحقاً من صفحة «متابعة تقدّمي»." %}</p>
+            </div>
+            {% endif %}
+
+            {% if suggested_card %}
+            <div class="calc__reco">
+                <h3 class="calc__reco-h">{% trans "الخطة المقترحة إلك" %}</h3>
+                <div class="calc__reco-card">
+                    {% include "core/_media_card.html" with card=suggested_card %}
+                </div>
+                <a href="{{ suggested_card.href }}" class="btn btn-primary calc__reco-cta" onclick="fbqLead()">
+                    {% trans "ابعتلي هالخطة على واتساب" %}
+                </a>
+            </div>
+            {% endif %}
+
+            <div class="calc__result-actions">
+                {% if show_consultation_upsell %}
+                <a href="{% url 'consultations:list' %}?source=calculator_upsell" class="btn btn-secondary">{% trans "اطلب استشارة" %} →</a>
+                {% endif %}
+                {% if current_menu %}
+                <a href="{% url 'menu:menu_list' %}" class="btn btn-secondary">{% trans "شوف وجبات هذا الأسبوع" %} →</a>
+                {% endif %}
+                <button type="button" onclick="window.print()" class="btn btn-ghost print-btn">{% trans "اطبع النتيجة أو احفظها PDF" %}</button>
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

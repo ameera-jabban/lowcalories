@@ -1,0 +1,17 @@
+Django>=5.0,<7.0
+Pillow>=10.0
+requests>=2.31          # استدعاء WhatsApp Business Cloud API (خدمة core/whatsapp_service.py)
+
+# ---- لوحة تحكم Enterprise ----
+django-unfold>=0.60        # ثيم عمليات Enterprise للـ admin: sidebar بمجموعات + هوية البراند + RTL
+django-simple-history>=3.13  # تتبع التعديلات (Audit Log) على الموديلات الحساسة
+
+# ---- إنتاج ----
+gunicorn>=26.0            # WSGI server حقيقي (بدل django runserver)
+whitenoise>=6.0           # يخدم الملفات الثابتة بكفاءة بدون nginx منفصل
+django-environ>=0.12      # يقرأ الإعدادات من متغيرات البيئة / ملف .env
+psycopg2-binary>=2.9      # PostgreSQL driver
+django-redis>=5.4         # Cache backend حقيقي (اختياري - يشتغل بس لو REDIS_URL موجود)
+
+# ---- أدوات تطوير ----
+polib>=1.2               # مزامنة/تجميع ترجمات .po/.mo بدون GNU gettext (scripts/i18n_sync.py)

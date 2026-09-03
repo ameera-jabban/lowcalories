@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "دخول العملاء" %} | {{ site_settings.brand_name }}{% endblock %}
+
+{% block content %}
+<section class="container page-header">
+    <h1>👤 {% trans "بوابة اشتراكي" %}</h1>
+    <p>{% trans "ادخل رقم هاتفك وكود الدخول اللي وصلك من الفريق لمتابعة اشتراكك." %}</p>
+</section>
+
+<section class="container">
+    {% if messages %}
+        {% for message in messages %}
+        <p class="field-error">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" class="calculator-form no-print">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-row">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">{% trans "دخول" %}</button>
+    </form>
+
+    <p class="hero-note">
+        {% trans "ما وصلك كود دخول؟ راسلنا على واتساب ونبعتلك ياه." %}
+        <a href="{% url 'leads:go_to_whatsapp_general' %}?source=account_login">{% trans "واتساب" %}</a>
+    </p>
+</section>
+{% endblock %}

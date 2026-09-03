@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ c.title }} | {{ site_settings.brand_name }}{% endblock %}
+{% block meta_description %}{{ c.intro }}{% endblock %}
+
+{% block content %}
+<main class="builder" id="plan-builder"
+      data-go-url-base="{{ go_url_base }}"
+      data-min-price="{{ min_price }}">
+    <script type="application/json" id="plan-matrix">{{ matrix_json|safe }}</script>
+
+    <div class="builder__inner">
+        <div class="builder__config">
+            <header class="builder__head">
+                <h1 class="builder__title">{{ c.title }}</h1>
+                <p class="builder__intro">{{ c.intro }}</p>
+            </header>
+
+            <ol class="builder__progress" aria-label="{{ c.summary_title }}">
+                <li class="builder__progress-step is-current" data-progress="type">
+                    <span class="builder__progress-dot" aria-hidden="true">1</span>
+                    <span class="builder__progress-label">{{ c.label_type }}</span>
+                </li>
+                <li class="builder__progress-step" data-progress="meals">
+                    <span class="builder__progress-dot" aria-hidden="true">2</span>
+                    <span class="builder__progress-label">{{ c.label_meals }}</span>
+                </li>
+                <li class="builder__progress-step" data-progress="days">
+                    <span class="builder__progress-dot" aria-hidden="true">3</span>
+                    <span class="builder__progress-label">{{ c.label_days }}</span>
+                </li>
+            </ol>
+
+            <section class="builder__step" data-step="type" aria-labelledby="step-type-h">
+                <h2 id="step-type-h" class="builder__step-title">{{ c.step_type }}</h2>
+                <div class="builder__options builder__options--cards" role="radiogroup" aria-label="{{ c.step_type }}">
+                    {% for mt in meal_types %}
+                    <div class="builder-opt builder-opt--card" role="radio" aria-checked="false" tabindex="0"
+                         data-choice="type" data-value="{{ mt.slug }}">
+                        <span class="builder-opt__check" aria-hidden="true">{% include "core/icons/check.svg" %}</span>
+                        <span class="builder-opt__name">{{ mt.name }}</span>
+                        <span class="builder-opt__macros" aria-hidden="true">
+                            {% for m in mt.macros %}<span class="builder-opt__macro builder-opt__macro--{{ m.key }}" style="flex-grow:{{ m.pct }}"></span>{% endfor %}
+                        </span>
+                        {% if mt.macro_legend %}
+                        <span class="builder-opt__legend">{% for m in mt.macro_legend %}<span>{{ m.value }} {{ m.label }}</span>{% endfor %}</span>
+                        {% endif %}
+                        <a href="{{ menu_url }}" class="builder-opt__menu">{{ c.view_menu }} <span aria-hidden="true">→</span></a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="builder__step" data-step="meals" aria-labelledby="step-meals-h" data-disabled hidden>
+                <h2 id="step-meals-h" class="builder__step-title">{{ c.step_meals }}</h2>
+                <div class="builder__options" role="radiogroup" aria-label="{{ c.step_meals }}" data-options-for="meals"></div>
+            </section>
+
+            <section class="builder__step" data-step="days" aria-labelledby="step-days-h" data-disabled hidden>
+                <h2 id="step-days-h" class="builder__step-title">{{ c.step_days }}</h2>
+                <div class="builder__options" role="radiogroup" aria-label="{{ c.step_days }}" data-options-for="days"></div>
+            </section>
+
+            <p class="builder__unavailable" role="alert" hidden>{{ c.unavailable }}</p>
+        </div>
+
+        <aside class="builder__summary" aria-label="{{ c.summary_title }}">
+            <div class="builder__summary-card">
+                <h2 class="builder__summary-title">{{ c.summary_title }}</h2>
+
+                <p class="builder__summary-text" data-summary-empty>{{ c.summary_empty_text }}</p>
+
+                <div data-summary-filled hidden>
+                    <dl class="builder__summary-rows">
+                        <div><dt>{{ c.label_type }}</dt><dd data-sum-type>—</dd></div>
+                        <div data-sum-meals-row hidden><dt>{{ c.label_meals }}</dt><dd data-sum-meals>—</dd></div>
+                        <div data-sum-days-row hidden><dt>{{ c.label_days }}</dt><dd data-sum-days>—</dd></div>
+                    </dl>
+                    <div class="builder__summary-total" data-sum-total-row hidden>
+                        <span class="builder__summary-total-label">{{ c.total }}</span>
+                        <span class="builder__summary-price"><strong data-sum-price>—</strong> <span>{{ c.jod }}</span></span>
+                    </div>
+                </div>
+
+                <a class="btn btn-primary builder__continue" data-continue href="#" aria-disabled="true" tabindex="-1">
+                    {% include "core/icons/whatsapp.svg" %}<span>{{ c.continue }}</span>
+                </a>
+            </div>
+        </aside>
+    </div>
+
+    <div class="builder__i18n" hidden
+         data-day-word="{{ c.day_word }}"
+         data-meal-singular="{{ c.meal_singular }}"
+         data-meal-plural="{{ c.meal_plural }}"></div>
+</main>
+{% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/plan-builder.js' %}"></script>{% endblock %}

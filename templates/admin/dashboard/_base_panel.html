@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+{% comment %}
+    القالب الأساسي الموحّد لكل صفحة مخصصة في لوحة التحكم (index / recent_changes).
+    يورّث shell الـ admin (sidebar + header + هوية البراند) من django-unfold عبر
+    extends "admin/base_site.html"، ويوفّر panel موحّد (.lc-panel) من dashboard.css.
+
+    بلوكات للاستخدام:
+        panel_heading      عنوان الـ panel
+        panel_actions      أزرار أعلى يمين الـ panel
+        dashboard_content  جسم الـ panel
+        after_panel        panels إضافية تحت
+{% endcomment %}
+
+{% block extrastyle %}{{ block.super }}
+    <link rel="stylesheet" href="{% static 'admin/css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="lc-page">
+    <section class="lc-panel">
+        <div class="lc-panel__head">
+            <h2 class="lc-panel__title">{% block panel_heading %}{{ title }}{% endblock %}</h2>
+            <div class="lc-panel__tools">{% block panel_actions %}{% endblock %}</div>
+        </div>
+        <div class="lc-panel__body">
+            {% block dashboard_content %}{% endblock %}
+        </div>
+    </section>
+
+    {% block after_panel %}{% endblock %}
+</div>
+{% endblock %}

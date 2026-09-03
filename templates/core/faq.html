@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "الأسئلة الشائعة" %} | {{ site_settings.brand_name }}{% endblock %}
+{% block meta_description %}{% trans "أجوبة على أكثر الأسئلة تكراراً عن خطط Low Calories Jordan، الاشتراك، التوصيل، والدفع." %}{% endblock %}
+
+{% block content %}
+{% if faq %}
+    {% include "core/_faq_section.html" %}
+{% else %}
+<section class="container section">
+    <div class="empty-state">
+        <p>{% trans "لسا ما في أسئلة شائعة — راسلنا على واتساب لأي استفسار." %}</p>
+        {% if site_settings.has_whatsapp %}
+        <a class="btn btn-primary" href="{{ site_settings.whatsapp_link }}" rel="noopener" target="_blank">{% trans "واتساب" %}</a>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

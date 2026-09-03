@@ -1,0 +1,22 @@
+[Unit]
+Description=Low Calories Jordan — Gunicorn
+After=network.target postgresql.service
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/lowcalories
+EnvironmentFile=/var/www/lowcalories/.env
+ExecStart=/var/www/lowcalories/venv/bin/gunicorn \
+    lowcalories.wsgi:application \
+    --bind unix:/run/lowcalories/gunicorn.sock \
+    --workers 3 \
+    --timeout 60 \
+    --access-logfile - \
+    --error-logfile -
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

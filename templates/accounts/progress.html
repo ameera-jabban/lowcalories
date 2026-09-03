@@ -1,0 +1,49 @@
+{% extends "accounts/_profile_base.html" %}
+{% load i18n %}
+{% block profile_title %}{% trans "متابعة تقدّمي" %}{% endblock %}
+
+{% block profile_content %}
+<h2 class="profile__h2">{% trans "متابعة تقدّمي" %}</h2>
+
+{% if calcs %}
+    {% if comparison %}
+    <div class="profile__stats">
+        <div class="profile__stat">
+            <span class="profile__stat-v" dir="ltr">{{ comparison.from_weight }} → {{ comparison.to_weight }} {% trans "كغ" %}</span>
+            <span class="profile__stat-l">{% blocktrans with f=comparison.from_date|date:"j M" t=comparison.to_date|date:"j M Y" %}من {{ f }} إلى {{ t }}{% endblocktrans %}</span>
+        </div>
+    </div>
+    {% else %}
+    <p class="profile__section-d">{% trans "ما عندك سجل كافٍ للمقارنة بعد — احسب سعراتك مرة ثانية بعد كم أسبوع." %}</p>
+    {% endif %}
+
+    <div class="profile__table-wrap">
+        <table class="progress-table">
+            <thead>
+                <tr>
+                    <th>{% trans "التاريخ" %}</th>
+                    <th>{% trans "الوزن (كغ)" %}</th>
+                    <th>{% trans "السعرات" %}</th>
+                    <th>{% trans "الهدف" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in calcs %}
+                <tr>
+                    <td>{{ c.created_at|date:"j M Y" }}</td>
+                    <td dir="ltr">{{ c.weight_kg }}</td>
+                    <td dir="ltr">{{ c.result_calories }}</td>
+                    <td>{{ c.get_goal_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+<div class="profile__empty">
+    <p class="profile__empty-t">{% trans "ما في سجل تقدّم بعد." %}</p>
+    <p class="profile__empty-d">{% trans "استخدم حاسبة السعرات واحفظ نتيجتك برقم هاتفك لتتابع رحلتك مع الوقت." %}</p>
+    <a href="{% url 'calculator:calorie_calculator' %}" class="btn btn-primary">{% trans "احسب سعراتي" %}</a>
+</div>
+{% endif %}
+{% endblock %}

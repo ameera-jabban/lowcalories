@@ -1,0 +1,71 @@
+{% extends "admin/dashboard/_base_panel.html" %}
+{% load i18n %}
+{% comment %}
+    الصفحة الرئيسية للـ admin — لوحة قيادة العمليات.
+    السياق يجي من core.admin_dashboard.dashboard_callback (UNFOLD["DASHBOARD_CALLBACK"]).
+{% endcomment %}
+
+{% block title %}{% trans "لوحة القيادة" %}{% endblock %}
+{% block panel_heading %}{% trans "شو يحتاج انتباه اليوم؟" %}{% endblock %}
+
+{% block panel_actions %}
+    {% if lc_show_audit_link %}
+        <a class="lc-panel__link" href="{% url 'admin:audit_recent_changes' %}">{% trans "كل التعديلات" %} →</a>
+    {% endif %}
+{% endblock %}
+
+{% block dashboard_content %}
+    {% if lc_cards %}
+    <div class="lc-kpis">
+        {% for c in lc_cards %}
+        <a class="lc-kpi" href="{{ c.url }}">
+            <div class="lc-kpi__value">{{ c.value }}</div>
+            <div class="lc-kpi__label">{{ c.title }}</div>
+            {% if c.hint %}<div class="lc-kpi__hint">{{ c.hint }}</div>{% endif %}
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="lc-empty">{% trans "لا توجد بيانات لعرضها بصلاحياتك الحالية." %}</div>
+    {% endif %}
+
+    {% if lc_leads_7d %}
+    <h3 class="lc-subhead">{% trans "نوايا الشراء — آخر 7 أيام" %}</h3>
+    <div class="lc-bars">
+        {% for row in lc_leads_7d %}
+        <div class="lc-bars__col">
+            <span class="lc-bars__count">{{ row.count }}</span>
+            <div class="lc-bars__bar" style="height: {% widthratio row.count lc_leads_7d_max 100 %}%;"></div>
+            <span class="lc-bars__label">{{ row.label }}</span>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block after_panel %}
+    {% if lc_show_audit_link %}
+    <section class="lc-panel">
+        <div class="lc-panel__head">
+            <h2 class="lc-panel__title">{% trans "آخر نشاط الفريق" %}</h2>
+            <a class="lc-panel__link" href="{% url 'admin:audit_recent_changes' %}">{% trans "عرض الكل" %} →</a>
+        </div>
+        <div class="lc-panel__body">
+            {% if lc_recent %}
+            <ul class="lc-activity">
+                {% for e in lc_recent %}
+                <li>
+                    <span class="lc-badge lc-badge--{{ e.action_css }}">{{ e.action_label }}</span>
+                    <strong>{{ e.model_label }}</strong> — {{ e.object_repr }}
+                    {% if e.user %}<span>{% blocktrans with u=e.user %}بواسطة {{ u }}{% endblocktrans %}</span>{% endif %}
+                    <br><time>{{ e.date }}</time>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="lc-empty">{% trans "لا يوجد نشاط مُسجّل بعد." %}</div>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+{% endblock %}

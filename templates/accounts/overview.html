@@ -1,0 +1,73 @@
+{% extends "accounts/_profile_base.html" %}
+{% load i18n %}
+{% block profile_title %}{% trans "نظرة عامة" %}{% endblock %}
+
+{% block profile_content %}
+<h2 class="profile__h2">{% trans "نظرة عامة" %}</h2>
+
+<div class="profile__stats">
+    <div class="profile__stat">
+        <span class="profile__stat-v">{{ active_count }}</span>
+        <span class="profile__stat-l">{% trans "اشتراكات فعّالة" %}</span>
+    </div>
+    {% if total_remaining %}
+    <div class="profile__stat">
+        <span class="profile__stat-v">{{ total_remaining }}</span>
+        <span class="profile__stat-l">{% trans "أيام متبقية" %}</span>
+    </div>
+    {% endif %}
+    {% if current_plan %}
+    <div class="profile__stat">
+        <span class="profile__stat-v">{{ current_plan }}</span>
+        <span class="profile__stat-l">{% trans "الخطة الحالية" %}</span>
+    </div>
+    {% endif %}
+    {% if next_end %}
+    <div class="profile__stat">
+        <span class="profile__stat-v">{{ next_end|date:"j M Y" }}</span>
+        <span class="profile__stat-l">{% trans "أقرب تاريخ انتهاء" %}</span>
+    </div>
+    {% endif %}
+</div>
+
+{% if subscriptions %}
+<div class="profile__section">
+    <div class="profile__section-head">
+        <h3>{% trans "اشتراكاتك" %}</h3>
+        <a href="{% url 'accounts:subscriptions' %}" class="profile__link">{% trans "إدارة الاشتراكات" %} →</a>
+    </div>
+    <div class="sub-cards sub-cards--compact">
+        {% for s in subscriptions %}
+        <article class="sub-card">
+            <div class="sub-card__top">
+                <h4 class="sub-card__title">{{ s.plan.meal_type.name }}</h4>
+                <span class="pill pill--{{ s.status }}">{{ s.get_status_display }}</span>
+            </div>
+            <p class="sub-card__meta">
+                {% blocktrans with days=s.plan.days meals=s.plan.meals_per_day %}{{ days }} يوم · {{ meals }} وجبة/يوم{% endblocktrans %}
+            </p>
+            {% if s.end_date %}
+            <p class="sub-card__meta">{% trans "ينتهي" %} {{ s.end_date|date:"j M Y" }}
+                {% if s.is_active %}· {% blocktrans with n=s.days_remaining %}متبقّي {{ n }} يوم{% endblocktrans %}{% endif %}
+            </p>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="profile__empty">
+    <p class="profile__empty-t">{% trans "ما عندك اشتراك فعّال حالياً." %}</p>
+    <p class="profile__empty-d">{% trans "اختر خطة تناسب هدفك ونكمّل معك من هناك." %}</p>
+    <a href="{% url 'plans:plans_list' %}" class="btn btn-primary">{% trans "شوف الخطط" %}</a>
+</div>
+{% endif %}
+
+<div class="profile__section">
+    <div class="profile__section-head">
+        <h3>{% trans "الإحالة والمكافآت" %}</h3>
+    </div>
+    <p class="profile__section-d">{% trans "ادعُ صديق — أول ما يشترك، الاثنين تاخدوا يوم مجاني." %}</p>
+    <a href="{% url 'referrals:get_code' %}" class="btn btn-secondary">{% trans "احصل على رابط الإحالة" %} →</a>
+</div>
+{% endblock %}

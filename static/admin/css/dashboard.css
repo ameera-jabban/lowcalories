@@ -1,0 +1,99 @@
+/* =====================================================================
+   dashboard.css — تنسيق الصفحات المخصصة في لوحة التحكم (Unfold shell):
+   لوحة القيادة (admin/index) + صفحة "آخر 20 تعديل".
+
+   يعتمد فقط على قيم ثابتة + متغيّرات Unfold (--color-*) — بدون Bootstrap.
+   منطقي الاتجاه (margin-inline / text-align:start) عشان RTL/LTR سواء.
+   ===================================================================== */
+
+:root {
+    --lc-primary: #F0791E;
+    --lc-secondary: #4C8C3C;
+    --lc-danger: #d92d20;
+    --lc-ink: #1d2939;
+    --lc-muted: #667085;
+    --lc-border: #e3e6ea;
+    --lc-surface: #fff;
+    --lc-head-tint: #fdf3e9;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --lc-ink: #e5e7eb;
+        --lc-muted: #98a2b3;
+        --lc-border: #303643;
+        --lc-surface: #1a1d24;
+        --lc-head-tint: #241a10;
+    }
+}
+
+.lc-page { width: 100%; }
+
+.lc-panel {
+    background: var(--lc-surface);
+    border: 1px solid var(--lc-border);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.lc-panel__head {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--lc-border);
+    background: var(--lc-head-tint);
+}
+.lc-panel__title {
+    margin: 0; font-size: 1rem; font-weight: 700; color: var(--lc-ink);
+    display: flex; align-items: center; gap: 10px;
+}
+.lc-panel__title::before {
+    content: ""; width: 4px; height: 1em; flex-shrink: 0;
+    background: var(--lc-primary); border-radius: 2px;
+}
+.lc-panel__body { padding: 18px; }
+.lc-panel__link {
+    font-size: .82rem; font-weight: 600; color: var(--lc-primary); text-decoration: none; white-space: nowrap;
+}
+.lc-panel__link:hover { text-decoration: underline; }
+
+.lc-subhead { margin: 22px 0 8px; font-size: .9rem; font-weight: 700; color: var(--lc-ink); }
+
+/* ---- كروت المؤشرات ---- */
+.lc-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+.lc-kpi {
+    display: block; text-decoration: none;
+    border: 1px solid var(--lc-border); border-radius: 10px; padding: 15px 16px;
+    background: var(--lc-surface); color: inherit;
+    transition: border-color .15s ease, transform .15s ease;
+}
+.lc-kpi:hover { border-color: var(--lc-primary); transform: translateY(-1px); }
+.lc-kpi__value { font-size: 1.8rem; font-weight: 800; line-height: 1.1; color: var(--lc-primary); }
+.lc-kpi__label { margin-top: 5px; font-size: .84rem; font-weight: 600; color: var(--lc-ink); }
+.lc-kpi__hint { margin-top: 2px; font-size: .74rem; color: var(--lc-muted); }
+
+/* ---- رسم بسيط بالـ CSS: نوايا الشراء آخر 7 أيام ---- */
+.lc-bars { display: flex; align-items: flex-end; gap: 10px; height: 150px; padding-top: 8px; }
+.lc-bars__col { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
+.lc-bars__bar { width: 100%; max-width: 44px; min-height: 3px; background: linear-gradient(180deg, var(--lc-primary), #f7a35c); border-radius: 6px 6px 0 0; }
+.lc-bars__count { font-size: .8rem; font-weight: 700; color: var(--lc-ink); }
+.lc-bars__label { font-size: .72rem; color: var(--lc-muted); white-space: nowrap; }
+
+/* ---- جدول آخر التعديلات ---- */
+.lc-tablewrap { overflow-x: auto; }
+.lc-audit { width: 100%; border-collapse: collapse; font-size: .88rem; color: var(--lc-ink); }
+.lc-audit th, .lc-audit td { padding: 10px 12px; border-bottom: 1px solid var(--lc-border); text-align: start; vertical-align: top; }
+.lc-audit th { font-weight: 700; color: var(--lc-muted); }
+.lc-audit__fields { color: var(--lc-muted); font-size: .82rem; }
+
+.lc-badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .74rem; font-weight: 700; color: #fff; }
+.lc-badge--success { background: var(--lc-secondary); }
+.lc-badge--warning { background: var(--lc-primary); }
+.lc-badge--danger  { background: var(--lc-danger); }
+.lc-badge--secondary { background: var(--lc-muted); }
+
+.lc-empty { padding: 28px; text-align: center; color: var(--lc-muted); }
+
+/* ---- قائمة النشاط الأخير ---- */
+.lc-activity { list-style: none; margin: 0; padding: 0; }
+.lc-activity li { padding: 10px 0; border-bottom: 1px solid var(--lc-border); font-size: .86rem; color: var(--lc-ink); }
+.lc-activity li:last-child { border-bottom: 0; }
+.lc-activity time { color: var(--lc-muted); font-size: .78rem; }

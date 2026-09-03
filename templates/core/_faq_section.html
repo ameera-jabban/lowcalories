@@ -1,0 +1,56 @@
+{% load i18n %}
+{# قسم الأسئلة الشائعة — أكورديون يسار + كرت دعم يمين. يستهلك المتغيّر `faq`. #}
+<section class="faq-section" aria-labelledby="faq-heading">
+    <div class="faq-section__inner">
+        <div class="faq-section__head">
+            <h2 id="faq-heading" class="faq-section__title">
+                {{ faq.title }}{% if faq.title_line2 %}<br><span class="faq-section__title-2">{{ faq.title_line2 }}</span>{% endif %}
+            </h2>
+        </div>
+
+        <div class="faq-section__grid">
+            <div class="faq-accordion" data-accordion {% if faq.allow_multiple_open %}data-accordion-multi{% endif %}>
+                {% for f in faq.faqs %}
+                <div class="faq-accordion__item">
+                    <h3 class="faq-accordion__q">
+                        <button type="button" class="faq-accordion__trigger accordion__trigger" aria-expanded="false"
+                                aria-controls="faqp-{{ f.id }}" id="faqb-{{ f.id }}">
+                            <span class="faq-accordion__q-text">{{ f.question }}</span>
+                            <span class="faq-accordion__icon" aria-hidden="true"></span>
+                        </button>
+                    </h3>
+                    <div class="faq-accordion__panel" id="faqp-{{ f.id }}" role="region" aria-labelledby="faqb-{{ f.id }}" hidden>
+                        <div class="faq-accordion__a">{{ f.answer|linebreaks }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% if faq.is_homepage %}
+                <a class="faq-accordion__all btn-pill-outline" href="{% url 'core:faq' %}">
+                    <span>{% trans "عرض كل الأسئلة الشائعة" %}</span>
+                    <span class="btn-pill-outline__arrow" aria-hidden="true"></span>
+                </a>
+                {% endif %}
+            </div>
+
+            {% if faq.support %}
+            <aside class="faq-support">
+                <h3 class="faq-support__title">{{ faq.support.title }}</h3>
+                <p class="faq-support__desc">{{ faq.support.description }}</p>
+                {% if faq.support.working_hours %}
+                <p class="faq-support__hours">
+                    {% include "core/icons/clock.svg" %}<span>{{ faq.support.working_hours }}</span>
+                </p>
+                {% endif %}
+                {% if faq.support.cta_url %}
+                <a href="{{ faq.support.cta_url }}" class="btn btn-primary faq-support__cta" rel="noopener" target="_blank">
+                    {% include "core/icons/whatsapp.svg" %}<span>{{ faq.support.cta_label }}</span>
+                </a>
+                {% endif %}
+            </aside>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if faq.jsonld %}<script type="application/ld+json">{{ faq.jsonld|safe }}</script>{% endif %}
+</section>

@@ -1,0 +1,45 @@
+{% load i18n %}
+{# قسم قصص العملاء — كاروسيل أفقي. يستهلك `ts`. بيانات من موديل Testimonial. #}
+<section class="stories" aria-labelledby="stories-heading" data-carousel>
+    <div class="stories__inner">
+        <div class="stories__head">
+            <div>
+                {% if ts.trust %}<p class="stories__trust">{{ ts.trust }}</p>{% endif %}
+                <h2 id="stories-heading" class="stories__title">{{ ts.title }}</h2>
+            </div>
+            <div class="stories__nav">
+                <button type="button" class="carousel__nav" data-carousel-prev aria-label="{% trans 'السابق' %}">‹</button>
+                <button type="button" class="carousel__nav" data-carousel-next aria-label="{% trans 'التالي' %}">›</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="stories__track" data-carousel-track role="group" aria-label="{% trans 'آراء عملائنا' %}">
+        {% for t in ts.items %}
+        <article class="carousel__slide story-card">
+            <div class="story-card__head">
+                <span class="story-card__avatar">
+                    {% if t.photo %}<img src="{{ t.photo.url }}" alt="{{ t.customer_name }}" loading="lazy" width="48" height="48">
+                    {% else %}<span aria-hidden="true">{{ t.initials }}</span>{% endif %}
+                </span>
+                <div class="story-card__who">
+                    <strong>{{ t.customer_name }}</strong>
+                    {% if t.location or t.plan_label %}
+                    <span class="story-card__meta">{{ t.plan_label }}{% if t.plan_label and t.location %} · {% endif %}{{ t.location }}</span>
+                    {% endif %}
+                    {% if t.rating %}
+                    <span class="story-card__stars" aria-label="{% blocktrans with r=t.rating %}{{ r }} من 5{% endblocktrans %}">
+                        {% for i in "12345" %}<span aria-hidden="true">{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}</span>{% endfor %}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+            <p class="story-card__text">{{ t.text }}</p>
+        </article>
+        {% endfor %}
+    </div>
+
+    {% if ts.cta %}
+    <div class="stories__inner"><div class="stories__cta"><a href="{{ ts.cta.url }}" class="btn btn-primary">{{ ts.cta.label }}</a></div></div>
+    {% endif %}
+</section>

@@ -1,0 +1,27 @@
+{% load i18n %}
+{# مقتطف المنيو الأسبوعي — WeeklyMenu/MenuItem (نفس مصدر صفحة المنيو). بطاقات .mcard. يستهلك `wm`. #}
+<section class="mediacaro weekmenu" aria-labelledby="weekmenu-heading" data-carousel>
+    <div class="mediacaro__inner">
+        <div class="mediacaro__head">
+            <h2 id="weekmenu-heading" class="mediacaro__title">{{ wm.title }}</h2>
+            {% if wm.subtitle %}<p class="mediacaro__sub">{{ wm.subtitle }}</p>{% endif %}
+            {% if wm.benefits %}
+            <ul class="mediacaro__benefits">
+                {% for b in wm.benefits %}<li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>
+                    <span>{{ b }}</span>
+                </li>{% endfor %}
+            </ul>
+            {% endif %}
+            {% if wm.cta %}<a href="{{ wm.cta.url }}" class="btn btn-primary mediacaro__cta">{{ wm.cta.label }}</a>{% endif %}
+        </div>
+        <div class="mediacaro__nav">
+            <button type="button" class="carousel__nav" data-carousel-prev aria-label="{% trans 'وجبات سابقة' %}">‹</button>
+            <button type="button" class="carousel__nav" data-carousel-next aria-label="{% trans 'وجبات تالية' %}">›</button>
+        </div>
+    </div>
+
+    <div class="mediacaro__track" data-carousel-track role="group" aria-label="{{ wm.title }}">
+        {% for c in wm.cards %}{% include "core/_media_card.html" with card=c %}{% endfor %}
+    </div>
+</section>

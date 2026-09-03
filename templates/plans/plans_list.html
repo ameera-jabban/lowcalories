@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "خطط وأسعار" %} | {{ site_settings.brand_name }}{% endblock %}
+{% block meta_description %}{% trans "اختار الخطة اللي تناسب روتينك — حدّد عدد الأيام، نوع الوجبات، وعدد الوجبات باليوم." %}{% endblock %}
+
+{% block content %}
+<main class="plansp">
+    <div class="plansp__inner">
+
+        <header class="plansp__head">
+            <h1 class="plansp__title">{% trans "خطط وأسعار" %}</h1>
+            <p class="plansp__lead">{% trans "اختار الخطة اللي تناسب روتينك." %}</p>
+            <p class="plansp__sub">{% trans "حدّد عدد الأيام، نوع الوجبات، وعدد الوجبات باليوم." %}</p>
+        </header>
+
+        <div class="plansp__utils">
+            <a href="{% url 'plans:builder' %}" class="btn btn-secondary plansp__build">
+                {% trans "اصنع خطتك المثالية" %} <span aria-hidden="true">→</span>
+            </a>
+
+            <div class="plansp__discount" id="discount-box"
+                 data-validate-url="{% url 'plans:validate_code' 'CODE' %}"
+                 data-msg-invalid="{% trans 'هذا الكود غير صالح أو منتهي.' %}"
+                 data-msg-error="{% trans 'تعذّر التحقق، حاول مجدداً.' %}">
+                <label for="discount-input">{% trans "عندك كود خصم؟" %}</label>
+                <span class="plansp__discount-row">
+                    <input type="text" id="discount-input" autocomplete="off"
+                           placeholder="{% trans 'أدخل الكود' %}">
+                    <button type="button" id="discount-apply" class="btn btn-primary">{% trans "تطبيق" %}</button>
+                    <span id="discount-msg" class="discount-msg" role="status"></span>
+                </span>
+            </div>
+        </div>
+        <p class="plansp__note">{% trans "السعر المخفّض استرشادي — الفريق بيأكد الخصم النهائي على واتساب." %}</p>
+
+        {% for days, cards in grouped_plans.items %}
+        <section class="plansp__group">
+            <h2 class="plansp__group-title">{% blocktrans with d=days %}{{ d }} يوم{% endblocktrans %}</h2>
+            <div class="plans-grid">
+                {% for card in cards %}
+                    {% include "core/_media_card.html" with card=card %}
+                {% endfor %}
+            </div>
+        </section>
+        {% empty %}
+        <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16v13H4z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+            <p>{% trans "الخطط غير متوفرة حالياً — تواصل معنا على واتساب." %}</p>
+            <a class="btn btn-primary" href="{% url 'leads:go_to_whatsapp_general' %}?source=plans_empty">{% trans "واتساب" %}</a>
+        </div>
+        {% endfor %}
+
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/discount.js' %}"></script>
+{% endblock %}

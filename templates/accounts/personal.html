@@ -1,0 +1,23 @@
+{% extends "accounts/_profile_base.html" %}
+{% load i18n %}
+{% block profile_title %}{% trans "بياناتي" %}{% endblock %}
+
+{% block profile_content %}
+<h2 class="profile__h2">{% trans "بياناتي" %}</h2>
+<p class="profile__section-d">{% trans "لتعديل بياناتك، راسل الفريق على واتساب ونحدّثها إلك." %}</p>
+
+<dl class="profile__details">
+    <div>
+        <dt>{% trans "الاسم" %}</dt>
+        <dd>{{ customer.name }}</dd>
+    </div>
+    <div>
+        <dt>{% trans "رقم الهاتف" %}</dt>
+        <dd dir="ltr">{{ customer.phone_number }}</dd>
+    </div>
+    <div>
+        <dt>{% trans "عضو منذ" %}</dt>
+        <dd>{{ customer.created_at|date:"j M Y" }}</dd>
+    </div>
+</dl>
+{% endblock %}

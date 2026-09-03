@@ -1,0 +1,54 @@
+{% load i18n %}
+{% comment %}
+بطاقة صورة-أولاً قابلة لإعادة الاستخدام — المصدر الوحيد لتصميم كل البطاقات المتشابهة.
+تستهلك `card` (dict): href, image, image_alt, object_position, layout ("overlay"|"stacked"),
+badge, title, macros [{key,pct}], macro_legend [{key,label,value}], meta [..], price/price_label/currency, variant.
+{% endcomment %}
+{% with tag=card.href|yesno:"a,article" layout=card.layout|default:"overlay" %}
+<{{ tag }} class="mcard mcard--{{ card.variant|default:'content' }} mcard--{{ layout }} carousel__slide{% if card.popular %} is-popular{% endif %}"{% if card.href %} href="{{ card.href }}"{% endif %}>
+    <div class="mcard__media">
+        {% if card.image %}
+        <img src="{{ card.image }}" alt="{{ card.image_alt|default:card.title }}" loading="lazy" decoding="async"
+             style="object-position: {{ card.object_position|default:'center center' }};">
+        {% else %}
+        <span class="mcard__media-fallback" aria-hidden="true"></span>
+        {% endif %}
+        {% if card.badge %}<span class="mcard__badge">{{ card.badge }}</span>{% endif %}
+
+        {% if layout == "overlay" %}
+        <div class="mcard__info">
+            <h3 class="mcard__title">{{ card.title }}{% if card.title_sub %}<span class="mcard__title-sub">{{ card.title_sub }}</span>{% endif %}</h3>
+            {% if card.macros %}
+            <span class="mcard__macros" aria-hidden="true">
+                {% for m in card.macros %}<span class="mcard__macro mcard__macro--{{ m.key }}" style="flex-grow:{{ m.pct }}"></span>{% endfor %}
+            </span>
+            {% endif %}
+            {% if card.macro_legend %}
+            <p class="mcard__legend">{% for m in card.macro_legend %}<span>{{ m.value }} {{ m.label }}</span>{% endfor %}</p>
+            {% endif %}
+            {% if card.meta %}<p class="mcard__meta">{% for line in card.meta %}<span>{{ line }}</span>{% if not forloop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+            {% if card.price %}
+            <p class="mcard__price"{% if card.price_raw %} data-price="{{ card.price_raw }}"{% endif %}>
+                {% if card.price_label %}{{ card.price_label }} {% endif %}<s class="mcard__price-was" hidden></s><strong class="mcard__price-now">{{ card.price }}</strong> {{ card.currency }}
+            </p>
+            {% endif %}
+            {% if card.cta %}
+            <a class="btn btn-primary mcard__cta" href="{{ card.cta.href }}" data-base="{{ card.cta.href }}"{% if card.cta.onclick %} onclick="{{ card.cta.onclick }}"{% endif %}>{{ card.cta.label }}</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    {% if layout == "stacked" %}
+    <div class="mcard__below">
+        {% if card.category %}<span class="mcard__cat">{{ card.category }}</span>{% endif %}
+        <h3 class="mcard__title">{{ card.title }}</h3>
+        {% if card.macro_legend %}
+        <p class="mcard__dots">
+            {% for m in card.macro_legend %}<span class="mcard__dot-item"><span class="mcard__dot mcard__dot--{{ m.key|default:'protein' }}" aria-hidden="true"></span>{{ m.value }} {{ m.label }}</span>{% endfor %}
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+</{{ tag }}>
+{% endwith %}

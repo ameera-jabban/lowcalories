@@ -1,0 +1,34 @@
+{% load i18n %}
+{# قسم "تحكّم كامل، مرونة تامّة" — سبليت: نص يسار + صورة وبطاقة توصيل عائمة يمين. يستهلك `flex`. #}
+<section class="flexsec" aria-labelledby="flexsec-h">
+    <div class="flexsec__text">
+        <h2 id="flexsec-h" class="flexsec__title">
+            {{ flex.heading_line1 }}<br>{{ flex.heading_line2 }}
+        </h2>
+        <ul class="flexsec__benefits">
+            {% for b in flex.benefits %}<li>{{ b }}</li>{% endfor %}
+        </ul>
+        <div class="flexsec__highlight">
+            <h3>{{ flex.highlight_title }}</h3>
+            <p>{{ flex.highlight_text }}</p>
+        </div>
+    </div>
+
+    <div class="flexsec__visual">
+        <img src="{{ flex.image }}" alt="" loading="lazy" decoding="async">
+        <div class="flexsec__card" role="img"
+             aria-label="{% trans 'مثال توضيحي لإدارة أيام التوصيل' %}">
+            <p class="flexsec__card-q">{{ flex.preview.question }}</p>
+            <div class="flexsec__days">
+                {% for d in flex.preview.days %}
+                <span class="flexsec__day{% if d.selected %} is-on{% endif %}{% if d.skipped %} is-skip{% endif %}">{{ d.label|slice:":1" }}</span>
+                {% endfor %}
+            </div>
+            <dl class="flexsec__rows">
+                <div><dt>{{ flex.preview.address_label }}</dt><dd>{{ flex.preview.address_value }}</dd></div>
+                <div><dt>{{ flex.preview.time_label }}</dt><dd>{{ flex.preview.time_value }}</dd></div>
+            </dl>
+            <p class="flexsec__skip">{{ flex.preview.skipped_text }}</p>
+        </div>
+    </div>
+</section>
