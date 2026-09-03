@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "المنيو الأسبوعي"
-msgstr "Weekly Menu"
+msgstr "Weekly menu"
 
 msgid "الخطط"
 msgstr "Plans"
@@ -167,7 +167,7 @@ msgstr ""
 "%(old)s to %(new)s."
 
 msgid "خطط الشركات"
-msgstr "Corporate Plans"
+msgstr "Corporate plans"
 
 msgid "منيو متنوّع"
 msgstr "Varied menu"
@@ -188,7 +188,7 @@ msgid "رقم التواصل"
 msgstr "Contact phone"
 
 msgid "عدد الموظفين التقريبي"
-msgstr "Approximate number of employees"
+msgstr "Approx. employee count"
 
 msgid "موقع التوصيل"
 msgstr "Delivery location"
@@ -334,7 +334,7 @@ msgstr ""
 "Your phone number (optional) — save your result to compare it next time"
 
 msgid "كود المتابعة"
-msgstr "Tracking code"
+msgstr "Progress code"
 
 msgid "التنقل الرئيسي"
 msgstr "Main navigation"
@@ -514,7 +514,7 @@ msgid "تبدأ من %(price)s د.أ"
 msgstr "Starting from %(price)s JOD"
 
 msgid "الأكثر طلباً"
-msgstr "Most Popular"
+msgstr "Most popular"
 
 msgid "منيو يتجدّد كل أسبوع"
 msgstr "A menu that changes every week"
@@ -1419,3 +1419,489 @@ msgstr "meals / day"
 
 msgid "اختر تفضيلاتك ويظهر ملخّص خطتك هنا."
 msgstr "Choose your preferences and your plan summary appears here."
+
+msgid "لوحة عمليات Low Calories"
+msgstr "Low Calories operations panel"
+
+msgid "آخر التعديلات"
+msgstr "Recent changes"
+
+msgid "العملاء والطلبات"
+msgstr "Customers & requests"
+
+msgid "العملاء"
+msgstr "Customers"
+
+msgid "طلبات عروض الشركات"
+msgstr "Corporate quote requests"
+
+msgid "الإحالات"
+msgstr "Referrals"
+
+msgid "أكواد الإحالة"
+msgstr "Referral codes"
+
+msgid "الاشتراكات والتسعير"
+msgstr "Subscriptions & pricing"
+
+msgid "خطط الاشتراك"
+msgstr "Subscription plans"
+
+msgid "اشتراكات العملاء"
+msgstr "Customer subscriptions"
+
+msgid "نوايا الشراء (Leads)"
+msgstr "Purchase intents (Leads)"
+
+msgid "أكواد الخصم"
+msgstr "Discount codes"
+
+msgid "المنيو والتغذية"
+msgstr "Menu & nutrition"
+
+msgid "أنواع الوجبات"
+msgstr "Meal types"
+
+msgid "نتائج حاسبة السعرات"
+msgstr "Calorie calculator results"
+
+msgid "التوصيل"
+msgstr "Delivery"
+
+msgid "مناطق التوصيل"
+msgstr "Delivery areas"
+
+msgid "المحتوى والإعدادات"
+msgstr "Content & settings"
+
+msgid "إعدادات الموقع"
+msgstr "Site settings"
+
+msgid "محتوى الـ Hero"
+msgstr "Hero content"
+
+msgid "كيف يعمل"
+msgstr "How it works"
+
+msgid "تقييمات العملاء"
+msgstr "Customer testimonials"
+
+msgid "مزايا الموقع"
+msgstr "Site features"
+
+msgid "السياسات القانونية"
+msgstr "Legal policies"
+
+msgid "المستخدمون والصلاحيات"
+msgstr "Users & permissions"
+
+msgid "المستخدمون"
+msgstr "Users"
+
+msgid "الأدوار"
+msgstr "Roles"
+
+msgid "شو يحتاج انتباه اليوم؟"
+msgstr "What needs attention today?"
+
+msgid "كل التعديلات"
+msgstr "All changes"
+
+msgid "لا توجد بيانات لعرضها بصلاحياتك الحالية."
+msgstr "No data to show with your current permissions."
+
+msgid "نوايا الشراء — آخر 7 أيام"
+msgstr "Purchase intents — last 7 days"
+
+msgid "آخر نشاط الفريق"
+msgstr "Recent team activity"
+
+msgid "عرض الكل"
+msgstr "View all"
+
+msgid "بواسطة %(u)s"
+msgstr "by %(u)s"
+
+msgid "لا يوجد نشاط مُسجّل بعد."
+msgstr "No activity recorded yet."
+
+msgid "طلبات استشارة جديدة"
+msgstr "New consultation requests"
+
+msgid "بانتظار تواصل الفريق"
+msgstr "Awaiting team contact"
+
+msgid "طلبات عروض شركات جديدة"
+msgstr "New corporate quote requests"
+
+msgid "آخر 7 أيام"
+msgstr "Last 7 days"
+
+msgid "إحالات بانتظار التأكيد"
+msgstr "Referrals awaiting confirmation"
+
+msgid "نوايا شراء اليوم"
+msgstr "Purchase intents today"
+
+msgid "إجمالي %(n)s"
+msgstr "%(n)s total"
+
+msgid "استخدامات حاسبة السعرات"
+msgstr "Calorie calculator uses"
+
+msgid "آخر 20 تعديل عبر الموقع"
+msgstr "Last 20 changes across the site"
+
+msgid "الإجراء"
+msgstr "Action"
+
+msgid "العنصر"
+msgstr "Item"
+
+msgid "الحقول المعدّلة"
+msgstr "Changed fields"
+
+msgid "المستخدم"
+msgstr "User"
+
+msgid "(بدون مستخدم)"
+msgstr "(no user)"
+
+msgid "لا يوجد أي تعديل مُسجّل بعد على الموديلات المتتبَّعة."
+msgstr "No changes recorded yet on the tracked models."
+
+msgid "عميل"
+msgstr "Customer"
+
+msgid "اشتراك"
+msgstr "Subscription"
+
+msgid "خطة اشتراك"
+msgstr "Subscription plan"
+
+msgid "منطقة توصيل"
+msgstr "Delivery area"
+
+msgid "كود خصم"
+msgstr "Discount code"
+
+msgid "نوع وجبة"
+msgstr "Meal type"
+
+msgid "منيو أسبوعي"
+msgstr "Weekly menu"
+
+msgid "خطة شركات"
+msgstr "Corporate plan"
+
+msgid "طلب عرض سعر شركة"
+msgstr "Corporate quote request"
+
+msgid "طلبات عروض أسعار الشركات"
+msgstr "Corporate quote requests"
+
+msgid "كود إحالة"
+msgstr "Referral code"
+
+msgid "إحالة"
+msgstr "Referral"
+
+msgid "نية شراء (Lead)"
+msgstr "Purchase intent (Lead)"
+
+msgid "نتيجة حاسبة سعرات"
+msgstr "Calorie calculation"
+
+msgid "تقييم عميل"
+msgstr "Customer testimonial"
+
+msgid "هدف (Hero)"
+msgstr "Hero goal"
+
+msgid "أهداف الـ Hero المتغيّرة"
+msgstr "Rotating hero goals"
+
+msgid "خطوة (كيف يعمل)"
+msgstr "How-it-works step"
+
+msgid "خطوات «كيف يعمل»"
+msgstr "How-it-works steps"
+
+msgid "سؤال شائع"
+msgstr "FAQ"
+
+msgid "الأسئلة الشائعة (FAQ)"
+msgstr "FAQs"
+
+msgid "ميزة (ليش تختارنا)"
+msgstr "Site feature"
+
+msgid "مزايا (ليش تختارنا)"
+msgstr "Site features"
+
+msgid "سياسة / صفحة قانونية"
+msgstr "Legal policy / page"
+
+msgid "السياسات والصفحات القانونية"
+msgstr "Legal policies & pages"
+
+msgid "قسم سياسة"
+msgstr "Policy section"
+
+msgid "أقسام السياسة"
+msgstr "Policy sections"
+
+msgid "الاسم (عربي)"
+msgstr "Name (Arabic)"
+
+msgid "الاسم (إنجليزي)"
+msgstr "Name (English)"
+
+msgid "العنوان (عربي)"
+msgstr "Title (Arabic)"
+
+msgid "العنوان (إنجليزي)"
+msgstr "Title (English)"
+
+msgid "الوصف (عربي)"
+msgstr "Description (Arabic)"
+
+msgid "الوصف (إنجليزي)"
+msgstr "Description (English)"
+
+msgid "النص (عربي)"
+msgstr "Text (Arabic)"
+
+msgid "النص (إنجليزي)"
+msgstr "Text (English)"
+
+msgid "السؤال (عربي)"
+msgstr "Question (Arabic)"
+
+msgid "السؤال (إنجليزي)"
+msgstr "Question (English)"
+
+msgid "الجواب (عربي)"
+msgstr "Answer (Arabic)"
+
+msgid "الجواب (إنجليزي)"
+msgstr "Answer (English)"
+
+msgid "التصنيف (إنجليزي)"
+msgstr "Category (English)"
+
+msgid "الموقع (اختياري)"
+msgstr "Location (optional)"
+
+msgid "الموقع (إنجليزي)"
+msgstr "Location (English)"
+
+msgid "الخطة (اختياري)"
+msgstr "Plan (optional)"
+
+msgid "الخطة (إنجليزي)"
+msgstr "Plan (English)"
+
+msgid "وصف SEO (عربي)"
+msgstr "SEO description (Arabic)"
+
+msgid "وصف SEO (إنجليزي)"
+msgstr "SEO description (English)"
+
+msgid "عنوان القسم (عربي)"
+msgstr "Section heading (Arabic)"
+
+msgid "عنوان القسم (إنجليزي)"
+msgstr "Section heading (English)"
+
+msgid "الفقرات (عربي)"
+msgstr "Body (Arabic)"
+
+msgid "الفقرات (إنجليزي)"
+msgstr "Body (English)"
+
+msgid "عناصر القائمة (عربي)"
+msgstr "List items (Arabic)"
+
+msgid "عناصر القائمة (إنجليزي)"
+msgstr "List items (English)"
+
+msgid "نوع القائمة"
+msgstr "List type"
+
+msgid "الترتيب"
+msgstr "Order"
+
+msgid "مفعّل"
+msgstr "Active"
+
+msgid "مفعّلة"
+msgstr "Active"
+
+msgid "منشور"
+msgstr "Published"
+
+msgid "منشورة"
+msgstr "Published"
+
+msgid "الأيقونة"
+msgstr "Icon"
+
+msgid "المُعرّف"
+msgstr "Slug"
+
+msgid "المعرّف بالرابط"
+msgstr "URL slug"
+
+msgid "رمز تعبيري"
+msgstr "Emoji"
+
+msgid "الصورة"
+msgstr "Image"
+
+msgid "صورة الخطة"
+msgstr "Step image"
+
+msgid "صورة العميل (اختياري)"
+msgstr "Customer photo (optional)"
+
+msgid "تظهر بروابط الفوتر"
+msgstr "Show in footer links"
+
+msgid "يظهر بمقتطف الصفحة الرئيسية"
+msgstr "Show in homepage preview"
+
+msgid "مميّز (يظهر بالصفحة الرئيسية)"
+msgstr "Featured (shown on homepage)"
+
+msgid "رقم النسخة (اختياري)"
+msgstr "Version number (optional)"
+
+msgid "آخر تحديث"
+msgstr "Last updated"
+
+msgid "تاريخ الإنشاء"
+msgstr "Created at"
+
+msgid "الخطة"
+msgstr "Plan"
+
+msgid "العميل"
+msgstr "Customer"
+
+msgid "تاريخ البداية"
+msgstr "Start date"
+
+msgid "تاريخ الانتهاء"
+msgstr "End date"
+
+msgid "تاريخ التجميد"
+msgstr "Freeze date"
+
+msgid "تاريخ إرسال طلب التقييم"
+msgstr "Review request sent at"
+
+msgid "اسم صاحب الكود"
+msgstr "Referrer name"
+
+msgid "رقم هاتفه"
+msgstr "Referrer phone"
+
+msgid "الكود"
+msgstr "Code"
+
+msgid "اسم الصديق"
+msgstr "Friend's name"
+
+msgid "رقم هاتف الصديق"
+msgstr "Friend's phone"
+
+msgid "كود الإحالة"
+msgstr "Referral code"
+
+msgid "تاريخ الاستبدال"
+msgstr "Redeemed at"
+
+msgid "بانتظار"
+msgstr "Pending"
+
+msgid "تم الاستبدال"
+msgstr "Redeemed"
+
+msgid "ملاحظات"
+msgstr "Notes"
+
+msgid "أقل عدد موظفين"
+msgstr "Min employees"
+
+msgid "أكثر عدد موظفين"
+msgstr "Max employees"
+
+msgid "سعر الموظف (د.أ)"
+msgstr "Price per employee (JOD)"
+
+msgid "نوع الوجبة"
+msgstr "Meal type"
+
+msgid "الوصف"
+msgstr "Description"
+
+msgid "عدد الأيام"
+msgstr "Days"
+
+msgid "وجبات باليوم"
+msgstr "Meals per day"
+
+msgid "السعر (د.أ)"
+msgstr "Price (JOD)"
+
+msgid "نسبة الخصم %"
+msgstr "Discount %"
+
+msgid "صالح حتى"
+msgstr "Valid until"
+
+msgid "أقصى عدد استخدامات"
+msgstr "Max uses"
+
+msgid "عدد الاستخدامات"
+msgstr "Uses count"
+
+msgid "تاريخ بداية الأسبوع"
+msgstr "Week start date"
+
+msgid "يوم الأسبوع"
+msgstr "Day of week"
+
+msgid "بروتين (غ)"
+msgstr "Protein (g)"
+
+msgid "كربوهيدرات (غ)"
+msgstr "Carbs (g)"
+
+msgid "دهون (غ)"
+msgstr "Fat (g)"
+
+msgid "بروتين %"
+msgstr "Protein %"
+
+msgid "كربوهيدرات %"
+msgstr "Carbs %"
+
+msgid "دهون %"
+msgstr "Fat %"
+
+msgid "السعرات الناتجة"
+msgstr "Result calories"
+
+msgid "الخطة المقترحة"
+msgstr "Suggested plan"
+
+msgid "صفحة المصدر"
+msgstr "Source page"
+
+msgid "كود الخصم المستخدم"
+msgstr "Discount code used"
+
+msgid "طلب عرض سعر"
+msgstr "Request a Quote"

@@ -3,7 +3,7 @@ Pillow>=10.0
 requests>=2.31          # استدعاء WhatsApp Business Cloud API (خدمة core/whatsapp_service.py)
 
 # ---- لوحة تحكم Enterprise ----
-django-unfold>=0.60        # ثيم عمليات Enterprise للـ admin: sidebar بمجموعات + هوية البراند + RTL
+django-unfold>=0.100       # ثيم عمليات Enterprise للـ admin: sidebar بمجموعات + هوية البراند + RTL
 django-simple-history>=3.13  # تتبع التعديلات (Audit Log) على الموديلات الحساسة
 
 # ---- إنتاج ----

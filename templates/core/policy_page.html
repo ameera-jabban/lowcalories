@@ -42,11 +42,11 @@
             <ul>
                 {% if site_settings.has_whatsapp %}
                 <li>{% trans "واتساب" %}:
-                    <a href="{{ site_settings.whatsapp_link }}" rel="noopener" target="_blank">{{ site_settings.whatsapp_number_display }}</a>
+                    <a class="ltr-value" dir="ltr" href="{{ site_settings.whatsapp_link }}" rel="noopener" target="_blank">{{ site_settings.whatsapp_number_display }}</a>
                 </li>
                 {% endif %}
                 {% if site_settings.support_email %}
-                <li>{% trans "البريد الإلكتروني" %}: <a href="mailto:{{ site_settings.support_email }}">{{ site_settings.support_email }}</a></li>
+                <li>{% trans "البريد الإلكتروني" %}: <a class="ltr-value" dir="ltr" href="mailto:{{ site_settings.support_email }}">{{ site_settings.support_email }}</a></li>
                 {% endif %}
                 {% if site_settings.location %}<li>{% trans "الموقع" %}: {{ site_settings.location }}</li>{% endif %}
                 {% if site_settings.working_hours %}<li>{% trans "ساعات العمل" %}: {{ site_settings.working_hours }}</li>{% endif %}

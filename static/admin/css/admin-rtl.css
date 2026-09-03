@@ -1,0 +1,134 @@
+/* =====================================================================
+   admin-rtl.css — إصلاحات تخطيط للوحة تحكم django-unfold.
+
+   Unfold 0.104 ما بيوفّر RTL: القوالب تستخدم utilities فيزيائية ثابتة
+   (text-left / pl-* / mr-* / border-r ...). مع <html dir="rtl"> المتصفح
+   يعكس اتجاه النص وترتيب الأعمدة، بس هالـ utilities تظل LTR فتنكسر
+   المحاذاة. هون نصلّحها بخصائص منطقية، **بنطاق [dir="rtl"] فقط** — ما
+   نلمس الإنجليزي (LTR) إطلاقاً.
+
+   يُحمّل عالمياً عبر UNFOLD["STYLES"].
+   ===================================================================== */
+
+/* ---------- عمود checkbox التحديد: عرض ثابت + توسيط (للاتجاهين) ---------- */
+#result_list th.action-checkbox-column,
+#result_list td.action-checkbox {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    max-width: 2.75rem;
+    padding: 0.5rem 0;
+    text-align: center;
+    vertical-align: middle;
+}
+/* رأس العمود: صفّي أي fl/flex nesting وخلّي الـ checkbox بالنص تماماً */
+#result_list th.action-checkbox-column > div,
+#result_list th.action-checkbox-column .text,
+#result_list th.action-checkbox-column label {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+#result_list th.action-checkbox-column input,
+#result_list td.action-checkbox input[name="_selected_action"] {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+}
+
+/* ===================== RTL فقط ===================== */
+
+/* محاذاة خلايا الجدول: Unfold يفرض text-left */
+[dir="rtl"] #result_list td.text-left,
+[dir="rtl"] #result_list th.text-left {
+    text-align: right;
+}
+/* اتجاه محتوى الخلية حسب نوعه: هاتف/إيميل/كود/ID → LTR تلقائياً، عربي → RTL */
+[dir="rtl"] #result_list td.field-phone,
+[dir="rtl"] #result_list td.field-contact_phone,
+[dir="rtl"] #result_list td.field-referred_phone,
+[dir="rtl"] #result_list td.field-referrer_phone,
+[dir="rtl"] #result_list td.field-phone_number,
+[dir="rtl"] #result_list td.field-customer_phone,
+[dir="rtl"] #result_list td.field-access_code,
+[dir="rtl"] #result_list td.field-code,
+[dir="rtl"] #result_list td.field-progress_code,
+[dir="rtl"] #result_list td.field-reference,
+[dir="rtl"] #result_list td.field-created_at,
+[dir="rtl"] #result_list td.field-start_date,
+[dir="rtl"] #result_list td.field-end_date {
+    unicode-bidi: plaintext;
+}
+[dir="rtl"] #result_list td.action-checkbox,
+[dir="rtl"] #result_list th.action-checkbox-column {
+    text-align: center;
+}
+
+/* أيقونات الترتيب برأس العمود (كانت margin-left) */
+[dir="rtl"] #result_list .sortoptions,
+[dir="rtl"] #result_list .sortpriority { margin-left: 0; margin-inline-start: 0.5rem; }
+[dir="rtl"] #result_list .sortremove { margin-left: 0; margin-inline-start: 0.25rem; }
+
+/* شريط الإجراءات الجماعية السفلي */
+[dir="rtl"] #changelist-actions [class~="sm:ml-auto"] { margin-left: 0; margin-inline-start: auto; }
+[dir="rtl"] #changelist-actions .action-counter { text-align: right; }
+[dir="rtl"] #changelist-actions select {
+    padding-inline: 0.75rem 2rem;
+    background-position: left 0.5rem center;
+}
+
+/* الشريط الجانبي: الحدّ الفاصل + مسافة الأيقونة */
+[dir="rtl"] #nav-sidebar {
+    border-right: 0;
+    border-left: 1px solid var(--color-base-200, #e5e7eb);
+}
+[dir="rtl"] #nav-sidebar .material-symbols-outlined[class~="mr-3"],
+[dir="rtl"] .sidebar .material-symbols-outlined[class~="mr-3"] {
+    margin-right: 0;
+    margin-inline-end: 0.75rem;
+}
+
+/* fieldset المتداخل (stacked inline): الشريط الجانبي */
+[dir="rtl"] fieldset.module[class~="border-l"] {
+    border-left: 0;
+    border-inline-start: 1px solid var(--color-base-200, #e5e7eb);
+    margin-left: 0;
+    margin-inline-start: 0.75rem;
+}
+[dir="rtl"] fieldset.module[class~="border-l"]::before {
+    left: auto;
+    inset-inline-start: -0.75rem;
+}
+
+/* ---------- قيم تقنية تظل LTR داخل الأدمن العربي ---------- */
+
+/* حقول التاريخ/الوقت (Django AdminDateWidget = input نصّي بكلاس vDateField) */
+[dir="rtl"] input.vDateField,
+[dir="rtl"] input.vTimeField,
+[dir="rtl"] input.vDateTimeField,
+[dir="rtl"] input[type="date"],
+[dir="rtl"] input[type="time"],
+[dir="rtl"] input[type="datetime-local"],
+[dir="rtl"] input[type="tel"],
+[dir="rtl"] input[type="url"],
+[dir="rtl"] input[type="email"] {
+    direction: ltr;
+    text-align: left;
+}
+
+/* اختصارات التاريخ (اليوم / التقويم) تظل عند نهاية الحقل LTR */
+[dir="rtl"] .datetimeshortcuts {
+    right: 1px;
+    left: auto;
+}
+[dir="rtl"] input.vDateField,
+[dir="rtl"] input.vDateTimeField { padding-inline-end: 2.25rem; }
+
+/* حقول للقراءة فقط: اكتشاف الاتجاه تلقائياً حسب المحتوى (تاريخ/هاتف/عربي) */
+[dir="rtl"] .readonly,
+[dir="rtl"] .field-box .readonly { unicode-bidi: plaintext; }
+
+/* date_hierarchy + pagination: أرقام/تواريخ تظل مقروءة */
+[dir="rtl"] .paginator,
+[dir="rtl"] #toolbar .date-hierarchy { unicode-bidi: plaintext; }

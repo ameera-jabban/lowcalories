@@ -7,6 +7,7 @@ import secrets
 
 from django.db import models
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 
 def _make_code(name: str) -> str:
@@ -20,15 +21,15 @@ def _make_code(name: str) -> str:
 
 
 class ReferralCode(models.Model):
-    referrer_name = models.CharField("اسم صاحب الكود", max_length=120)
-    referrer_phone = models.CharField("رقم هاتفه", max_length=20, unique=True)
-    code = models.SlugField("الكود", max_length=24, unique=True, allow_unicode=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    referrer_name = models.CharField(_("اسم صاحب الكود"), max_length=120)
+    referrer_phone = models.CharField(_("رقم هاتفه"), max_length=20, unique=True)
+    code = models.SlugField(_("الكود"), max_length=24, unique=True, allow_unicode=True, blank=True)
+    created_at = models.DateTimeField(_("تاريخ الإنشاء"), auto_now_add=True)
 
     class Meta:
         ordering = ["-created_at"]
-        verbose_name = "كود إحالة"
-        verbose_name_plural = "أكواد الإحالة"
+        verbose_name = _("كود إحالة")
+        verbose_name_plural = _("أكواد الإحالة")
 
     def __str__(self):
         return f"{self.code} — {self.referrer_name}"
@@ -51,23 +52,23 @@ class ReferralCode(models.Model):
 
 class Referral(models.Model):
     class Status(models.TextChoices):
-        PENDING = "pending", "بانتظار"
-        REDEEMED = "redeemed", "تم الاستبدال"
-        EXPIRED = "expired", "منتهي"
+        PENDING = "pending", _("بانتظار")
+        REDEEMED = "redeemed", _("تم الاستبدال")
+        EXPIRED = "expired", _("منتهي")
 
     referral_code = models.ForeignKey(
-        ReferralCode, on_delete=models.CASCADE, related_name="referrals", verbose_name="كود الإحالة"
+        ReferralCode, on_delete=models.CASCADE, related_name="referrals", verbose_name=_("كود الإحالة")
     )
-    referred_name = models.CharField("اسم الصديق", max_length=120)
-    referred_phone = models.CharField("رقم هاتف الصديق", max_length=20)
-    status = models.CharField("الحالة", max_length=12, choices=Status.choices, default=Status.PENDING)
-    created_at = models.DateTimeField(auto_now_add=True)
-    redeemed_at = models.DateTimeField("تاريخ الاستبدال", null=True, blank=True)
+    referred_name = models.CharField(_("اسم الصديق"), max_length=120)
+    referred_phone = models.CharField(_("رقم هاتف الصديق"), max_length=20)
+    status = models.CharField(_("الحالة"), max_length=12, choices=Status.choices, default=Status.PENDING)
+    created_at = models.DateTimeField(_("تاريخ الإنشاء"), auto_now_add=True)
+    redeemed_at = models.DateTimeField(_("تاريخ الاستبدال"), null=True, blank=True)
 
     class Meta:
         ordering = ["-created_at"]
-        verbose_name = "إحالة"
-        verbose_name_plural = "الإحالات"
+        verbose_name = _("إحالة")
+        verbose_name_plural = _("الإحالات")
 
     def __str__(self):
         return f"{self.referred_name} ← {self.referral_code.referrer_name}"

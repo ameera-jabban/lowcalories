@@ -56,6 +56,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",  # يخدم الملفات الثابتة بكفاءة بدون nginx منفصل
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",  # لازم قبل CommonMiddleware عشان الترجمة تشتغل
+    "core.middleware.AdminLocaleMiddleware",  # كوكي اللغة لـ /admin/ (مش تحت i18n_patterns)
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",

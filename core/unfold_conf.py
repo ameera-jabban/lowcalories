@@ -13,6 +13,11 @@ from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+
+def _asset(path):
+    """callable — يُحوّل مسار static وقت الطلب (يحترم hashing الإنتاج)."""
+    return lambda request: static(path)
+
 _FALLBACK_BRAND = "Low Calories Jordan"
 
 
@@ -84,8 +89,10 @@ def build_unfold_settings() -> dict:
         ],
         "SHOW_HISTORY": True,
         "SHOW_VIEW_ON_SITE": True,
-        "SHOW_LANGUAGES": True,          # مبدّل اللغة بالـ shell (يحتاج i18n_patterns/set_language)
+        "SHOW_LANGUAGES": True,          # مبدّل اللغة بالـ shell (core.middleware.AdminLocaleMiddleware)
         "BORDER_RADIUS": "6px",
+        # إصلاحات تخطيط RTL + قيم تقنية LTR — بنطاق [dir="rtl"] فقط، ما يمسّ الإنجليزي
+        "STYLES": [_asset("admin/css/admin-rtl.css")],
         "DASHBOARD_CALLBACK": "core.admin_dashboard.dashboard_callback",
         # ---- برتقالي البراند كـ accent محكوم (مش خلفية everywhere) ----
         "COLORS": {
@@ -164,7 +171,7 @@ def build_unfold_settings() -> dict:
                     "separator": True,
                     "items": [
                         _nav(_("إعدادات الموقع"), "admin:core_sitesettings_changelist", "core.view_sitesettings", icon="settings"),
-                        _nav(_("محتوى الـ Hero"), "admin:core_herogoal_changelist", "core.view_herogoal", icon="st-ar"),
+                        _nav(_("محتوى الـ Hero"), "admin:core_herogoal_changelist", "core.view_herogoal", icon="wallpaper"),
                         _nav(_("كيف يعمل"), "admin:core_howitworksstep_changelist", "core.view_howitworksstep", icon="format_list_numbered"),
                         _nav(_("الأسئلة الشائعة"), "admin:core_faq_changelist", "core.view_faq", icon="quiz"),
                         _nav(_("تقييمات العملاء"), "admin:core_testimonial_changelist", "core.view_testimonial", icon="reviews"),

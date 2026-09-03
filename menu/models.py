@@ -4,19 +4,19 @@ from simple_history.models import HistoricalRecords
 
 
 class MealType(models.Model):
-    name_ar = models.CharField(max_length=50)
-    name_en = models.CharField(max_length=50)
-    slug = models.SlugField(unique=True)
-    icon_emoji = models.CharField(max_length=10, blank=True)
+    name_ar = models.CharField(_("الاسم (عربي)"), max_length=50)
+    name_en = models.CharField(_("الاسم (إنجليزي)"), max_length=50)
+    slug = models.SlugField(_("المُعرّف"), unique=True)
+    icon_emoji = models.CharField(_("رمز تعبيري"), max_length=10, blank=True)
 
     # توزيع الماكروز التقريبي لهذا النوع — يضبطه الأدمن مرة، يظهر على كروت الخطط
-    typical_protein_pct = models.PositiveSmallIntegerField("بروتين %", default=40)
-    typical_carbs_pct = models.PositiveSmallIntegerField("كربوهيدرات %", default=40)
-    typical_fat_pct = models.PositiveSmallIntegerField("دهون %", default=20)
+    typical_protein_pct = models.PositiveSmallIntegerField(_("بروتين %"), default=40)
+    typical_carbs_pct = models.PositiveSmallIntegerField(_("كربوهيدرات %"), default=40)
+    typical_fat_pct = models.PositiveSmallIntegerField(_("دهون %"), default=20)
 
     class Meta:
-        verbose_name = "نوع وجبة"
-        verbose_name_plural = "أنواع الوجبات"
+        verbose_name = _("نوع وجبة")
+        verbose_name_plural = _("أنواع الوجبات")
 
     def __str__(self):
         return self.name_ar
@@ -38,10 +38,10 @@ class MealType(models.Model):
 
 
 class WeeklyMenu(models.Model):
-    week_start_date = models.DateField(help_text="عادة يوم الأحد")
+    week_start_date = models.DateField(_("تاريخ بداية الأسبوع"), help_text=_("عادة يوم الأحد"))
     is_active = models.BooleanField(
-        default=True, db_index=True,
-        help_text="فعّل هذا المنيو ليظهر بالموقع (يعطل تلقائياً القديم)"
+        _("مفعّل"), default=True, db_index=True,
+        help_text=_("فعّل هذا المنيو ليظهر بالموقع (يعطل تلقائياً القديم)")
     )
 
     # Audit Log — تتبع تفعيل/تعطيل وتعديل المنيو الأسبوعي
@@ -49,8 +49,8 @@ class WeeklyMenu(models.Model):
 
     class Meta:
         ordering = ["-week_start_date"]
-        verbose_name = "منيو أسبوعي"
-        verbose_name_plural = "المنيو الأسبوعي"
+        verbose_name = _("منيو أسبوعي")
+        verbose_name_plural = _("المنيو الأسبوعي")
 
     def __str__(self):
         return f"منيو أسبوع {self.week_start_date}"
@@ -72,24 +72,24 @@ class MenuItem(models.Model):
         (4, _("الخميس")), (5, _("الجمعة")), (6, _("السبت")),
     ]
 
-    weekly_menu = models.ForeignKey(WeeklyMenu, related_name="items", on_delete=models.CASCADE)
-    meal_type = models.ForeignKey(MealType, on_delete=models.PROTECT)
-    day_of_week = models.IntegerField(choices=DAYS)
-    name_ar = models.CharField(max_length=120)
-    name_en = models.CharField(max_length=120, blank=True)
-    calories = models.PositiveIntegerField()
-    protein_g = models.PositiveIntegerField()
-    carbs_g = models.PositiveIntegerField()
-    fat_g = models.PositiveIntegerField()
-    image = models.ImageField(upload_to="menu/", blank=True)
+    weekly_menu = models.ForeignKey(WeeklyMenu, related_name="items", on_delete=models.CASCADE, verbose_name=_("المنيو الأسبوعي"))
+    meal_type = models.ForeignKey(MealType, on_delete=models.PROTECT, verbose_name=_("نوع الوجبة"))
+    day_of_week = models.IntegerField(_("يوم الأسبوع"), choices=DAYS)
+    name_ar = models.CharField(_("الاسم (عربي)"), max_length=120)
+    name_en = models.CharField(_("الاسم (إنجليزي)"), max_length=120, blank=True)
+    calories = models.PositiveIntegerField(_("السعرات"))
+    protein_g = models.PositiveIntegerField(_("بروتين (غ)"))
+    carbs_g = models.PositiveIntegerField(_("كربوهيدرات (غ)"))
+    fat_g = models.PositiveIntegerField(_("دهون (غ)"))
+    image = models.ImageField(_("الصورة"), upload_to="menu/", blank=True)
 
     # Audit Log — تتبع تعديل وجبات المنيو (سعرات، ماكروز، أسماء)
     history = HistoricalRecords()
 
     class Meta:
         ordering = ["day_of_week"]
-        verbose_name = "وجبة"
-        verbose_name_plural = "الوجبات"
+        verbose_name = _("وجبة")
+        verbose_name_plural = _("الوجبات")
 
     def __str__(self):
         return f"{self.name_ar} ({self.get_day_of_week_display()})"

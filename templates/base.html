@@ -184,7 +184,7 @@
             {% if site_settings.has_whatsapp %}
             <a class="footer-brand__phone" href="{{ site_settings.whatsapp_link }}" rel="noopener" target="_blank">
                 <span class="footer-brand__phone-icon">{% include "core/icons/whatsapp.svg" %}</span>
-                <span>{{ site_settings.whatsapp_number_display }}</span>
+                <span class="ltr-value" dir="ltr">{{ site_settings.whatsapp_number_display }}</span>
             </a>
             {% endif %}
         </div>
@@ -227,8 +227,8 @@
             {% endif %}
             {% if site_settings.phone_number or site_settings.support_email or site_settings.app_store_url or site_settings.google_play_url %}
             <ul class="footer-contact__extra">
-                {% if site_settings.phone_number %}<li><a href="tel:{{ site_settings.phone_number }}">{% include "core/icons/phone.svg" %}<span>{{ site_settings.phone_number }}</span></a></li>{% endif %}
-                {% if site_settings.support_email %}<li><a href="mailto:{{ site_settings.support_email }}">{% include "core/icons/mail.svg" %}<span>{{ site_settings.support_email }}</span></a></li>{% endif %}
+                {% if site_settings.phone_number %}<li><a href="tel:{{ site_settings.phone_number }}">{% include "core/icons/phone.svg" %}<span class="ltr-value" dir="ltr">{{ site_settings.phone_number }}</span></a></li>{% endif %}
+                {% if site_settings.support_email %}<li><a href="mailto:{{ site_settings.support_email }}">{% include "core/icons/mail.svg" %}<span class="ltr-value" dir="ltr">{{ site_settings.support_email }}</span></a></li>{% endif %}
                 {% if site_settings.app_store_url %}<li><a href="{{ site_settings.app_store_url }}">App Store</a></li>{% endif %}
                 {% if site_settings.google_play_url %}<li><a href="{{ site_settings.google_play_url }}">Google Play</a></li>{% endif %}
             </ul>

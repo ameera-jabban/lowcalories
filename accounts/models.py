@@ -26,20 +26,20 @@ def generate_access_code(length: int = 6) -> str:
 
 class Customer(models.Model):
     phone_number = models.CharField(
-        "رقم الهاتف", max_length=20, unique=True,
-        help_text="بصيغة دولية بدون + (مثال: 962795551234)",
+        _("رقم الهاتف"), max_length=20, unique=True,
+        help_text=_("بصيغة دولية بدون + (مثال: 962795551234)"),
     )
-    name = models.CharField("الاسم", max_length=120)
+    name = models.CharField(_("الاسم"), max_length=120)
     access_code = models.CharField(
-        "كود الدخول", max_length=12, blank=True,
-        help_text="يُنشأ تلقائياً. شاركه مع العميل ليدخل بوابته (بديل مؤقت عن OTP).",
+        _("كود الدخول"), max_length=12, blank=True,
+        help_text=_("يُنشأ تلقائياً. شاركه مع العميل ليدخل بوابته (بديل مؤقت عن OTP)."),
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(_("تاريخ الإنشاء"), auto_now_add=True)
 
     class Meta:
         ordering = ["-created_at"]
-        verbose_name = "عميل"
-        verbose_name_plural = "العملاء"
+        verbose_name = _("عميل")
+        verbose_name_plural = _("العملاء")
 
     def __str__(self):
         return f"{self.name} ({self.phone_number})"
@@ -66,30 +66,30 @@ class Subscription(models.Model):
         CANCELLED = "cancelled", _("ملغى")
 
     customer = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, related_name="subscriptions", verbose_name="العميل"
+        Customer, on_delete=models.CASCADE, related_name="subscriptions", verbose_name=_("العميل")
     )
     plan = models.ForeignKey(
-        "plans.Plan", on_delete=models.PROTECT, related_name="subscriptions", verbose_name="الخطة"
+        "plans.Plan", on_delete=models.PROTECT, related_name="subscriptions", verbose_name=_("الخطة")
     )
-    start_date = models.DateField("تاريخ البداية", default=date.today)
-    end_date = models.DateField("تاريخ الانتهاء", blank=True, null=True)
+    start_date = models.DateField(_("تاريخ البداية"), default=date.today)
+    end_date = models.DateField(_("تاريخ الانتهاء"), blank=True, null=True)
     status = models.CharField(
-        "الحالة", max_length=12, choices=Status.choices, default=Status.ACTIVE
+        _("الحالة"), max_length=12, choices=Status.choices, default=Status.ACTIVE
     )
     frozen_at = models.DateField(
-        "تاريخ التجميد", blank=True, null=True,
-        help_text="يُستخدم لتمديد تاريخ الانتهاء بشكل صحيح عند استئناف الاشتراك.",
+        _("تاريخ التجميد"), blank=True, null=True,
+        help_text=_("يُستخدم لتمديد تاريخ الانتهاء بشكل صحيح عند استئناف الاشتراك."),
     )
     review_requested_at = models.DateTimeField(
-        "تاريخ إرسال طلب التقييم", blank=True, null=True,
-        help_text="يمنع إرسال طلب تقييم أكثر من مرة (أمر send_review_requests).",
+        _("تاريخ إرسال طلب التقييم"), blank=True, null=True,
+        help_text=_("يمنع إرسال طلب تقييم أكثر من مرة (أمر send_review_requests)."),
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(_("تاريخ الإنشاء"), auto_now_add=True)
 
     class Meta:
         ordering = ["-created_at"]
-        verbose_name = "اشتراك"
-        verbose_name_plural = "الاشتراكات"
+        verbose_name = _("اشتراك")
+        verbose_name_plural = _("الاشتراكات")
 
     def __str__(self):
         return f"{self.customer.name} — {self.plan} ({self.get_status_display()})"

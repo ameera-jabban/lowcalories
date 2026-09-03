@@ -21,32 +21,32 @@ class CalorieCalculation(models.Model):
         ("athlete", _("رياضي محترف أو عمل بدني شاق يومياً")),
     ]
 
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
-    age = models.PositiveIntegerField()
-    height_cm = models.PositiveIntegerField()
-    weight_kg = models.PositiveIntegerField()
-    activity_level = models.CharField(max_length=20, choices=ACTIVITY_CHOICES)
-    goal = models.CharField(max_length=20, choices=GOAL_CHOICES)
+    gender = models.CharField(_("الجنس"), max_length=10, choices=GENDER_CHOICES)
+    age = models.PositiveIntegerField(_("العمر"))
+    height_cm = models.PositiveIntegerField(_("الطول (سم)"))
+    weight_kg = models.PositiveIntegerField(_("الوزن (كغ)"))
+    activity_level = models.CharField(_("مستوى النشاط"), max_length=20, choices=ACTIVITY_CHOICES)
+    goal = models.CharField(_("الهدف"), max_length=20, choices=GOAL_CHOICES)
 
-    result_calories = models.PositiveIntegerField(null=True, blank=True)
-    result_protein_g = models.PositiveIntegerField(null=True, blank=True)
-    result_carbs_g = models.PositiveIntegerField(null=True, blank=True)
-    result_fat_g = models.PositiveIntegerField(null=True, blank=True)
-    suggested_plan = models.ForeignKey(Plan, null=True, blank=True, on_delete=models.SET_NULL)
+    result_calories = models.PositiveIntegerField(_("السعرات الناتجة"), null=True, blank=True)
+    result_protein_g = models.PositiveIntegerField(_("بروتين (غ)"), null=True, blank=True)
+    result_carbs_g = models.PositiveIntegerField(_("كربوهيدرات (غ)"), null=True, blank=True)
+    result_fat_g = models.PositiveIntegerField(_("دهون (غ)"), null=True, blank=True)
+    suggested_plan = models.ForeignKey(Plan, null=True, blank=True, on_delete=models.SET_NULL, verbose_name=_("الخطة المقترحة"))
 
     # ---- متابعة التقدّم (اختياري) ----
-    customer_phone = models.CharField("رقم الهاتف", max_length=20, blank=True)
+    customer_phone = models.CharField(_("رقم الهاتف"), max_length=20, blank=True)
     # ⚠️ خصوصية: بيانات الوزن/السعرات حسّاسة. رقم الهاتف لوحده ما يكفي للوصول
     # للسجل (أي حد بيعرف رقم صاحبه بيشوف وزنه). عشان هيك progress_code إلزامي
     # للوصول (مش اختياري) — يُنشأ فقط لو انعبّى رقم الهاتف.
-    progress_code = models.CharField("كود المتابعة", max_length=8, blank=True, db_index=True)
+    progress_code = models.CharField(_("كود المتابعة"), max_length=8, blank=True, db_index=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(_("تاريخ الإنشاء"), auto_now_add=True)
 
     class Meta:
         ordering = ["-created_at"]
-        verbose_name = "نتيجة حاسبة سعرات"
-        verbose_name_plural = "نتائج حاسبة السعرات"
+        verbose_name = _("نتيجة حاسبة سعرات")
+        verbose_name_plural = _("نتائج حاسبة السعرات")
 
     def __str__(self):
         return f"{self.get_gender_display()} - {self.age} سنة - {self.result_calories} سعرة"

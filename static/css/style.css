@@ -96,6 +96,11 @@ p  { margin: 0 0 var(--sp-3); }
 
 .container { width: 100%; max-width: var(--container); margin: 0 auto; padding-inline: var(--sp-4); }
 
+/* قيمة تقنية تظل LTR ومعزولة داخل أي تخطيط RTL (هاتف، إيميل، رابط، كود، ID).
+   استخدمها مع dir="ltr" على العنصر نفسه. ما تستخدمها على نص عربي عادي. */
+.ltr-value { direction: ltr; unicode-bidi: isolate; }
+span.ltr-value, a.ltr-value, strong.ltr-value, code.ltr-value { display: inline-block; }
+
 :focus-visible { outline: 3px solid var(--primary-dark); outline-offset: 2px; border-radius: 4px; }
 
 /* ========================= Buttons ========================= */
