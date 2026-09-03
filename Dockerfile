@@ -26,7 +26,8 @@ COPY . .
 
 RUN python manage.py compilemessages \
     && mkdir -p /app/media /app/staticfiles \
-    && chown -R appuser:appuser /app
+    && chown -R appuser:appuser /app \
+    && chown -R appuser:appuser /root/.local
 
 USER appuser
 
