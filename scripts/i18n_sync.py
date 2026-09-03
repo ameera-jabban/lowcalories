@@ -88,13 +88,16 @@ TRANSLATIONS = {
         "We received your review — it will appear on the site after a quick check by the team.",
     "الصفحة الرئيسية": "Home",
     "أرسل التقييم": "Submit Review",
-    "دخول العملاء": "Customer Login",
-    "بوابة اشتراكي": "My Subscription Portal",
-    "ادخل رقم هاتفك وكود الدخول اللي وصلك من الفريق لمتابعة اشتراكك.":
-        "Enter your phone number and the access code the team sent you to manage your subscription.",
+    "بوابة اشتراكي": "My Subscription Portal",  # لسا مستخدم برابط الفوتر
     "دخول": "Log In",
-    "ما وصلك كود دخول؟ راسلنا على واتساب ونبعتلك ياه.":
-        "Didn't get an access code? Message us on WhatsApp and we'll send it to you.",
+    # -- صفحة الدخول (إعادة تصميم: كرت مركزي مضغوط) --
+    "إدارة اشتراكك": "Manage your subscription",
+    "ادخل رقم هاتفك وكود الدخول لعرض وإدارة اشتراكك.":
+        "Enter your phone number and access code to view and manage your subscription.",
+    "تحتاج مساعدة؟": "Need help?",
+    "ما عندك كود دخول؟": "Don't have an access code?",
+    "تواصل مع فريقنا ومنبعتلك ياه.": "Contact our team and we'll send it to you.",
+    "تواصل معنا على واتساب": "Contact us on WhatsApp",
     # ---- accounts blocktrans ----
     "أهلاً %(name)s 👋": "Hi %(name)s 👋",
     "متبقٍّ %(days)s يوم": "%(days)s days remaining",
@@ -188,6 +191,25 @@ TRANSLATIONS = {
         "We'll contact you shortly to arrange your consultation.",
     "رقم الطلب: %(ref)s": "Request %(ref)s",
     "العودة للرئيسية": "Back to home",
+    # -- إعادة تصميم الصفحة (عمودين: معلومات + كرت نموذج) --
+    "استشارة تغذية": "Nutrition consultation",
+    "إرشاد تغذوي مخصّص مبني على هدفك ونمط حياتك واحتياجك من السعرات. ابعت طلبك وفريقنا بيتواصل معك لترتيب الجلسة.":
+        "Personalized nutrition guidance based on your goals, lifestyle, and calorie needs. "
+        "Submit your request and our team will contact you to arrange your consultation.",
+    "رسوم الاستشارة": "Consultation fee",
+    "التفاصيل النهائية يؤكّدها فريقنا.": "Final details are confirmed by our team.",
+    "ابعت طلبك": "Send your request",
+    "نراجع تفاصيلك": "We review your details",
+    "فريقنا بيتواصل معك": "Our team contacts you",
+    "دخّل بياناتك وفريقنا بيتواصل معك.": "Leave your details and our team will get in touch.",
+    "أرسل طلب الاستشارة": "Request Consultation",
+    "ما في حجز أونلاين — فريقنا بيتواصل معك بعد مراجعة طلبك.":
+        "No online booking required — our team will contact you after reviewing your request.",
+    "استلمنا طلبك": "Request received",
+    "شكراً — راح يراجع فريقنا تفاصيلك ويتواصل معك قريباً.":
+        "Thank you. Our team will review your details and contact you shortly.",
+    "خبّرنا باختصار عن هدفك — خسارة وزن، بناء عضل، تخطيط وجبات، إرشاد سعرات…":
+        "Tell us briefly about your goal — weight loss, muscle gain, meal planning, calorie guidance, etc.",
     "بدك خطة مفصّلة عليك بالضبط؟ اطلب استشارة مع أخصائي تغذية.":
         "Want a plan tailored exactly to you? Request a consultation with a nutritionist.",
     # form fields + choices

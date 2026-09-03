@@ -1,0 +1,9 @@
+{% load i18n %}
+<div class="form-row{% if field.errors %} form-row--err{% endif %}">
+    <label for="{{ field.id_for_label }}">
+        {{ field.label }}{% if field.field.required %} <span aria-hidden="true">*</span>{% endif %}
+    </label>
+    {{ field }}
+    {% if field.help_text %}<span class="form-hint">{{ field.help_text }}</span>{% endif %}
+    {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+</div>

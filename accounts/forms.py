@@ -6,12 +6,18 @@ class CustomerLoginForm(forms.Form):
     phone_number = forms.CharField(
         label=_("رقم الهاتف"),
         max_length=20,
-        widget=forms.TextInput(attrs={"inputmode": "tel", "placeholder": "962795551234"}),
+        widget=forms.TextInput(attrs={
+            "inputmode": "tel", "autocomplete": "tel", "dir": "ltr", "class": "ltr-value",
+            "placeholder": "07X XXX XXXX",
+        }),
     )
     access_code = forms.CharField(
         label=_("كود الدخول"),
         max_length=12,
-        widget=forms.TextInput(attrs={"autocomplete": "one-time-code"}),
+        widget=forms.TextInput(attrs={
+            "autocomplete": "one-time-code", "autocapitalize": "characters",
+            "dir": "ltr", "class": "ltr-value",
+        }),
     )
 
     def clean_phone_number(self):

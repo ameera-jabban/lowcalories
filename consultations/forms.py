@@ -10,12 +10,16 @@ class ConsultationRequestForm(forms.ModelForm):
         fields = ["full_name", "phone", "email", "preferred_contact", "goal", "notes"]
         widgets = {
             "phone": forms.TextInput(attrs={
-                "inputmode": "tel", "dir": "ltr", "placeholder": "07 9 000 0000",
+                "inputmode": "tel", "dir": "ltr", "class": "ltr-value",
+                "placeholder": "07X XXX XXXX",
             }),
-            "email": forms.EmailInput(attrs={"dir": "ltr", "placeholder": "name@example.com"}),
+            "email": forms.EmailInput(attrs={
+                "dir": "ltr", "class": "ltr-value", "placeholder": "name@example.com",
+            }),
             "preferred_contact": forms.RadioSelect,
-            "goal": forms.TextInput(attrs={
-                "placeholder": _("مثال: خسارة وزن، خطة وجبات، نصائح رياضية…"),
+            "goal": forms.Textarea(attrs={
+                "rows": 4,
+                "placeholder": _("خبّرنا باختصار عن هدفك — خسارة وزن، بناء عضل، تخطيط وجبات، إرشاد سعرات…"),
             }),
             "notes": forms.Textarea(attrs={"rows": 3}),
         }

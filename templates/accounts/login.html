@@ -1,36 +1,45 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "دخول العملاء" %} | {{ site_settings.brand_name }}{% endblock %}
+{% block title %}{% trans "حسابي" %} | {{ site_settings.brand_name }}{% endblock %}
 
 {% block content %}
-<section class="container page-header">
-    <h1>👤 {% trans "بوابة اشتراكي" %}</h1>
-    <p>{% trans "ادخل رقم هاتفك وكود الدخول اللي وصلك من الفريق لمتابعة اشتراكك." %}</p>
-</section>
+<main class="auth">
+    <div class="auth__inner">
+        <header class="auth__head">
+            <p class="auth__eyebrow">{% trans "حسابي" %}</p>
+            <h1 class="auth__title">{% trans "إدارة اشتراكك" %}</h1>
+            <p class="auth__lead">{% trans "ادخل رقم هاتفك وكود الدخول لعرض وإدارة اشتراكك." %}</p>
+        </header>
 
-<section class="container">
-    {% if messages %}
-        {% for message in messages %}
-        <p class="field-error">{{ message }}</p>
-        {% endfor %}
-    {% endif %}
+        <div class="auth__card">
+            {% if messages %}
+                {% for message in messages %}
+                <p class="auth__form-error" role="alert">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
 
-    <form method="post" class="calculator-form no-print">
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="form-row">
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-            {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+            <form method="post" class="auth__form no-print" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-row">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary auth__submit">{% trans "دخول" %}</button>
+            </form>
+
+            <div class="auth__help">
+                <span class="auth__help-divider">{% trans "تحتاج مساعدة؟" %}</span>
+                <p class="auth__help-title">{% trans "ما عندك كود دخول؟" %}</p>
+                <p class="auth__help-text">{% trans "تواصل مع فريقنا ومنبعتلك ياه." %}</p>
+                <a class="auth__help-cta" href="{% url 'leads:go_to_whatsapp_general' %}?source=account_login">
+                    {% include "core/icons/whatsapp.svg" %}<span>{% trans "تواصل معنا على واتساب" %}</span>
+                </a>
+            </div>
         </div>
-        {% endfor %}
-        <button type="submit" class="btn btn-primary">{% trans "دخول" %}</button>
-    </form>
-
-    <p class="hero-note">
-        {% trans "ما وصلك كود دخول؟ راسلنا على واتساب ونبعتلك ياه." %}
-        <a href="{% url 'leads:go_to_whatsapp_general' %}?source=account_login">{% trans "واتساب" %}</a>
-    </p>
-</section>
+    </div>
+</main>
 {% endblock %}

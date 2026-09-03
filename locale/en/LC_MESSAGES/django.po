@@ -97,23 +97,11 @@ msgstr "Home"
 msgid "أرسل التقييم"
 msgstr "Submit Review"
 
-msgid "دخول العملاء"
-msgstr "Customer Login"
-
 msgid "بوابة اشتراكي"
 msgstr "My Subscription Portal"
 
-msgid "ادخل رقم هاتفك وكود الدخول اللي وصلك من الفريق لمتابعة اشتراكك."
-msgstr ""
-"Enter your phone number and the access code the team sent you to manage your"
-" subscription."
-
 msgid "دخول"
 msgstr "Log In"
-
-msgid "ما وصلك كود دخول؟ راسلنا على واتساب ونبعتلك ياه."
-msgstr ""
-"Didn't get an access code? Message us on WhatsApp and we'll send it to you."
 
 msgid "أهلاً %(name)s 👋"
 msgstr "Hi %(name)s 👋"
@@ -1905,3 +1893,69 @@ msgstr "Discount code used"
 
 msgid "طلب عرض سعر"
 msgstr "Request a Quote"
+
+msgid "استشارة تغذية"
+msgstr "Nutrition consultation"
+
+msgid ""
+"إرشاد تغذوي مخصّص مبني على هدفك ونمط حياتك واحتياجك من السعرات. ابعت طلبك "
+"وفريقنا بيتواصل معك لترتيب الجلسة."
+msgstr ""
+"Personalized nutrition guidance based on your goals, lifestyle, and calorie "
+"needs. Submit your request and our team will contact you to arrange your "
+"consultation."
+
+msgid "رسوم الاستشارة"
+msgstr "Consultation fee"
+
+msgid "التفاصيل النهائية يؤكّدها فريقنا."
+msgstr "Final details are confirmed by our team."
+
+msgid "ابعت طلبك"
+msgstr "Send your request"
+
+msgid "نراجع تفاصيلك"
+msgstr "We review your details"
+
+msgid "فريقنا بيتواصل معك"
+msgstr "Our team contacts you"
+
+msgid "دخّل بياناتك وفريقنا بيتواصل معك."
+msgstr "Leave your details and our team will get in touch."
+
+msgid "أرسل طلب الاستشارة"
+msgstr "Request Consultation"
+
+msgid "ما في حجز أونلاين — فريقنا بيتواصل معك بعد مراجعة طلبك."
+msgstr ""
+"No online booking required — our team will contact you after reviewing your "
+"request."
+
+msgid "شكراً — راح يراجع فريقنا تفاصيلك ويتواصل معك قريباً."
+msgstr "Thank you. Our team will review your details and contact you shortly."
+
+msgid ""
+"خبّرنا باختصار عن هدفك — خسارة وزن، بناء عضل، تخطيط وجبات، إرشاد سعرات…"
+msgstr ""
+"Tell us briefly about your goal — weight loss, muscle gain, meal planning, "
+"calorie guidance, etc."
+
+msgid "إدارة اشتراكك"
+msgstr "Manage your subscription"
+
+msgid "ادخل رقم هاتفك وكود الدخول لعرض وإدارة اشتراكك."
+msgstr ""
+"Enter your phone number and access code to view and manage your "
+"subscription."
+
+msgid "تحتاج مساعدة؟"
+msgstr "Need help?"
+
+msgid "ما عندك كود دخول؟"
+msgstr "Don't have an access code?"
+
+msgid "تواصل مع فريقنا ومنبعتلك ياه."
+msgstr "Contact our team and we'll send it to you."
+
+msgid "تواصل معنا على واتساب"
+msgstr "Contact us on WhatsApp"

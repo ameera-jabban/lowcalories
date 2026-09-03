@@ -11,66 +11,82 @@
     {% if submitted %}
     {# ---- حالة النجاح (بدون تأكيد موعد — الفريق بيتواصل) ---- #}
     <section class="consult__success" role="status">
-        <span class="consult__check" aria-hidden="true">✓</span>
-        <h1>{% trans "استلمنا طلب استشارتك" %}</h1>
-        <p>{% trans "رح نتواصل معك قريباً لترتيب موعد الاستشارة." %}</p>
+        <span class="consult__check" aria-hidden="true">{% include "core/icons/check.svg" %}</span>
+        <h1>{% trans "استلمنا طلبك" %}</h1>
+        <p>{% trans "شكراً — راح يراجع فريقنا تفاصيلك ويتواصل معك قريباً." %}</p>
         <p class="consult__ref">{% blocktrans with ref=submitted.reference %}رقم الطلب: {{ ref }}{% endblocktrans %}</p>
         <a class="btn btn-secondary" href="{% url 'core:home' %}">{% trans "العودة للرئيسية" %}</a>
     </section>
 
     {% else %}
-    <section class="consult__intro">
-        <h1>{% trans "استشارة أخصائي تغذية" %}</h1>
-        <p>
-            {% trans "اطلب استشارة وفريقنا بيتواصل معك لترتيب جلسة مع أخصائي تغذية — بتراجعوا فيها هدفك وسعراتك وبتطلع بخطة عملية مفصّلة عليك." %}
-            {% if site_settings.consultation_price_jod %}
-            <br><strong>{% blocktrans with price=site_settings.consultation_price_jod %}رسوم الجلسة {{ price }} د.أ (يؤكّدها الفريق).{% endblocktrans %}</strong>
-            {% endif %}
-        </p>
-        <ul class="consult__benefits">
-            <li>{% trans "إرشاد تغذوي مخصّص لهدفك" %}</li>
-            <li>{% trans "دعم بخطة الوجبات وتوزيع الماكروز" %}</li>
-            <li>{% trans "توصيات مبنية على وضعك وهدفك" %}</li>
-        </ul>
-    </section>
+    <div class="consult__grid">
 
-    <section class="consult__form-wrap" id="request">
-        <h2>{% trans "اطلب استشارة" %}</h2>
-        <form method="post" class="calculator-form consult__form no-print" novalidate>
-            {% csrf_token %}
-            <input type="hidden" name="source" value="{{ source }}">
-            {% if form.non_field_errors %}<p class="field-error">{{ form.non_field_errors|striptags }}</p>{% endif %}
-            {% for field in form %}
-            {% if field.name == 'preferred_contact' %}
-            <div class="form-row form-row--segmented">
-                <span class="form-row__label" id="pref-contact-label">
-                    {{ field.label }}{% if field.field.required %} <span aria-hidden="true">*</span>{% endif %}
-                </span>
-                <div class="segmented" role="radiogroup" aria-labelledby="pref-contact-label">
-                    {% for radio in field %}
-                    <label class="segmented__opt" for="{{ radio.id_for_label }}">
-                        {{ radio.tag }}
-                        <span>{{ radio.choice_label }}</span>
-                    </label>
-                    {% endfor %}
-                </div>
-                {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
-            </div>
-            {% else %}
-            <div class="form-row">
-                <label for="{{ field.id_for_label }}">
-                    {{ field.label }}{% if field.field.required %} <span aria-hidden="true">*</span>{% endif %}
-                </label>
-                {{ field }}
-                {% if field.help_text %}<span class="form-hint">{{ field.help_text }}</span>{% endif %}
-                {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+        <div class="consult__info">
+            <p class="consult__eyebrow">{% trans "استشارة تغذية" %}</p>
+            <h1 class="consult__title">{% trans "استشارة أخصائي تغذية" %}</h1>
+            <p class="consult__lead">{% trans "إرشاد تغذوي مخصّص مبني على هدفك ونمط حياتك واحتياجك من السعرات. ابعت طلبك وفريقنا بيتواصل معك لترتيب الجلسة." %}</p>
+
+            <ul class="consult__benefits">
+                <li>{% include "core/icons/check.svg" %}<span>{% trans "إرشاد تغذوي مخصّص لهدفك" %}</span></li>
+                <li>{% include "core/icons/check.svg" %}<span>{% trans "دعم بخطة الوجبات وتوزيع الماكروز" %}</span></li>
+                <li>{% include "core/icons/check.svg" %}<span>{% trans "توصيات مبنية على وضعك وهدفك" %}</span></li>
+            </ul>
+
+            {% if site_settings.consultation_price_jod %}
+            <div class="consult__price">
+                <span class="consult__price-label">{% trans "رسوم الاستشارة" %}</span>
+                <span class="consult__price-v"><span class="ltr-value" dir="ltr">{{ site_settings.consultation_price_jod }}</span> {% trans "د.أ" %}</span>
+                <span class="consult__price-note">{% trans "التفاصيل النهائية يؤكّدها فريقنا." %}</span>
             </div>
             {% endif %}
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">{% trans "إرسال الطلب" %}</button>
-        </form>
-        <p class="hero-note">{% trans "ما في اختيار موعد — بعد ما تبعت الطلب، الفريق بيتواصل معك لترتيب الجلسة." %}</p>
-    </section>
+
+            <ol class="consult__steps">
+                <li><span class="consult__step-n">1</span> <span>{% trans "ابعت طلبك" %}</span></li>
+                <li><span class="consult__step-n">2</span> <span>{% trans "نراجع تفاصيلك" %}</span></li>
+                <li><span class="consult__step-n">3</span> <span>{% trans "فريقنا بيتواصل معك" %}</span></li>
+            </ol>
+        </div>
+
+        <div class="consult__form-card">
+            <h2 class="consult__form-h">{% trans "اطلب استشارة" %}</h2>
+            <p class="consult__form-d">{% trans "دخّل بياناتك وفريقنا بيتواصل معك." %}</p>
+
+            <form method="post" class="consult__form no-print" novalidate>
+                {% csrf_token %}
+                <input type="hidden" name="source" value="{{ source }}">
+                {% if form.non_field_errors %}<p class="field-error">{{ form.non_field_errors|striptags }}</p>{% endif %}
+
+                {% include "consultations/_field.html" with field=form.full_name %}
+
+                <div class="consult__row2">
+                    {% include "consultations/_field.html" with field=form.phone %}
+                    {% include "consultations/_field.html" with field=form.email %}
+                </div>
+
+                <div class="form-row form-row--segmented{% if form.preferred_contact.errors %} form-row--err{% endif %}">
+                    <span class="form-row__label" id="pref-contact-label">
+                        {{ form.preferred_contact.label }}{% if form.preferred_contact.field.required %} <span aria-hidden="true">*</span>{% endif %}
+                    </span>
+                    <div class="segmented" role="radiogroup" aria-labelledby="pref-contact-label">
+                        {% for radio in form.preferred_contact %}
+                        <label class="segmented__opt" for="{{ radio.id_for_label }}">
+                            {{ radio.tag }}
+                            <span>{{ radio.choice_label }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    {% if form.preferred_contact.errors %}<span class="field-error">{{ form.preferred_contact.errors|striptags }}</span>{% endif %}
+                </div>
+
+                {% include "consultations/_field.html" with field=form.goal %}
+                {% include "consultations/_field.html" with field=form.notes %}
+
+                <button type="submit" class="btn btn-primary consult__submit">{% trans "أرسل طلب الاستشارة" %}</button>
+                <p class="consult__form-note">{% trans "ما في حجز أونلاين — فريقنا بيتواصل معك بعد مراجعة طلبك." %}</p>
+            </form>
+        </div>
+
+    </div>
     {% endif %}
 
     </div>
